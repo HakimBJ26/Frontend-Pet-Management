@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -11,6 +10,7 @@ import { tokens } from '../theme';
 import { useState } from 'react';
 import { Alert, useTheme } from '@mui/material';
 import UserService from '../service/UserService';
+import StyledBox from '../components/StyledBox/StyledBox';
 
 export default function SignIn() {
  const theme = useTheme()
@@ -44,18 +44,16 @@ export default function SignIn() {
     event.preventDefault();
     if (validate()) {
     const userData=  await UserService.login(formData.email,formData.password)
-      console.log(userData)
-    
+  
     
       if (userData.token) {
-        console.log(userData.role.toUpperCase())
           localStorage.setItem('token', userData.token)
           localStorage.setItem('role', userData.role)
-          if(userData.role.toUpperCase()=='ADMIN'){
+          if(userData.role.toUpperCase()==='ADMIN'){
               navigate('/dashboard-admin')
-          }else if(userData.role.toUpperCase()=='CLIENT'){
+          }else if(userData.role.toUpperCase()==='CLIENT'){
             navigate('/dashboard-client')   
-          }else if(userData.role.toUpperCase()=='VETERINARIAN'){
+          }else if(userData.role.toUpperCase()==='VETERINARIAN'){
             navigate('/dashboard-veterinarian')
           }
       }else{
@@ -65,15 +63,7 @@ export default function SignIn() {
   };
 
   return (
-    <Box
-      sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        border: `2px solid ${theme.palette.primary.main}`, 
-      }}
-   
+    <StyledBox
     >
 
 
@@ -139,6 +129,6 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Box>
-    </Box>
+    </StyledBox>
   );
 }

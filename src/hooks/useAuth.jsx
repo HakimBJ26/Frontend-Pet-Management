@@ -14,7 +14,7 @@ const useAuth = () => {
         if (role) {
           user.role = role;
         }
-        console.log(role);
+    
         setCurrentUser(user);
       } catch (e) {
         console.error("Invalid token:", e);

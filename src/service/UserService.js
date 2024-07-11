@@ -6,7 +6,6 @@ class UserService{
     static async login(email, password){
         try {
             const response = await axiosInstance.post('/auth/login', { email, password });
-           console.log(response.data)
             return response.data;
         } catch (err) {
             console.log(err);
@@ -17,10 +16,7 @@ class UserService{
 
     static async register(userData){
         try{
-            const response = await axiosInstance.post('/auth/register', userData, 
-            {
-               
-            })
+            const response = await axiosInstance.post('/auth/register', userData, {})
             return response.data;
         }catch(err){
             throw err;

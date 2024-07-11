@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useState } from 'react';
 import { useTheme } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -16,6 +15,7 @@ import PetsIcon from '@mui/icons-material/Pets';
 import UserService from '../service/UserService';
 import { tokens } from '../theme';
 import Alert from '@mui/material/Alert';
+import StyledBox from '../components/StyledBox/StyledBox';
 
 export default function SignUp() {
   const theme = useTheme()
@@ -60,29 +60,21 @@ export default function SignUp() {
     event.preventDefault();
     if (validate()) {
       try {
-        const response = await UserService.register(formData);
-        console.log(response)
-        response.statusCode==200 ? navigate('/signin') :   setError(response.message)
+      await UserService.register(formData);
+     
+       navigate('/signin')   
       
      
       } catch (error) {
+        setError(error)
         console.error('Error registering user:', error.response ? error.response.data : error.message);
       }
     }
   };
 
   return (
-    <Box
-      sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        margin: '20px',
-        padding: '20px',
-        border: `2px solid ${theme.palette.primary.main}`,
-        borderRadius: '8px',
-      }}
+    <StyledBox
+    
     >
       <Typography variant="h1">PETAGORA</Typography>
       <Divider variant="middle" sx={{ mb: 3 }} />
@@ -191,6 +183,6 @@ export default function SignUp() {
           </Grid>
         </Grid>
       </Box>
-    </Box>
+    </StyledBox>
   );
 }
