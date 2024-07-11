@@ -44,6 +44,10 @@ class UserService{
         return role === 'USER'
     }
 
+    static logout(){
+        localStorage.removeItem('token')
+        localStorage.removeItem('role')
+    }
   
 
 }
