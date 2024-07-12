@@ -6,6 +6,7 @@ import AdminDashboard from '../pages/Dashboard/AdminDashboard';
 import ClientDashboard from '../pages/Dashboard/ClientDashboard';
 import VetoDashboard from '../pages/Dashboard/VetoDashboard';
 import ProtectedRoute from './ProtectedRoute';
+import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
 
 
 const ProtectedRoutes = () => (
@@ -13,7 +14,7 @@ const ProtectedRoutes = () => (
     <Route 
       path="/dashboard-admin" 
       element={
-        <ProtectedRoute roles={['admin']}>
+        <ProtectedRoute roles={[ROLE_ADMIN]}>
           <AdminDashboard />
         </ProtectedRoute>
       } 
@@ -21,7 +22,7 @@ const ProtectedRoutes = () => (
     <Route 
       path="/dashboard-client" 
       element={
-        <ProtectedRoute roles={['client']}>
+        <ProtectedRoute roles={[ROLE_CLIENT]}>
           <ClientDashboard />
         </ProtectedRoute>
       } 
@@ -29,7 +30,7 @@ const ProtectedRoutes = () => (
     <Route 
       path="/dashboard-veterinarian" 
       element={
-        <ProtectedRoute roles={['veterinarian']}>
+        <ProtectedRoute roles={[ROLE_VETO]}>
           <VetoDashboard />
         </ProtectedRoute>
       } 

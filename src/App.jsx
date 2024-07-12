@@ -5,23 +5,28 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import AuthContextProvider from './context/AuthContext';
 import ProtectedRoutes from './router/ProtectedRoutes';
 import { getAuthInfo } from './utils/authCred';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from './common/configuration/constants/UserRole';
 
 function App() {
   const [colorMode, theme] = useMode();
   const navigate = useNavigate()
+  const location = useLocation();
+
   useEffect(() => {
     const { token, role } = getAuthInfo();
-
+    if (location.pathname === '/signup') {
+      return;
+    }
     if (token && role) {
       switch (role) {
-        case 'admin':
+        case ROLE_ADMIN:
           navigate('/dashboard-admin');
           break;
-        case 'client':
+        case ROLE_CLIENT:
           navigate('/dashboard-client');
           break;
-        case 'veterinarian':
+        case ROLE_VETO:
           navigate('/dashboard-veterinarian');
           break;
         default:
@@ -31,7 +36,7 @@ function App() {
     } else {
       navigate('/signin');
     }
-  }, [navigate]);
+  }, [navigate,location.pathname]);
 
   return (
     <AuthContextProvider>

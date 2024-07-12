@@ -8,19 +8,24 @@ import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
 import { tokens } from '../theme';
 import { useState } from 'react';
-import { Alert, useTheme } from '@mui/material';
+import {  useTheme } from '@mui/material';
 import UserService from '../service/UserService';
-import StyledBox from '../components/StyledBox/StyledBox';
+import StyledBox from '../components/StyledBox';
+import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
+import CustomToast from '../components/CustomToast';
 
 export default function SignIn() {
  const theme = useTheme()
  const navigate=useNavigate()
- const [error,setError]=useState('')
   const colors = tokens(theme.palette.mode);
+  const [toastMessage, setToastMessage] = useState('');
+  const [severity,setSeverity]= useState('')
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
 
   const [errors, setErrors] = useState({});
 
@@ -40,24 +45,34 @@ export default function SignIn() {
     return Object.values(tempErrors).every(x => x === '');
   };
 
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validate()) {
     const userData=  await UserService.login(formData.email,formData.password)
   
-    
+    setSnackbarOpen(true)
       if (userData.token) {
           localStorage.setItem('token', userData.token)
           localStorage.setItem('role', userData.role)
-          if(userData.role.toUpperCase()==='ADMIN'){
+          setSeverity('success')
+          setToastMessage('SignIN performed successfully')
+          setTimeout(()=>{
+            if(userData.role===ROLE_ADMIN){
               navigate('/dashboard-admin')
-          }else if(userData.role.toUpperCase()==='CLIENT'){
+          }else if(userData.role===ROLE_CLIENT){
             navigate('/dashboard-client')   
-          }else if(userData.role.toUpperCase()==='VETERINARIAN'){
+          }else if(userData.role===ROLE_VETO){
             navigate('/dashboard-veterinarian')
           }
+          }, 2000);
+       
       }else{
-        setError(userData.message)
+        setSeverity('error')
+        setToastMessage(userData.message)
       }
     }
   };
@@ -106,13 +121,6 @@ export default function SignIn() {
             />
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-  {error && (
-    <Alert severity="error" sx={{ mt: 2, mb: 2 }}>
-      {error}
-    </Alert>
-  )}
-        </Grid>
         <Button
           type="submit"
           fullWidth
@@ -129,6 +137,12 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Box>
+      <CustomToast
+        open={snackbarOpen}
+        onClose={handleSnackbarClose}
+        message={toastMessage}
+        severity={severity}
+      />
     </StyledBox>
   );
 }
