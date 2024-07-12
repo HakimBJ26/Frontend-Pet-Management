@@ -7,18 +7,23 @@ import ClientDashboard from '../pages/Dashboard/ClientDashboard';
 import VetoDashboard from '../pages/Dashboard/VetoDashboard';
 import ProtectedRoute from './ProtectedRoute';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
+import UserManagement from '../pages/admin/UserManagement';
 
 
 const ProtectedRoutes = () => (
   <Routes>
     <Route 
-      path="/dashboard-admin" 
+      path="/dashboard-admin/*"
       element={
         <ProtectedRoute roles={[ROLE_ADMIN]}>
-          <AdminDashboard />
+          <Routes>
+            <Route path="/" element={<AdminDashboard />} />
+            <Route path="users-management" element={<UserManagement />} />
+          </Routes>
         </ProtectedRoute>
-      } 
+      }
     />
+    
     <Route 
       path="/dashboard-client" 
       element={

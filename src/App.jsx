@@ -18,9 +18,10 @@ function App() {
     if (location.pathname === '/signup') {
       return;
     }
-    if (token && role) {
+   if (token && role) {
       switch (role) {
         case ROLE_ADMIN:
+          if (location.pathname === '/dashboard-admin/users-management') return;
           navigate('/dashboard-admin');
           break;
         case ROLE_CLIENT:
