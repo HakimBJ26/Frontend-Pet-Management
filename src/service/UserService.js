@@ -36,13 +36,15 @@ class UserService {
     }
   }
 
-  static async UserProfile(token) {
+  static async updateUserProfile(token, updatedProfile) {
     try {
-      const response = await axiosInstance.get("adminuser/get-profile", {
-        headers: { Authorization: `Bearer ${token}` },});
-      console.log(localStorage.getItem("token"));
-      console.log(response.data);
+      const response = await axiosInstance.put(
+        "user/update-profile",
+        updatedProfile,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       return response.data;
+
     } catch (err) {
       throw err;
     }

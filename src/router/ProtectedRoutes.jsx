@@ -6,12 +6,14 @@ import AdminDashboard from "../pages/Dashboard/AdminDashboard";
 import ClientDashboard from "../pages/Dashboard/ClientDashboard";
 import VetoDashboard from "../pages/Dashboard/VetoDashboard";
 import ProtectedRoute from "./ProtectedRoute";
-import Profile from "../pages/Profile";
+import PetProfile from "../pages/PetProfile";
+import UserProfile from "../pages/UserProfile";
+import { ROUTES } from "../common/constants/ROUTES";
 
 const ProtectedRoutes = () => (
   <Routes>
     <Route
-      path="/dashboard-admin"
+      path={ROUTES.ADMIN_DASHBOARD}
       element={
         <ProtectedRoute roles={["admin"]}>
           <AdminDashboard />
@@ -19,7 +21,7 @@ const ProtectedRoutes = () => (
       }
     />
     <Route
-      path="/dashboard-client"
+      path={ROUTES.CLIENT_DASHBOARD}
       element={
         <ProtectedRoute roles={["client"]}>
           <ClientDashboard />
@@ -27,21 +29,29 @@ const ProtectedRoutes = () => (
       }
     />
     <Route
-      path="/dashboard-veterinarian"
+      path={ROUTES.VETERINARIAN_DASHBOARD}
       element={
         <ProtectedRoute roles={["veterinarian"]}>
           <VetoDashboard />
         </ProtectedRoute>
       }
     />
-    <Route path="/signin" element={<SignIn />} />
-    <Route path="/signup" element={<SignUp />} />
+    <Route path={ROUTES.SIGN_IN} element={<SignIn />} />
+    <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
 
     <Route
-      path="/dashboard-client/profile"
+      path={ROUTES.PET_PROFILE}
       element={
         <ProtectedRoute roles={["client"]}>
-          <Profile />
+          <PetProfile />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path={ROUTES.USER_PROFILE}
+      element={
+        <ProtectedRoute roles={["client"]}>
+          <UserProfile />
         </ProtectedRoute>
       }
     />
