@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserService from '../../service/UserService'
+import { SIGN_IN_PATH } from '../../common/configuration/constants/Paths'
 
 function ClientDashboard() {
   const navigate = useNavigate()
@@ -10,7 +10,7 @@ function ClientDashboard() {
       <h1> Clinet Dashboard</h1>
       <Button variant='countined'  sx={{ mt: 3, mb: 2 }} title='logout'  onClick={()=>{
  UserService.logout()
- navigate('/signin')
+ navigate(SIGN_IN_PATH)
   }
    
 }

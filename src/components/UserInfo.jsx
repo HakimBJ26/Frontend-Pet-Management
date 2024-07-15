@@ -1,41 +1,34 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Button, TextField, Typography, Box, Paper } from '@mui/material';
 import UserService from '../service/UserService';
 import { getAuthInfo } from '../utils/authCred';
-import CustomToast from './CustomToast';
+import useToast from '../hooks/useToast';
+import { ERROR_UPDATE_TOAST, SUCCESS_UPDATE_TOAST } from '../common/configuration/constants/ToastConfig';
 
 
 function UserInfo({ user }) {
   const [data, setData] = useState(user);
-  const [toastMessage, setToastMessage] = useState('');
-  const [severity,setSeverity]= useState('')
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+  const {showToast}= useToast()
   const handleUpdate = async() => {
   
 
 
-
     try {
+      const token = getAuthInfo().token
         await  UserService.updateUser(data.id, {
             name: data.name,
             email: data.email,
             role: data.role,
-          }, getAuthInfo().token);
-          setToastMessage("user Updated it successfully");
-        setSnackbarOpen(true);
-        setSeverity('success')
+          },token );
+          showToast(SUCCESS_UPDATE_TOAST)
+       
       } catch (error) {
-        setSeverity('error')
-        setToastMessage(error.response ? error.response.data : error.message);
+        showToast(ERROR_UPDATE_TOAST)
         console.error('Error Updating user:', error);
       }
   };
 
 
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
 
   return (
     <Paper elevation={3} sx={{ padding: 2, maxWidth: 400, margin: 'auto', mt: 5 }}>
@@ -79,12 +72,6 @@ function UserInfo({ user }) {
       <Button variant="contained" color="primary" onClick={handleUpdate}>
         Update
       </Button>
-      <CustomToast
-        open={snackbarOpen}
-        onClose={handleSnackbarClose}
-        message={toastMessage}
-        severity={severity}
-      />
 
     </Paper>
   );

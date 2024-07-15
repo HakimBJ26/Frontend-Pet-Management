@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
@@ -7,6 +7,8 @@ import ProtectedRoutes from './router/ProtectedRoutes';
 import { getAuthInfo } from './utils/authCred';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from './common/configuration/constants/UserRole';
+import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_IN_PATH, SIGN_UP_PATH, USER_MANAGEMENT_PATH, VETO_DASH_PATH } from './common/configuration/constants/Paths';
+import { Toaster } from 'sonner';
 
 function App() {
   const [colorMode, theme] = useMode();
@@ -15,27 +17,27 @@ function App() {
 
   useEffect(() => {
     const { token, role } = getAuthInfo();
-    if (location.pathname === '/signup') {
+    if (location.pathname === SIGN_UP_PATH) {
       return;
     }
    if (token && role) {
       switch (role) {
         case ROLE_ADMIN:
-          if (location.pathname === '/dashboard-admin/users-management') return;
-          navigate('/dashboard-admin');
+          if (location.pathname === `${ADMIN_DASH_PATH}${USER_MANAGEMENT_PATH}`) return;
+          navigate(ADMIN_DASH_PATH);
           break;
         case ROLE_CLIENT:
-          navigate('/dashboard-client');
+          navigate(CLIENT_DASH_PATH);
           break;
         case ROLE_VETO:
-          navigate('/dashboard-veterinarian');
+          navigate(VETO_DASH_PATH);
           break;
         default:
-          navigate('/signin');
+          navigate(SIGN_IN_PATH);
           break;
       }
     } else {
-      navigate('/signin');
+      navigate(SIGN_IN_PATH);
     }
   }, [navigate,location.pathname]);
 
@@ -47,6 +49,7 @@ function App() {
           <div className="app">
             <main className="content">
               <ProtectedRoutes />
+              <Toaster expand visibleToasts={9} />
             </main>
           </div>
         </ThemeProvider>

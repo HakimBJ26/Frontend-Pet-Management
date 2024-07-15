@@ -12,20 +12,20 @@ import {  useTheme } from '@mui/material';
 import UserService from '../service/UserService';
 import StyledBox from '../components/StyledBox';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
-import CustomToast from '../components/CustomToast';
+import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH} from '../common/configuration/constants/Paths';
+import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig';
+import useToast from '../hooks/useToast';
 
 export default function SignIn() {
  const theme = useTheme()
  const navigate=useNavigate()
   const colors = tokens(theme.palette.mode);
-  const [toastMessage, setToastMessage] = useState('');
-  const [severity,setSeverity]= useState('')
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
+  const {showToast}= useToast()
 
   const [errors, setErrors] = useState({});
 
@@ -45,34 +45,30 @@ export default function SignIn() {
     return Object.values(tempErrors).every(x => x === '');
   };
 
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validate()) {
+    const validated= validate()
+    if (validated) {
     const userData=  await UserService.login(formData.email,formData.password)
   
-    setSnackbarOpen(true)
       if (userData.token) {
           localStorage.setItem('token', userData.token)
           localStorage.setItem('role', userData.role)
-          setSeverity('success')
-          setToastMessage('SignIN performed successfully')
+          showToast(SUCCESS_LOGIN_TOAST);
           setTimeout(()=>{
             if(userData.role===ROLE_ADMIN){
-              navigate('/dashboard-admin')
+              navigate(ADMIN_DASH_PATH)
           }else if(userData.role===ROLE_CLIENT){
-            navigate('/dashboard-client')   
+            navigate(CLIENT_DASH_PATH)   
           }else if(userData.role===ROLE_VETO){
-            navigate('/dashboard-veterinarian')
+            navigate(VETO_DASH_PATH)
           }
           }, 2000);
        
       }else{
-        setSeverity('error')
-        setToastMessage(userData.message)
+        showToast(ERROR_LOGIN_TOAST);
       }
     }
   };
@@ -131,18 +127,13 @@ export default function SignIn() {
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link style={{ color: colors.primary[400] }} to="/signup">
+            <Link style={{ color: colors.primary[400] }} to={SIGN_UP_PATH}>
               <h3>Don't have an account? Sign Up</h3>
             </Link>
           </Grid>
         </Grid>
       </Box>
-      <CustomToast
-        open={snackbarOpen}
-        onClose={handleSnackbarClose}
-        message={toastMessage}
-        severity={severity}
-      />
+    
     </StyledBox>
   );
 }

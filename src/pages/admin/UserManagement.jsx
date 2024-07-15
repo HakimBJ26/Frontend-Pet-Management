@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserInfo from '../../components/UserInfo';
 import UserService from '../../service/UserService';
 import { Box, Typography } from '@mui/material';
 import SearchBar from '../../components/SearchBar';
 import StyledBox from '../../components/StyledBox';
+import { getAuthInfo } from '../../utils/authCred';
 
 
 function UserManagement() {
@@ -12,10 +13,11 @@ function UserManagement() {
 
 
   useEffect(() => {
-    UserService.getAllUsers(localStorage.getItem('token')).then(res => {
+    const token = getAuthInfo().token
+    UserService.getAllUsers(token).then(res => {
       setUsers(res.ourUsersList);
     });
-  }, [users]);
+  }, []);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
