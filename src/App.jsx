@@ -1,37 +1,45 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import AuthContextProvider from './context/AuthContext';
 import ProtectedRoutes from './router/ProtectedRoutes';
 import { getAuthInfo } from './utils/authCred';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from './common/configuration/constants/UserRole';
+import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_IN_PATH, SIGN_UP_PATH, USER_MANAGEMENT_PATH, VETO_DASH_PATH } from './common/configuration/constants/Paths';
+import { Toaster } from 'sonner';
 
 function App() {
   const [colorMode, theme] = useMode();
   const navigate = useNavigate()
+  const location = useLocation();
+
   useEffect(() => {
     const { token, role } = getAuthInfo();
-
-    if (token && role) {
+    if (location.pathname === SIGN_UP_PATH) {
+      return;
+    }
+   if (token && role) {
       switch (role) {
-        case 'admin':
-          navigate('/dashboard-admin');
+        case ROLE_ADMIN:
+          if (location.pathname === `${ADMIN_DASH_PATH}${USER_MANAGEMENT_PATH}`) return;
+          navigate(ADMIN_DASH_PATH);
           break;
-        case 'client':
-          navigate('/dashboard-client');
+        case ROLE_CLIENT:
+          navigate(CLIENT_DASH_PATH);
           break;
-        case 'veterinarian':
-          navigate('/dashboard-veterinarian');
+        case ROLE_VETO:
+          navigate(VETO_DASH_PATH);
           break;
         default:
-          navigate('/signin');
+          navigate(SIGN_IN_PATH);
           break;
       }
     } else {
-      navigate('/signin');
+      navigate(SIGN_IN_PATH);
     }
-  }, [navigate]);
+  }, [navigate,location.pathname]);
 
   return (
     <AuthContextProvider>
@@ -41,6 +49,7 @@ function App() {
           <div className="app">
             <main className="content">
               <ProtectedRoutes />
+              <Toaster expand visibleToasts={9} />
             </main>
           </div>
         </ThemeProvider>

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTheme } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -14,14 +13,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import PetsIcon from '@mui/icons-material/Pets';
 import UserService from '../service/UserService';
 import { tokens } from '../theme';
-import Alert from '@mui/material/Alert';
-import StyledBox from '../components/StyledBox/StyledBox';
+import StyledBox from '../components/StyledBox';
+import { ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
+import CustomTextField from '../components/CustomTextField';
+import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsName';
+import { SIGN_IN_PATH } from '../common/configuration/constants/Paths';
+import { ERROR_SIGN_UP_TOAST, SUCCESS_SIGN_UP_TOAST } from '../common/configuration/constants/ToastConfig';
+import useToast from '../hooks/useToast';
 
 export default function SignUp() {
-  const theme = useTheme()
-  const colors = tokens(theme.palette.mode)
-  const navigate=useNavigate()
-  const [error,setError]=useState('')
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const {showToast}= useToast()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -49,7 +53,11 @@ export default function SignUp() {
   const validate = () => {
     let tempErrors = {};
     tempErrors.name = formData.name ? '' : 'Name is required';
-    tempErrors.email = formData.email ? (/\S+@\S+\.\S+/.test(formData.email) ? '' : 'Email is not valid') : 'Email is required';
+    tempErrors.email = formData.email
+      ? /\S+@\S+\.\S+/.test(formData.email)
+        ? ''
+        : 'Email is not valid'
+      : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.role = formData.role ? '' : 'Role is required';
     setErrors(tempErrors);
@@ -58,24 +66,30 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validate()) {
+    const validated = validate()
+    if (validated) {
       try {
-      await UserService.register(formData);
-     
-       navigate('/signin')   
-      
-     
+        await UserService.register(formData);
+        setTimeout(() =>{ navigate(SIGN_IN_PATH)
+        showToast(SUCCESS_SIGN_UP_TOAST)
+        }, 2000);
       } catch (error) {
-        setError(error)
-        console.error('Error registering user:', error.response ? error.response.data : error.message);
+        showToast(ERROR_SIGN_UP_TOAST)
+        console.error('Error registering user:', error);
       }
     }
   };
 
+
+  const fields = SIGN_UP_FIELDS.map(field => ({
+    ...field,
+    value: formData[field.name],
+    error: errors[field.name],
+    helperText: errors[field.name],
+  }));
+
   return (
-    <StyledBox
-    
-    >
+    <StyledBox>
       <Typography variant="h1">PETAGORA</Typography>
       <Divider variant="middle" sx={{ mb: 3 }} />
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -84,50 +98,23 @@ export default function SignUp() {
       <Typography component="h1" variant="h5">Sign up</Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              autoComplete="given-name"
-              name="name"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              autoFocus
-              value={formData.name}
-              onChange={handleChange}
-              error={!!errors.name}
-              helperText={errors.name}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={!!errors.email}
-              helperText={errors.email}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              value={formData.password}
-              onChange={handleChange}
-              error={!!errors.password}
-              helperText={errors.password}
-            />
-          </Grid>
+          {fields.map((field) => (
+            <Grid item xs={12} key={field.id}>
+              <CustomTextField
+                autoComplete={field.autoComplete}
+                name={field.name}
+                required
+                fullWidth
+                id={field.id}
+                label={field.label}
+                type={field.type}
+                value={field.value}
+                onChange={handleChange}
+                error={!!field.error}
+                helperText={field.helperText}
+              />
+            </Grid>
+          ))}
           <Grid item xs={12}>
             <FormGroup>
               <Typography variant="subtitle1">Select Role</Typography>
@@ -135,8 +122,8 @@ export default function SignUp() {
                 control={
                   <Checkbox
                     name="role"
-                    value="client"
-                    checked={formData.role === 'client'}
+                    value={ROLE_CLIENT}
+                    checked={formData.role === ROLE_CLIENT}
                     onChange={handleChange}
                   />
                 }
@@ -146,8 +133,8 @@ export default function SignUp() {
                 control={
                   <Checkbox
                     name="role"
-                    value="veterinarian"
-                    checked={formData.role === 'veterinarian'}
+                    value={ROLE_VETO}
+                    checked={formData.role === ROLE_VETO}
                     onChange={handleChange}
                   />
                 }
@@ -161,23 +148,12 @@ export default function SignUp() {
             )}
           </Grid>
         </Grid>
-      
-
-
-      <Grid item xs={12}>
-  {error && (
-    <Alert severity="error" sx={{ mt: 2, mb: 2 }}>
-      {error}
-    </Alert>
-  )}
-        </Grid>
-
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
           Sign Up
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link style={{ color: colors.primary[400] }} to="/signin">
+            <Link style={{ color: colors.primary[400] }} to={SIGN_IN_PATH}>
               <h3>Already have an account? Sign in</h3>
             </Link>
           </Grid>
