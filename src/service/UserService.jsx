@@ -1,4 +1,5 @@
 import axiosInstance from "../common/configuration/ApiClient";
+import { ROLE_ADMIN, ROLE_CLIENT } from "../common/configuration/constants/UserRole";
 
 class UserService{
    
@@ -32,17 +33,41 @@ class UserService{
 
     static isAdmin(){
         const role = localStorage.getItem('role')
-        return role === 'ADMIN'
+        return role === ROLE_ADMIN
     }
 
     static isUser(){
         const role = localStorage.getItem('role')
-        return role === 'USER'
+        return role === ROLE_CLIENT
     }
 
     static logout(){
         localStorage.removeItem('token')
         localStorage.removeItem('role')
+    }
+
+    static async getAllUsers(token){
+        try{
+            const response = await axiosInstance.get('/admin/get-all-users', 
+            {
+                headers: {Authorization: `Bearer ${token}`}
+            })
+            return response.data;
+        }catch(err){
+            throw err;
+        }
+    }
+
+    static async updateUser(userId, userData, token){
+        try{
+            const response = await axiosInstance.put(`/admin/update/${userId}`, userData,
+            {
+                headers: {Authorization: `Bearer ${token}`}
+            })
+            return response.data;
+        }catch(err){
+            throw err;
+        }
     }
   
 
