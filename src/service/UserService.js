@@ -39,8 +39,7 @@ class UserService {
   static async UserProfile(token) {
     try {
       const response = await axiosInstance.get("adminuser/get-profile", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+        headers: { Authorization: `Bearer ${token}` },});
       console.log(localStorage.getItem("token"));
       console.log(response.data);
       return response.data;
