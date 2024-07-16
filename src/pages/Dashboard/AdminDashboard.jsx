@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import UserService from '../../service/UserService'
-import { ADMIN_DASH_PATH, SIGN_IN_PATH, USER_MANAGEMENT_PATH } from '../../common/configuration/constants/Paths'
+import { ADMIN_DASH_PATH, PET_SHOP_MANAGEMENET_PATH, SIGN_IN_PATH, USER_MANAGEMENT_PATH } from '../../common/configuration/constants/Paths'
 
 
 function Dashboard() {
@@ -17,6 +17,14 @@ function Dashboard() {
    
 }
  >USer management</Button>
+
+<Button variant='countined'  sx={{ mt: 3, mb: 2 }} title='logout'  onClick={()=>{
+
+navigate(`${ADMIN_DASH_PATH}${PET_SHOP_MANAGEMENET_PATH}`)
+ }
+  
+}
+>Pet shop managemenet</Button>
 
   <Button variant='countined'  sx={{ mt: 3, mb: 2 }} title='logout'  onClick={()=>{
  UserService.logout()

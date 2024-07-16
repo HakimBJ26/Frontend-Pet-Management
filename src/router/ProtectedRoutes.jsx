@@ -13,8 +13,10 @@ import {
   ADMIN_DASH_PATH, 
   CLIENT_DASH_PATH, 
   VETO_DASH_PATH, 
-  USER_MANAGEMENT_PATH 
+  USER_MANAGEMENT_PATH, 
+  PET_SHOP_MANAGEMENET_PATH
 } from '../common/configuration/constants/Paths';
+import PetShopManagement from '../pages/admin/PetShopManagement';
 
 const ProtectedRoutes = () => (
   <Routes>
@@ -25,6 +27,7 @@ const ProtectedRoutes = () => (
           <Routes>
             <Route path="/" element={<AdminDashboard />} />
             <Route path={USER_MANAGEMENT_PATH} element={<UserManagement />} />
+            <Route path={PET_SHOP_MANAGEMENET_PATH} element={<PetShopManagement />} />
           </Routes>
         </ProtectedRoute>
       }

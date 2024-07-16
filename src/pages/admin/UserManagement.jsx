@@ -41,7 +41,7 @@ function UserManagement() {
         </Box>
       </div>
       {filteredUsers.map(user => (
-        <UserInfo key={user.id} user={user} />
+        <UserInfo placeHolder="Search User By ID" key={user.id} user={user} />
       ))}
     
     </StyledBox>
