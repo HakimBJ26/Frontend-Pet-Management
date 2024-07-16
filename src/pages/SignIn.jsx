@@ -8,19 +8,24 @@ import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
 import { tokens } from '../theme';
 import { useState } from 'react';
-import { Alert, useTheme } from '@mui/material';
+import {  useTheme } from '@mui/material';
 import UserService from '../service/UserService';
-import StyledBox from '../components/StyledBox/StyledBox';
+import StyledBox from '../components/StyledBox';
+import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
+import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH} from '../common/configuration/constants/Paths';
+import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig';
+import useToast from '../hooks/useToast';
 
 export default function SignIn() {
  const theme = useTheme()
  const navigate=useNavigate()
- const [error,setError]=useState('')
   const colors = tokens(theme.palette.mode);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  const {showToast}= useToast()
 
   const [errors, setErrors] = useState({});
 
@@ -40,24 +45,30 @@ export default function SignIn() {
     return Object.values(tempErrors).every(x => x === '');
   };
 
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validate()) {
+    const validated= validate()
+    if (validated) {
     const userData=  await UserService.login(formData.email,formData.password)
   
-    
       if (userData.token) {
           localStorage.setItem('token', userData.token)
           localStorage.setItem('role', userData.role)
-          if(userData.role.toUpperCase()==='ADMIN'){
-              navigate('/dashboard-admin')
-          }else if(userData.role.toUpperCase()==='CLIENT'){
-            navigate('/dashboard-client')   
-          }else if(userData.role.toUpperCase()==='VETERINARIAN'){
-            navigate('/dashboard-veterinarian')
+          showToast(SUCCESS_LOGIN_TOAST);
+          setTimeout(()=>{
+            if(userData.role===ROLE_ADMIN){
+              navigate(ADMIN_DASH_PATH)
+          }else if(userData.role===ROLE_CLIENT){
+            navigate(CLIENT_DASH_PATH)   
+          }else if(userData.role===ROLE_VETO){
+            navigate(VETO_DASH_PATH)
           }
+          }, 2000);
+       
       }else{
-        setError(userData.message)
+        showToast(ERROR_LOGIN_TOAST);
       }
     }
   };
@@ -106,13 +117,6 @@ export default function SignIn() {
             />
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-  {error && (
-    <Alert severity="error" sx={{ mt: 2, mb: 2 }}>
-      {error}
-    </Alert>
-  )}
-        </Grid>
         <Button
           type="submit"
           fullWidth
@@ -123,12 +127,13 @@ export default function SignIn() {
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link style={{ color: colors.primary[400] }} to="/signup">
+            <Link style={{ color: colors.primary[400] }} to={SIGN_UP_PATH}>
               <h3>Don't have an account? Sign Up</h3>
             </Link>
           </Grid>
         </Grid>
       </Box>
+    
     </StyledBox>
   );
 }
