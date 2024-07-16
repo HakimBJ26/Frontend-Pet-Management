@@ -13,12 +13,16 @@ import {
   ADMIN_DASH_PATH, 
   CLIENT_DASH_PATH, 
   VETO_DASH_PATH, 
-  USER_MANAGEMENT_PATH 
+  USER_MANAGEMENT_PATH, 
+  PET_PROFILE,
+  USER_PROFILE
 } from '../common/configuration/constants/Paths';
+import PetProfile from "../pages/PetProfile";
+import UserProfile from "../pages/UserProfile";
 
 const ProtectedRoutes = () => (
   <Routes>
-    <Route 
+    <Route
       path={`${ADMIN_DASH_PATH}/*`}
       element={
         <ProtectedRoute roles={[ROLE_ADMIN]}>
@@ -29,22 +33,31 @@ const ProtectedRoutes = () => (
         </ProtectedRoute>
       }
     />
-    <Route 
-      path={CLIENT_DASH_PATH} 
+
+    <Route
+      path={`${CLIENT_DASH_PATH}/*`}
       element={
         <ProtectedRoute roles={[ROLE_CLIENT]}>
-          <ClientDashboard />
+          <Routes>
+            <Route path="/" element={<ClientDashboard />} />
+            <Route path={USER_PROFILE} element={<UserProfile />} />
+            <Route path={PET_PROFILE} element={<PetProfile />} />
+          </Routes>
         </ProtectedRoute>
-      } 
+      }
     />
-    <Route 
-      path={VETO_DASH_PATH} 
+
+    <Route
+      path={VETO_DASH_PATH}
       element={
         <ProtectedRoute roles={[ROLE_VETO]}>
           <VetoDashboard />
         </ProtectedRoute>
-      } 
+      }
     />
+    <Route path={SIGN_IN_PATH} element={<SignIn />} />
+    <Route path={SIGN_UP_PATH} element={<SignUp />} />
+
     <Route path={SIGN_IN_PATH} element={<SignIn />} />
     <Route path={SIGN_UP_PATH} element={<SignUp />} />
   </Routes>
