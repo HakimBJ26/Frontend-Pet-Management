@@ -1,10 +1,19 @@
 import axiosInstance from "../common/configuration/ApiClient";
-import { ROLE_ADMIN, ROLE_CLIENT } from "../common/configuration/constants/UserRole";
+import {
+  GET_PROFILE_API,
+  LOGIN_API,
+  REGISTER_API,
+  UPDATE_PROFILE_API,
+} from "../common/configuration/constants/PathBack";
+import {
+  ROLE_ADMIN,
+  ROLE_CLIENT,
+} from "../common/configuration/constants/UserRole";
 
 class UserService {
   static async login(email, password) {
     try {
-      const response = await axiosInstance.post("/auth/login", {
+      const response = await axiosInstance.post(LOGIN_API, {
         email,
         password,
       });
@@ -17,7 +26,7 @@ class UserService {
 
   static async register(userData) {
     try {
-      const response = await axiosInstance.post("/auth/register", userData, {});
+      const response = await axiosInstance.post(REGISTER_API, userData, {});
       return response.data;
     } catch (err) {
       throw err;
@@ -26,7 +35,7 @@ class UserService {
 
   static async getUserProfile(token) {
     try {
-      const response = await axiosInstance.get("adminuser/get-profile", {
+      const response = await axiosInstance.get(GET_PROFILE_API, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log(localStorage.getItem("token"));
@@ -40,20 +49,15 @@ class UserService {
   static async updateUserProfile(token, updatedProfile) {
     try {
       const response = await axiosInstance.put(
-        "user/update-profile",
+        UPDATE_PROFILE_API,
         updatedProfile,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return response.data;
-
     } catch (err) {
       throw err;
     }
   }
-
-   
-
-
 
   static isAuthenticated() {
     const token = localStorage.getItem("token");
@@ -64,37 +68,37 @@ class UserService {
     const role = localStorage.getItem("role");
     return role === "ADMIN";
   }
-  
 
-    static logout(){
-        localStorage.removeItem('token')
-        localStorage.removeItem('role')
+  static logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+  }
+
+  static async getAllUsers(token) {
+    try {
+      const response = await axiosInstance.get("/admin/get-all-users", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (err) {
+      throw err;
     }
+  }
 
-    static async getAllUsers(token){
-        try{
-            const response = await axiosInstance.get('/admin/get-all-users', 
-            {
-                headers: {Authorization: `Bearer ${token}`}
-            })
-            return response.data;
-        }catch(err){
-            throw err;
+  static async updateUser(userId, userData, token) {
+    try {
+      const response = await axiosInstance.put(
+        `/admin/update/${userId}`,
+        userData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
         }
+      );
+      return response.data;
+    } catch (err) {
+      throw err;
     }
-
-    static async updateUser(userId, userData, token){
-        try{
-            const response = await axiosInstance.put(`/admin/update/${userId}`, userData,
-            {
-                headers: {Authorization: `Bearer ${token}`}
-            })
-            return response.data;
-        }catch(err){
-            throw err;
-        }
-    }
-  
+  }
 
   static isUser() {
     const role = localStorage.getItem("role");
@@ -105,6 +109,5 @@ class UserService {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
   }
-
 }
 export default UserService;
