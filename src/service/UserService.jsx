@@ -2,7 +2,7 @@ import { axiosInstance, axiosPrivate } from '../common/configuration/ApiAuth';
 import {
   GET_PROFILE_API,
   LOGIN_API,
-  REFRESH_TOKEN_API,
+
   REGISTER_API,
   UPDATE_PROFILE_API,
 } from "../common/configuration/constants/PathBack";
@@ -106,5 +106,4 @@ class UserService {
     localStorage.removeItem("role");
   }
 }
-
 export default UserService;

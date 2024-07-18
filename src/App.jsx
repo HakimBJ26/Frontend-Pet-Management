@@ -1,69 +1,76 @@
-import {  useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import AuthContextProvider from './context/AuthContext';
 import ProtectedRoutes from './router/ProtectedRoutes';
-import { getAuthInfo } from './utils/authCred';
+import { getAuthInfo, shouldShowSideBar, shouldShowTopBar } from './utils/authCred';
 import { useLocation, useNavigate } from 'react-router-dom';
+import SideBar from './components/global/SideBar';
+import TopBar from './components/global/Topbar';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from './common/configuration/constants/UserRole';
-import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, PET_PROFILE, PET_SHOP_MANAGEMENET_PATH, SIGN_IN_PATH, SIGN_UP_PATH, USER_MANAGEMENT_PATH, USER_PROFILE, VETO_DASH_PATH } from './common/configuration/constants/Paths';
 import { Toaster } from 'sonner';
-import {  useCookies } from 'react-cookie';
-import UserService from './service/UserService';
-
-
+import {
+  CLIENT_DASH_PATH, VETO_DASH_PATH, SIGN_IN_PATH, SIGN_UP_PATH,
+  ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,
+  DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH,
+  HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
+  SET_ACTIVITY_GOALS_PATH,
+  ADMIN_DASH_PATH, USER_MANAGEMENT_PATH,
+  VETO_NOTIFICATIONS_PATH,
+  VETO_UPDATE_NOTES_PATH,
+  VETO_UPDATE_TREATMENT_PATH,
+  USER_PROFILE,
+  PET_PROFILE,
+  PET_SHOP_MANAGEMENT
+} from './common/configuration/constants/Paths';
 
 function App() {
   const [colorMode, theme] = useMode();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
-  const [cookies, setCookie, removeCookie] = useCookies('jwt');
-
-
-console.log(cookies)
-useEffect(() => {
-  const updateUserProfile = async () => {
-    try {
-      // Update the user profile
-      const response = await UserService.updateUser({
-        name: 'aymen',
-        email: 'aymen@gmail.com',
-      });
-
-      console.log('User profile updated:', response);
-    } catch (error) {
-      console.error('Error updating user profile:', error);
-    }
-  };
-
-  updateUserProfile();
-}, []);
-
-
 
   useEffect(() => {
-    const { token, role } ={"token":"44", "role":"admin"};
+    const {role } = getAuthInfo();
+    
     if (location.pathname === SIGN_UP_PATH) {
       return;
     }
-   if (token && role) {
+    if (role) {
       switch (role) {
-        case ROLE_ADMIN:
-          if (location.pathname === `${ADMIN_DASH_PATH}${USER_MANAGEMENT_PATH}`) return;
-          if (location.pathname === `${ADMIN_DASH_PATH}${PET_SHOP_MANAGEMENET_PATH}`) return;
-          navigate(ADMIN_DASH_PATH);
+        case ROLE_ADMIN: {
+          const adminpaths = [
+            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT
+          ];
+          if (adminpaths.some(path => location.pathname === `${ADMIN_DASH_PATH}${path}`)) {
+            return;
+          }
+          navigate(`${ADMIN_DASH_PATH}`);
           break;
-        case ROLE_CLIENT:
-           if (location.pathname === `${CLIENT_DASH_PATH}${USER_PROFILE}`) 
-      return;
-      if (location.pathname === `${CLIENT_DASH_PATH}${PET_PROFILE}`) 
-      return;
-          navigate(CLIENT_DASH_PATH);
+        }
+        case ROLE_CLIENT: {
+          const clientPaths = [
+            GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
+            COMMUNITY_PATH, USER_PROFILE, DEFINE_SAFE_ZONE_PATH,
+            HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE
+          ];
+          if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
+            return;
+          }
+          navigate(`${CLIENT_DASH_PATH}`);
           break;
-        case ROLE_VETO:
-          navigate(VETO_DASH_PATH);
+        }
+        case ROLE_VETO: {
+          const vetoPaths = [
+            VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH
+          ];
+          if (vetoPaths.some(path => location.pathname === `${VETO_DASH_PATH}${path}`)) {
+            return;
+          }
+          navigate(`${VETO_DASH_PATH}`);
           break;
+        }
         default:
           navigate(SIGN_IN_PATH);
           break;
@@ -71,15 +78,16 @@ useEffect(() => {
     } else {
       navigate(SIGN_IN_PATH);
     }
-  }, [navigate,location.pathname]);
+  }, [navigate, location.pathname]);
 
   return (
     <AuthContextProvider>
-    
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <div className="app">
+            {shouldShowSideBar(location.pathname) && <SideBar />}
+            {shouldShowTopBar(location.pathname) && <TopBar />}
             <main className="content">
               <ProtectedRoutes />
               <Toaster expand visibleToasts={9} />
@@ -87,7 +95,6 @@ useEffect(() => {
           </div>
         </ThemeProvider>
       </ColorModeContext.Provider>
-  
     </AuthContextProvider>
   );
 }

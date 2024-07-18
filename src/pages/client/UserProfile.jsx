@@ -8,8 +8,8 @@ import {
   Typography,
   Dialog,
   DialogActions,
-  DialogContent
- 
+  DialogContent,
+  DialogTitle,
 } from "@mui/material";
 import UserService from "../service/UserService";
 import UpdateProfileForm from "../components/forms/UpdateProfileForm";

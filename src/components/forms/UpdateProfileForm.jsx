@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Avatar, Button, TextField, Typography, Box } from "@mui/material";
+import UserService from "../../service/UserService";
 
 const UpdateProfileForm = (props) => {
   const [formData, setFormData] = useState({
@@ -15,12 +16,12 @@ const UpdateProfileForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-   /*   const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (token) {
         await UserService.updateUserProfile(token, formData);
         props.setProfileData(formData);
         props.handleClose();
-      } */
+      }
     } catch (error) {
       console.error("Error updating profile:", error);
     }

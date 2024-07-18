@@ -1,3 +1,3 @@
-export const ROLE_ADMIN ='admin'
-export const ROLE_CLIENT ='client'
-export const ROLE_VETO ='veterinarian'
+export const ROLE_ADMIN ='ADMIN'
+export const ROLE_CLIENT ='CLIENT'
+export const ROLE_VETO ='VETERINARIAN'
