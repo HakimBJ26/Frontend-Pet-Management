@@ -24,12 +24,13 @@ import useToast from '../hooks/useToast';
 export default function SignUp() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const {showToast}= useToast()
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
+    city: '', // Added city field
     role: '',
   });
 
@@ -59,6 +60,7 @@ export default function SignUp() {
         : 'Email is not valid'
       : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
+    tempErrors.city = formData.city ? '' : 'City is required'; // Added city validation
     tempErrors.role = formData.role ? '' : 'Role is required';
     setErrors(tempErrors);
     return Object.values(tempErrors).every((x) => x === '');
@@ -66,22 +68,22 @@ export default function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const validated = validate()
+    const validated = validate();
     if (validated) {
       try {
         await UserService.register(formData);
-        setTimeout(() =>{ navigate(SIGN_IN_PATH)
-        showToast(SUCCESS_SIGN_UP_TOAST)
+        setTimeout(() => {
+          navigate(SIGN_IN_PATH);
+          showToast(SUCCESS_SIGN_UP_TOAST);
         }, 2000);
       } catch (error) {
-        showToast(ERROR_SIGN_UP_TOAST)
+        showToast(ERROR_SIGN_UP_TOAST);
         console.error('Error registering user:', error);
       }
     }
   };
 
-
-  const fields = SIGN_UP_FIELDS.map(field => ({
+  const fields = SIGN_UP_FIELDS.map((field) => ({
     ...field,
     value: formData[field.name],
     error: errors[field.name],
@@ -95,7 +97,9 @@ export default function SignUp() {
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <PetsIcon />
       </Avatar>
-      <Typography component="h1" variant="h5">Sign up</Typography>
+      <Typography component="h1" variant="h5">
+        Sign up
+      </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           {fields.map((field) => (

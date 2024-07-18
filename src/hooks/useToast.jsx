@@ -5,7 +5,7 @@ const useToast = () => {
     toast(config.message, {
       type: config.type,
       duration: config.duration,
-      style: config.style, // Include style attribute for custom styling
+      style: config.style, 
     });
   };
 

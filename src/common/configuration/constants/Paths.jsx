@@ -5,3 +5,5 @@ export const USER_MANAGEMENT_PATH = '/users_management';
 export const CLIENT_DASH_PATH = '/dashboard_client';
 export const VETO_DASH_PATH = '/dashboard_veterinarian';
 export const PET_SHOP_MANAGEMENET_PATH = '/pet_shop_management';
+export const PET_PROFILE= '/pet-profile/:id';
+export const USER_PROFILE = '/profile';

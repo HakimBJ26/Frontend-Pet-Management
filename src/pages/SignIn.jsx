@@ -15,6 +15,7 @@ import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/cons
 import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH} from '../common/configuration/constants/Paths';
 import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
+import useAuth from '../hooks/useAuth';
 
 export default function SignIn() {
  const theme = useTheme()
@@ -26,6 +27,7 @@ export default function SignIn() {
   });
 
   const {showToast}= useToast()
+  const { setCurrentUser } = useAuth();
 
   const [errors, setErrors] = useState({});
 
@@ -51,11 +53,10 @@ export default function SignIn() {
     event.preventDefault();
     const validated= validate()
     if (validated) {
+      try {
     const userData=  await UserService.login(formData.email,formData.password)
-  
+  setCurrentUser(userData)
       if (userData.token) {
-          localStorage.setItem('token', userData.token)
-          localStorage.setItem('role', userData.role)
           showToast(SUCCESS_LOGIN_TOAST);
           setTimeout(()=>{
             if(userData.role===ROLE_ADMIN){
@@ -66,10 +67,12 @@ export default function SignIn() {
             navigate(VETO_DASH_PATH)
           }
           }, 2000);
-       
-      }else{
-        showToast(ERROR_LOGIN_TOAST);
-      }
+        }
+      }catch(error){
+          showToast(ERROR_LOGIN_TOAST);
+          console.error('Error login user:', error);
+        }
+    
     }
   };
 
