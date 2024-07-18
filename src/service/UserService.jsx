@@ -5,10 +5,7 @@ import {
   REGISTER_API,
   UPDATE_PROFILE_API,
 } from "../common/configuration/constants/PathBack";
-import {
-  ROLE_ADMIN,
-  ROLE_CLIENT,
-} from "../common/configuration/constants/UserRole";
+
 
 class UserService {
   static async login(email, password) {
@@ -69,10 +66,7 @@ class UserService {
     return role === "ADMIN";
   }
 
-  static logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-  }
+
 
   static async getAllUsers(token) {
     try {
