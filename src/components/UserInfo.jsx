@@ -1,7 +1,6 @@
 import  { useState } from 'react';
 import { Button, TextField, Typography, Box, Paper } from '@mui/material';
 import UserService from '../service/UserService';
-import { getAuthInfo } from '../utils/authCred';
 import useToast from '../hooks/useToast';
 import { ERROR_UPDATE_TOAST, SUCCESS_UPDATE_TOAST } from '../common/configuration/constants/ToastConfig';
 
@@ -10,22 +9,41 @@ function UserInfo({ user }) {
   const [data, setData] = useState(user);
   const {showToast}= useToast()
   const handleUpdate = async() => {
+  const idAdmin = localStorage.getItem('id') ;
+
+
   
-
-
-    try {
-      const token = getAuthInfo().token
-        await  UserService.updateUser(data.id, {
-            name: data.name,
-            email: data.email,
-            role: data.role,
-          },token );
-          showToast(SUCCESS_UPDATE_TOAST)
-       
-      } catch (error) {
-        showToast(ERROR_UPDATE_TOAST)
-        console.error('Error Updating user:', error);
+      
+      if(idAdmin==data.id){
+        try {
+          await  UserService.updateUserProfile({
+              name: data.name,
+              email: data.email,
+              role: data.role,
+            } );
+            showToast(SUCCESS_UPDATE_TOAST)
+         
+        } catch (error) {
+          showToast(ERROR_UPDATE_TOAST)
+          console.error('Error Updating user:', error);
+        }
       }
+      else{
+
+        try {
+          await  UserService.updateUser( data.id,{
+              name: data.name,
+              email: data.email,
+              role: data.role,
+            } );
+            showToast(SUCCESS_UPDATE_TOAST)
+         
+        } catch (error) {
+          showToast(ERROR_UPDATE_TOAST)
+          console.error('Error Updating user:', error);
+        }
+    }
+   
   };
 
 

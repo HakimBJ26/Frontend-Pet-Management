@@ -47,7 +47,6 @@ function SideBar() {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState('');
-  const auth = getAuthInfo().token;
   const role = getAuthInfo().role;
 
   return (
@@ -60,7 +59,7 @@ function SideBar() {
         boxShadow: '2px 0 10px rgba(0, 0, 0, 0.1)',
       }}
     >
-      {auth ? (
+      {role ? (
         <Sidebar collapsed={isCollapsed}>
           <Menu iconShape="square">
             <MenuItem

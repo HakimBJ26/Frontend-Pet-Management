@@ -55,8 +55,8 @@ export default function SignIn() {
         const userData=  await UserService.login(formData.email,formData.password)
         console.log(userData)
             if (userData) {
-                localStorage.setItem('token', userData.token)
                 localStorage.setItem('role', userData.role)
+                localStorage.setItem('id', userData.id)
                 showToast(SUCCESS_LOGIN_TOAST);
                 setTimeout(()=>{
                   if(userData.role===ROLE_ADMIN){

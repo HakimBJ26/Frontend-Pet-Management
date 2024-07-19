@@ -4,7 +4,6 @@ import UserService from '../../service/UserService';
 import { Box, Typography } from '@mui/material';
 import SearchBar from '../../components/SearchBar';
 import StyledBox from '../../components/StyledBox';
-import { getAuthInfo } from '../../utils/authCred';
 
 
 function UserManagement() {
@@ -13,9 +12,9 @@ function UserManagement() {
 
 
   useEffect(() => {
-    const token = getAuthInfo().token
-    UserService.getAllUsers(token).then(res => {
-      setUsers(res.ourUsersList);
+    UserService.getAllUsers().then(res => {
+     console.log(res)
+      setUsers(res);
     });
   }, []);
 

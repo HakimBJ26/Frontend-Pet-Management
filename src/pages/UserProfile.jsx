@@ -24,15 +24,14 @@ export default function UserProfile() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          const response = await UserService.getUserProfile(token);
-          const userData = response.ourUsers;
+      
+          const response = await UserService.getUserProfile();
+          console.log(response)
           setProfileData({
-            name: userData.name,
-            email: userData.email,
+            name: response.name,
+            email: response.email,
           });
-        }
+        
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }

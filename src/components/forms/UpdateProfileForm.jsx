@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { Avatar, Button, TextField, Typography, Box } from "@mui/material";
 import UserService from "../../service/UserService";
+import { useNavigate } from "react-router-dom";
+import { SIGN_IN_PATH } from "../../common/configuration/constants/Paths";
+
 
 const UpdateProfileForm = (props) => {
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     name: props.profileData.name || "",
     email: props.profileData.email || "",
@@ -16,11 +20,12 @@ const UpdateProfileForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        await UserService.updateUserProfile(token, formData);
+      const role = localStorage.getItem("role");
+      if (role) {
+        await UserService.updateUserProfile(formData);
         props.setProfileData(formData);
         props.handleClose();
+      
       }
     } catch (error) {
       console.error("Error updating profile:", error);

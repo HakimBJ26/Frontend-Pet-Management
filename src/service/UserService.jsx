@@ -1,10 +1,14 @@
 import { axiosInstance, axiosPrivate } from '../common/configuration/ApiAuth'; 
 import {
   GET_PROFILE_API,
+  GET_USERS_API,
   LOGIN_API,
+
+  LOG_OUT_API,
 
   REGISTER_API,
   UPDATE_PROFILE_API,
+  UPDATE_USER_PROFILE_BY_ADMIN,
 } from "../common/configuration/constants/PathBack";
 
 class UserService {
@@ -13,10 +17,10 @@ class UserService {
       const response = await axiosInstance.post(LOGIN_API, {
         email,
         password,
-      }, {
+      },   {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
-      });
+    });
       return response.data;
     } catch (err) {
       console.log(err);
@@ -26,10 +30,12 @@ class UserService {
 
   static async register(userData) {
     try {
-      const response = await axiosInstance.post(REGISTER_API, userData, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
-      });
+      const response = await axiosInstance.post(REGISTER_API, userData, 
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+      }
+      );
       return response.data;
     } catch (err) {
       throw err;
@@ -49,38 +55,7 @@ class UserService {
     }
   }
 
-  static async updateUserProfile(token, updatedProfile) {
-    try {
-      const response = await axiosPrivate.put(
-        UPDATE_PROFILE_API,
-        updatedProfile,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      return response.data;
-    } catch (err) {
-      throw err;
-    }
-  }
-
-
-
-  static isAuthenticated() {
-    const token = localStorage.getItem("token");
-    return !!token;
-  }
-
-  static isAdmin() {
-    const role = localStorage.getItem("role");
-    return role === "ADMIN";
-  }
-
-  static logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-  }
-
-
-  static async updateUser(userData) {
+  static async updateUserProfile(userData) {
     try {
       const response = await axiosPrivate.put(
         UPDATE_PROFILE_API,
@@ -96,14 +71,44 @@ class UserService {
 
 
 
-  static isUser() {
-    const role = localStorage.getItem("role");
-    return role === "USER";
+
+  static logout= async()=>{
+    const response=await axiosPrivate.post(LOG_OUT_API,{
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true
+    })
+    console.log(response)
+    if(response)
+    localStorage.removeItem("role");
+    localStorage.removeItem("id");
   }
 
-  static logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
+
+  static async getAllUsers(){
+    try{
+        const response = await axiosPrivate.get(GET_USERS_API, 
+          { withCredentials: true }
+       )
+        return response.data;
+    }catch(err){
+        throw err;
+    }
+}
+
+  static async updateUser(id,userData) {
+    try {
+      const response = await axiosPrivate.put(
+        `${UPDATE_USER_PROFILE_BY_ADMIN}/${id}`,
+        userData,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
   }
+
+
+
 }
 export default UserService;
