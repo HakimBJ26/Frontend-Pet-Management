@@ -7,7 +7,7 @@ export default function SearchBar({placeHolder, value, onChange }) {
   return (
     <Paper
       component="form"
-      sx={{ alignItems: 'center', display: 'flex'}}
+      sx={{ alignItems: 'center', display: 'flex',marginTop:'20px'}}
     >
       <InputBase
         sx={{ ml: 1, flex: 1 }}

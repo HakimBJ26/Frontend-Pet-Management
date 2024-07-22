@@ -83,7 +83,7 @@ function SideBar() {
                 {role === ROLE_CLIENT && (
                   <>
                     <Link to={CLIENT_DASH_PATH} style={{ textDecoration: 'none' }}>
-                      <SideBarItem title="Home" to="/" icon={<DashboardOutlinedIcon />} selected={selected} setSelected={setSelected} />
+                      <SideBarItem title="Home" icon={<DashboardOutlinedIcon />} selected={selected} setSelected={setSelected} />
                     </Link>
                     <Link to={`${CLIENT_DASH_PATH}${USER_PROFILE}`} style={{ textDecoration: 'none' }}>
                       <SideBarItem title="User Profile" icon={<AnalyticsOutlinedIcon />} selected={selected} setSelected={setSelected} />

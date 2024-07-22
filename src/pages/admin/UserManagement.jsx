@@ -27,7 +27,6 @@ function UserManagement() {
 
   return (
     <StyledBox>
-      <div>
         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
           <Typography variant="h4" component="h1" gutterBottom>
             User Management
@@ -37,7 +36,6 @@ function UserManagement() {
           </Typography>
           <SearchBar value={searchQuery} onChange={handleSearchChange} />
         </Box>
-      </div>
       {filteredUsers.map(user => (
         <UserInfo placeHolder="Search User By ID" key={user.id} user={user} />
       ))}

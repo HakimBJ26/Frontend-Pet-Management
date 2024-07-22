@@ -24,8 +24,38 @@
   color: white;
 }
 
+
+.bottom-navigation {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1300;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1px;
+}
+
 .App-link {
   color: #61dafb;
+}
+
+.custom-card {
+  max-width: 300px;
+  margin: 10px;
+  border: 2px solid var(--primary-color);
+}
+
+.bottom-navigation-action {
+  min-width: auto;
+  padding: 0 1px;
+}
+
+.bottom-navigation-action .MuiBottomNavigationAction-label {
+  font-size: 0.5rem;
+}
+
+.bottom-navigation-action .MuiSvgIcon-root {
+  font-size: 0.8rem;
 }
 
 @keyframes App-logo-spin {

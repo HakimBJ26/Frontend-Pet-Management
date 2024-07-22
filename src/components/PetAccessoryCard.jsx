@@ -1,17 +1,15 @@
 import  { useState } from 'react';
 import { Card, CardContent, CardActions, CardMedia, TextField, Button } from '@mui/material';
-import { useTheme } from '@emotion/react';
 
 const PetAccessoryCard = ({ product, onDelete, onUpdate }) => {
   const [name, setName] = useState(product.name);
   const [price, setPrice] = useState(product.price);
-    const theme = useTheme();
   const handleUpdate = () => {
     onUpdate(product.id, { name, price });
   };
 
   return (
-    <Card style={{ maxWidth: 300, margin: '10px' ,  border: `2px solid ${theme.palette.primary.main}` }}>
+    <Card className="custom-card">
       <CardMedia
         component="img"
         height="200"

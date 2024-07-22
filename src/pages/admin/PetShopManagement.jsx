@@ -2,42 +2,13 @@ import { Box, Grid, Typography } from "@mui/material";
 import PetAccessoryCard from "../../components/PetAccessoryCard";
 import SearchBar from "../../components/SearchBar";
 import { useState } from "react";
+import { products } from "../../common/configuration/constants/Products";
+import StyledBox from "../../components/StyledBox";
 
 function PetShopManagement() {
     const [searchQuery,setSearchQuery]=useState('')
 
-const products = [
-    {
-      id: 1,
-      img: 'https://images.squarespace-cdn.com/content/v1/5c6467680cf57d95a64743db/1618328087580-2643I1AGBEXTYW4FJB25/jingle_ball_cat_toy.jpg?format=1000w', 
-      name: 'Cat Toy',
-      price: 9.99,
-    },
-    {
-      id: 2,
-      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWXZXP1sPb8yIY7myqRr-Uv4E0qhK5rkZ-Sw&s', 
-      name: 'Pet Leash',
-      price: 15.99,
-    },
-    {
-      id: 3,
-      img: 'https://m.media-amazon.com/images/I/71HVr-TP6cL._AC_UF1000,1000_QL80_.jpg', 
-      name: 'Pet Bed',
-      price: 45.99,
-    },
-    {
-      id: 4,
-      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGVJ_Kx05yJEFrPi-GdAdFrKNz2n8d8q0WPg&s', 
-      name: 'Pet Toy',
-      price: 12.99,
-    },
-    {
-      id: 5,
-      img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz5zHS51GmcaukO8M8rLEyYvn3IMUdYByA2A&s', 
-      name: 'Pet Bowl',
-      price: 7.99,
-    },
-  ];
+
 
   const handleDelete = (id) => {
     console.log(`Delete product with id: ${id}`);
@@ -58,7 +29,7 @@ const products = [
 
   return (
    
- <Box>
+ <StyledBox>
         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
           <Typography variant="h4" component="h1" gutterBottom>
             Pet Shop Management
@@ -73,7 +44,7 @@ const products = [
       <PetAccessoryCard key={product.id} product={product} onDelete={handleDelete} onUpdate={handleUpdate} />
     ))}
   </Grid>
-  </Box>
+  </StyledBox>
   )
 }
 
