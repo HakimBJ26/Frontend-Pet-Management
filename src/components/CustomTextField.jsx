@@ -1,4 +1,3 @@
-import React from 'react';
 import TextField from '@mui/material/TextField';
 
 const CustomTextField = ({ id, name, label, type = 'text', autoComplete, value, onChange, error, helperText }) => (

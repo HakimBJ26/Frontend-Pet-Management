@@ -13,7 +13,6 @@ function UserManagement() {
 
   useEffect(() => {
     UserService.getAllUsers().then(res => {
-     console.log(res)
       setUsers(res);
     });
   }, []);

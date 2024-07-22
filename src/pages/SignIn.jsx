@@ -53,7 +53,6 @@ export default function SignIn() {
     if (validated) {
       try{
         const userData=  await UserService.login(formData.email,formData.password)
-        console.log(userData)
             if (userData) {
                 localStorage.setItem('role', userData.role)
                 localStorage.setItem('id', userData.id)

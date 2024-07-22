@@ -30,8 +30,10 @@ export default function SignUp() {
     name: '',
     email: '',
     password: '',
-    city: '', // Added city field
+    city: '',
     role: '',
+    phone: '',
+    countryCode: '+1', // Default country code
   });
 
   const [errors, setErrors] = useState({});
@@ -60,8 +62,10 @@ export default function SignUp() {
         : 'Email is not valid'
       : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
-    tempErrors.city = formData.city ? '' : 'City is required'; // Added city validation
+    tempErrors.city = formData.city ? '' : 'City is required';
     tempErrors.role = formData.role ? '' : 'Role is required';
+    tempErrors.phone = formData.phone ? '' : 'Phone number is required';
+    tempErrors.countryCode = formData.countryCode ? '' : 'Country code is required';
     setErrors(tempErrors);
     return Object.values(tempErrors).every((x) => x === '');
   };
@@ -70,8 +74,12 @@ export default function SignUp() {
     event.preventDefault();
     const validated = validate();
     if (validated) {
+    const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
+    const { countryCode, ...submissionData } = formData;
+    submissionData.phone = fullPhoneNumber;
+
       try {
-        await UserService.register(formData);
+        await UserService.register(submissionData);
         setTimeout(() => {
           navigate(SIGN_IN_PATH);
           showToast(SUCCESS_SIGN_UP_TOAST);
@@ -91,7 +99,7 @@ export default function SignUp() {
   }));
 
   return (
-    <StyledBox>
+    <StyledBox >
       <Typography variant="h1">PETAGORA</Typography>
       <Divider variant="middle" sx={{ mb: 3 }} />
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -100,10 +108,10 @@ export default function SignUp() {
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom:10 }}>
         <Grid container spacing={2}>
           {fields.map((field) => (
-            <Grid item xs={12} key={field.id}>
+            <Grid item xs={12} sm={field.name === 'countryCode' || field.name === 'phone' ? 6 : 12} key={field.id}>
               <CustomTextField
                 autoComplete={field.autoComplete}
                 name={field.name}

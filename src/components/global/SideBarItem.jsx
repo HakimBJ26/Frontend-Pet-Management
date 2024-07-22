@@ -10,7 +10,7 @@ const SideBarItem = ({ title, to, icon, selected, setSelected }) => {
 
 
   return (
-    <MenuItem active={selected === title} style={{ color: colors.grey[100] }} onClick={() => setSelected(title)} icon={icon}>
+    <MenuItem active={selected === title} style={{ color: colors.primary[700] }} onClick={() => setSelected(title)} icon={icon}>
       <Typography>{title}</Typography>
       <Link to={to} style={{ textDecoration: 'none' }}>
 

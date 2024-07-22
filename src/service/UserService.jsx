@@ -77,10 +77,12 @@ class UserService {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true
     })
-    console.log(response)
-    if(response)
-    localStorage.removeItem("role");
+    if(response){
+        localStorage.removeItem("role");
     localStorage.removeItem("id");
+    }
+
+  
   }
 
 
