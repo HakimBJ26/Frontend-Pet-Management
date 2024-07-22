@@ -4,7 +4,6 @@ import { SIGN_IN_PATH } from '../common/configuration/constants/Paths';
 
 const ProtectedRoute = ({ children, roles }) => {
   const { currentUser, isLoading } = useAuth();
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

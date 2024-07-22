@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,7 +7,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import UserService from "../service/UserService";
+import UserService from "../../service/UserService";
 
 export default function UserProfile() {
   const [profileData, setProfileData] = useState({

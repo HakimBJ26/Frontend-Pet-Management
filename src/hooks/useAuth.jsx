@@ -6,23 +6,19 @@ const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+
     const role = localStorage.getItem('role');
-    if (token) {
-      try {
-        const user = JSON.parse(atob(token.split('.')[1]));
-        if (role) {
-          user.role = role;
-        }
+    if (role) {
     
+        const user = {}
+       
+          user.role = role;
+      
         setCurrentUser(user);
-      } catch (e) {
-        console.error("Invalid token:", e);
+    }else{
         setCurrentUser(null);
       }
-    } else {
-      setCurrentUser(null);
-    }
+     
     setIsLoading(false); 
   }, [setCurrentUser]);
 
@@ -30,3 +26,4 @@ const useAuth = () => {
 };
 
 export default useAuth;
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -11,28 +11,30 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import UserService from "../service/UserService";
-import UpdateProfileForm from "../components/forms/UpdateProfileForm";
+import UserService from "../../service/UserService";
+import UpdateProfileForm from "../../components/forms/UpdateProfileForm";
 
 export default function UserProfile() {
   const [profileData, setProfileData] = useState({
     name: "",
     email: "",
+    city: "",
+    phone: "",
+    role: "",
   });
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          const response = await UserService.getUserProfile(token);
-          const userData = response.ourUsers;
-          setProfileData({
-            name: userData.name,
-            email: userData.email,
-          });
-        }
+        const response = await UserService.getUserProfile();
+        setProfileData({
+          name: response.name,
+          email: response.email,
+          city: response.city,
+          phone: response.phone,
+          role: response.role,
+        });
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -44,13 +46,13 @@ export default function UserProfile() {
   const handleClose = () => setOpen(false);
 
   return (
-    <Box sx={{ mt: 5 }}>
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+    <Box sx={{ mt: 6}}>
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
         <Typography variant="h5" gutterBottom>
           User Profile
         </Typography>
       </Box>
-      <Card sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
+      <Card sx={{ maxWidth: 345, mx: "auto", mt: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
           <Avatar
             src="/placeholder-user.jpg"
@@ -61,31 +63,52 @@ export default function UserProfile() {
               borderColor: "background.default",
             }}
           >
-            AC
+            {profileData.name ? profileData.name.charAt(0) : "U"}
           </Avatar>
         </Box>
         <CardContent sx={{ p: 3 }}>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              Name
-            </Typography>
-            <Typography variant="body2">{profileData.name}</Typography>
-          </Box>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              Email
-            </Typography>
-            <Typography variant="body2">{profileData.email}</Typography>
-          </Box>
           <Box display="flex" flexDirection="column" gap={2}>
-            <Button variant="outlined" onClick={handleOpen}>
-              Edit
-            </Button>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Name
+              </Typography>
+              <Typography variant="body2">{profileData.name}</Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Email
+              </Typography>
+              <Typography variant="body2">{profileData.email}</Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                City
+              </Typography>
+              <Typography variant="body2">{profileData.city}</Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Phone
+              </Typography>
+              <Typography variant="body2">{profileData.phone}</Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Role
+              </Typography>
+              <Typography variant="body2">{profileData.role}</Typography>
+            </Box>
+            <Box display="flex" flexDirection="column" gap={2}>
+              <Button variant="outlined" onClick={handleOpen}>
+                Edit
+              </Button>
+            </Box>
           </Box>
         </CardContent>
       </Card>
 
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
+        <DialogTitle>Edit Profile</DialogTitle>
         <DialogContent>
           <UpdateProfileForm
             profileData={profileData}

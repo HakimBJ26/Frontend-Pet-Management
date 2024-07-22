@@ -8,10 +8,12 @@ import { LightModeOutlined } from '@mui/icons-material';
 import { DarkModeOutlined } from '@mui/icons-material';
 import { ColorModeContext } from '../../theme';
 import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 function TopBar() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const {setCurrentUser}=useContext(AuthContext);
   const colorMode = useContext(ColorModeContext);
 
   return (
@@ -27,6 +29,7 @@ function TopBar() {
 
         <IconButton color="inherit" onClick={() => {
           UserService.logout();
+          setCurrentUser(null)
           navigate(`${SIGN_IN_PATH}`)
         }}>
           <ExitToAppOutlinedIcon sx={{ mr: 1 }} />

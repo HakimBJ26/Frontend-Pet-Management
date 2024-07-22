@@ -29,8 +29,8 @@ import {
   PET_PROFILE,
   USER_PROFILE
 } from '../common/configuration/constants/Paths';
-import PetProfile from "../pages/PetProfile";
-import UserProfile from "../pages/UserProfile";
+import PetProfile from "../pages/client/PetProfile";
+import UserProfile from "../pages/client/UserProfile";
 import UpdateMedicalNotes from '../pages/veto/UpdateMedicalNotes';
 import UpdateTreatmentPlans from '../pages/veto/UpdateTreatmentPlans';
 import Notifications from '../pages/veto/Notifications';

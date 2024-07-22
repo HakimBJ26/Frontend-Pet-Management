@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Avatar, Button, TextField, Typography, Box } from "@mui/material";
 import UserService from "../../service/UserService";
 
 const UpdateProfileForm = (props) => {
   const [formData, setFormData] = useState({
     name: props.profileData.name || "",
-    email: props.profileData.email || "",
+    city: props.profileData.city || "",
+    phone: props.profileData.phone || "",
   });
 
   const handleChange = (event) => {
@@ -16,12 +17,9 @@ const UpdateProfileForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        await UserService.updateUserProfile(token, formData);
-        props.setProfileData(formData);
-        props.handleClose();
-      }
+      await UserService.updateUserProfile(formData);
+      props.setProfileData(formData);
+      props.handleClose();
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -50,7 +48,7 @@ const UpdateProfileForm = (props) => {
             borderColor: "background.default",
           }}
         >
-          AC
+          {formData.name ? formData.name.charAt(0) : "U"}
         </Avatar>
       </Box>
 
@@ -77,11 +75,23 @@ const UpdateProfileForm = (props) => {
           margin="normal"
           required
           fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          value={formData.email}
+          id="city"
+          label="City"
+          name="city"
+          autoComplete="city"
+          value={formData.city}
+          onChange={handleChange}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="phone"
+          label="Phone Number"
+          name="phone"
+          autoComplete="tel"
+          value={formData.phone}
           onChange={handleChange}
         />
         <Button
@@ -91,7 +101,7 @@ const UpdateProfileForm = (props) => {
           color="primary"
           sx={{ mt: 3, mb: 2 }}
         >
-          Ok{" "}
+          Save
         </Button>
       </Box>
     </Box>

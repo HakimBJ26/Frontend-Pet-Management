@@ -51,24 +51,28 @@ export default function SignIn() {
     event.preventDefault();
     const validated= validate()
     if (validated) {
-    const userData=  await UserService.login(formData.email,formData.password)
-  
-      if (userData.token) {
-          localStorage.setItem('token', userData.token)
-          localStorage.setItem('role', userData.role)
-          showToast(SUCCESS_LOGIN_TOAST);
-          setTimeout(()=>{
-            if(userData.role===ROLE_ADMIN){
-              navigate(ADMIN_DASH_PATH)
-          }else if(userData.role===ROLE_CLIENT){
-            navigate(CLIENT_DASH_PATH)   
-          }else if(userData.role===ROLE_VETO){
-            navigate(VETO_DASH_PATH)
-          }
-          }, 2000);
-       
-      }else{
-        showToast(ERROR_LOGIN_TOAST);
+      try{
+        const userData=  await UserService.login(formData.email,formData.password)
+            if (userData) {
+                localStorage.setItem('role', userData.role)
+                localStorage.setItem('id', userData.id)
+                showToast(SUCCESS_LOGIN_TOAST);
+                setTimeout(()=>{
+                  if(userData.role===ROLE_ADMIN){
+                    navigate(ADMIN_DASH_PATH)
+                }else if(userData.role===ROLE_CLIENT){
+                  navigate(CLIENT_DASH_PATH)   
+                }else if(userData.role===ROLE_VETO){
+                  navigate(VETO_DASH_PATH)
+                }
+                }, 2000);
+             
+            }
+
+      }catch(error){
+          console.log(error)
+          showToast(ERROR_LOGIN_TOAST);
+        
       }
     }
   };

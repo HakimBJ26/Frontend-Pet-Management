@@ -1,31 +1,24 @@
-import { useContext } from 'react';
-import { Container, Typography, Grid, Card, CardMedia, CardContent, CssBaseline } from '@mui/material';
+import { Container, Typography, Grid, Card, CardMedia, CardContent } from '@mui/material';
 import PetImage8 from '../../images/PetImage8.jpg';
 import PetImage6 from '../../images/PetImage6.jpg';
 import PetImage9 from '../../images/PetImage9.jpg';
-import { ThemeProvider, useTheme } from '@mui/material/styles';
-import { ColorModeContext } from '../../theme';
+import {  useTheme } from '@mui/material/styles';
+
 
 
 function ClientDashboard() {
   const theme = useTheme();
-  const { toggleColorMode } = useContext(ColorModeContext);
 
   return (
 
-    <ColorModeContext.Provider value={{ toggleColorMode }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-
-        <div className="app">
-
-          <main className="content">
+ 
             <Container
               style={{
                 textAlign: 'center',
                 padding: '8px',
                 backgroundColor: 'default',
                 minHeight: '100vh',
+                marginTop:'30px'
 
               }}
             >
@@ -110,10 +103,7 @@ function ClientDashboard() {
               </Grid>
 
             </Container>
-          </main>
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+ 
   );
 }
 

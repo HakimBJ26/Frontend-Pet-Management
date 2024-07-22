@@ -24,13 +24,16 @@ import useToast from '../hooks/useToast';
 export default function SignUp() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const {showToast}= useToast()
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
+    city: '',
     role: '',
+    phone: '',
+    countryCode: '+1', // Default country code
   });
 
   const [errors, setErrors] = useState({});
@@ -59,29 +62,36 @@ export default function SignUp() {
         : 'Email is not valid'
       : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
+    tempErrors.city = formData.city ? '' : 'City is required';
     tempErrors.role = formData.role ? '' : 'Role is required';
+    tempErrors.phone = formData.phone ? '' : 'Phone number is required';
+    tempErrors.countryCode = formData.countryCode ? '' : 'Country code is required';
     setErrors(tempErrors);
     return Object.values(tempErrors).every((x) => x === '');
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const validated = validate()
+    const validated = validate();
     if (validated) {
+    const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
+    const { countryCode, ...submissionData } = formData;
+    submissionData.phone = fullPhoneNumber;
+
       try {
-        await UserService.register(formData);
-        setTimeout(() =>{ navigate(SIGN_IN_PATH)
-        showToast(SUCCESS_SIGN_UP_TOAST)
+        await UserService.register(submissionData);
+        setTimeout(() => {
+          navigate(SIGN_IN_PATH);
+          showToast(SUCCESS_SIGN_UP_TOAST);
         }, 2000);
       } catch (error) {
-        showToast(ERROR_SIGN_UP_TOAST)
+        showToast(ERROR_SIGN_UP_TOAST);
         console.error('Error registering user:', error);
       }
     }
   };
 
-
-  const fields = SIGN_UP_FIELDS.map(field => ({
+  const fields = SIGN_UP_FIELDS.map((field) => ({
     ...field,
     value: formData[field.name],
     error: errors[field.name],
@@ -89,17 +99,19 @@ export default function SignUp() {
   }));
 
   return (
-    <StyledBox>
+    <StyledBox >
       <Typography variant="h1">PETAGORA</Typography>
       <Divider variant="middle" sx={{ mb: 3 }} />
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
         <PetsIcon />
       </Avatar>
-      <Typography component="h1" variant="h5">Sign up</Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <Typography component="h1" variant="h5">
+        Sign up
+      </Typography>
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom:10 }}>
         <Grid container spacing={2}>
           {fields.map((field) => (
-            <Grid item xs={12} key={field.id}>
+            <Grid item xs={12} sm={field.name === 'countryCode' || field.name === 'phone' ? 6 : 12} key={field.id}>
               <CustomTextField
                 autoComplete={field.autoComplete}
                 name={field.name}

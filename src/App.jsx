@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { ColorModeContext, useMode } from './theme';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
 import AuthContextProvider from './context/AuthContext';
 import ProtectedRoutes from './router/ProtectedRoutes';
 import { getAuthInfo, shouldShowSideBar, shouldShowTopBar } from './utils/authCred';
@@ -24,18 +24,21 @@ import {
   PET_PROFILE,
   PET_SHOP_MANAGEMENT
 } from './common/configuration/constants/Paths';
+import BottomBar from './components/global/ButtomBar';
 
 function App() {
   const [colorMode, theme] = useMode();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const isMobile = useMediaQuery('(max-width: 600px)');
+  const [showSidebar, setShowSidebar] = useState(!isMobile);
   useEffect(() => {
-    const { token, role } = getAuthInfo();
+    const {role } = getAuthInfo();
+    
     if (location.pathname === SIGN_UP_PATH) {
       return;
     }
-    if (token && role) {
+    if (role) {
       switch (role) {
         case ROLE_ADMIN: {
           const adminpaths = [
@@ -79,22 +82,27 @@ function App() {
     }
   }, [navigate, location.pathname]);
 
+  useEffect(() => {
+    setShowSidebar(!isMobile);
+  }, [isMobile]);
+
   return (
     <AuthContextProvider>
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <div className="app">
-            {shouldShowSideBar(location.pathname) && <SideBar />}
-            {shouldShowTopBar(location.pathname) && <TopBar />}
-            <main className="content">
-              <ProtectedRoutes />
-              <Toaster expand visibleToasts={9} />
-            </main>
-          </div>
-        </ThemeProvider>
-      </ColorModeContext.Provider>
-    </AuthContextProvider>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="app">
+          {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
+          {shouldShowTopBar(location.pathname) && <TopBar />}
+          <main className="content">
+            <ProtectedRoutes />
+            <Toaster expand visibleToasts={9} />
+          </main>
+          {isMobile && shouldShowSideBar(location.pathname) &&<BottomBar />}
+        </div>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  </AuthContextProvider>
   );
 }
 

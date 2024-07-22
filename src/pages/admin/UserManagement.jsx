@@ -4,7 +4,6 @@ import UserService from '../../service/UserService';
 import { Box, Typography } from '@mui/material';
 import SearchBar from '../../components/SearchBar';
 import StyledBox from '../../components/StyledBox';
-import { getAuthInfo } from '../../utils/authCred';
 
 
 function UserManagement() {
@@ -13,9 +12,8 @@ function UserManagement() {
 
 
   useEffect(() => {
-    const token = getAuthInfo().token
-    UserService.getAllUsers(token).then(res => {
-      setUsers(res.ourUsersList);
+    UserService.getAllUsers().then(res => {
+      setUsers(res);
     });
   }, []);
 
@@ -29,7 +27,6 @@ function UserManagement() {
 
   return (
     <StyledBox>
-      <div>
         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
           <Typography variant="h4" component="h1" gutterBottom>
             User Management
@@ -39,9 +36,8 @@ function UserManagement() {
           </Typography>
           <SearchBar value={searchQuery} onChange={handleSearchChange} />
         </Box>
-      </div>
       {filteredUsers.map(user => (
-        <UserInfo key={user.id} user={user} />
+        <UserInfo placeHolder="Search User By ID" key={user.id} user={user} />
       ))}
     
     </StyledBox>

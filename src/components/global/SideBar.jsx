@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Box, IconButton, Typography, useTheme } from '@mui/material';
-import { tokens } from '../../theme';
+import { Box, IconButton, Typography } from '@mui/material';
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -43,24 +42,20 @@ import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../../common/configuration/c
 
 
 function SideBar() {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState('');
-  const auth = getAuthInfo().token;
   const role = getAuthInfo().role;
 
   return (
     <Box
-      height="calc(100vh - 64px)"
+    
       sx={{
         marginTop: '64px',
-        background: colors.primary[400],
-        color: colors.grey[100],
+        height:'100vh',
         boxShadow: '2px 0 10px rgba(0, 0, 0, 0.1)',
       }}
     >
-      {auth ? (
+      {role ? (
         <Sidebar collapsed={isCollapsed}>
           <Menu iconShape="square">
             <MenuItem
@@ -68,12 +63,12 @@ function SideBar() {
               icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
               style={{
                 margin: '10px 0 20px 0',
-                color: colors.grey[100],
+    
               }}
             >
               {!isCollapsed && (
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Typography variant="h3" color={colors.grey[100]} sx={{ fontWeight: 'bold', ml: 2 }}>
+                  <Typography variant="h3"  sx={{ fontWeight: 'bold', ml: 2 }}>
                     Petagora
                   </Typography>
                   <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
@@ -88,7 +83,7 @@ function SideBar() {
                 {role === ROLE_CLIENT && (
                   <>
                     <Link to={CLIENT_DASH_PATH} style={{ textDecoration: 'none' }}>
-                      <SideBarItem title="Home" to="/" icon={<DashboardOutlinedIcon />} selected={selected} setSelected={setSelected} />
+                      <SideBarItem title="Home" icon={<DashboardOutlinedIcon />} selected={selected} setSelected={setSelected} />
                     </Link>
                     <Link to={`${CLIENT_DASH_PATH}${USER_PROFILE}`} style={{ textDecoration: 'none' }}>
                       <SideBarItem title="User Profile" icon={<AnalyticsOutlinedIcon />} selected={selected} setSelected={setSelected} />
