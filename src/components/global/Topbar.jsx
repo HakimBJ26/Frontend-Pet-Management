@@ -17,7 +17,7 @@ function TopBar() {
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
+    <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1}}>
       <Toolbar>
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
         </Typography>

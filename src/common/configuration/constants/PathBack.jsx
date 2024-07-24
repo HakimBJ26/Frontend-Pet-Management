@@ -6,3 +6,6 @@ export const GET_USERS_API = "/api/auth/GetAllUsers" ;
 export const LOG_OUT_API="/api/auth/logout"
 export const UPDATE_USER_PROFILE_BY_ADMIN= "/api/auth/updateUserByAdmin"
 export const REFRESH_TOKEN_API='/api/auth/refreshToken'
+export const GET_VETO_ACC_TO_APPROVE='/api/auth/unapprovedUsers'
+export const APPROVE_VETO_ACC_API='/api/auth/approveUserByEmail'
+

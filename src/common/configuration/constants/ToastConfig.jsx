@@ -57,4 +57,25 @@ export const SUCCESS_SIGN_UP_TOAST = {
       color: '#ffffff', 
     },
   };
-  
+
+
+ 
+  export const  SUCCESS_REQUEST_JOIN_TOAST= {
+    type: 'success',
+    duration: 3000,
+    message: 'Request to join successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff', 
+    },
+  };
+
+  export const ERROR_REQUEST_JOIN_TOAST= {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to request to join.',
+    style: {
+      background: '#f44336', 
+      color: '#ffffff', 
+    },
+  };

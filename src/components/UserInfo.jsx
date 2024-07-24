@@ -73,6 +73,9 @@ function UserInfo({ user }) {
         <TextField
           fullWidth
           label="Email"
+          InputProps={{
+            readOnly: true,
+          }}
           value={data.email}
           onChange={(e) => setData({ ...data, email: e.target.value })}
           variant="outlined"

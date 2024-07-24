@@ -1,7 +1,9 @@
 import { axiosInstance, axiosPrivate } from '../common/configuration/ApiAuth'; 
 import {
+  APPROVE_VETO_ACC_API,
   GET_PROFILE_API,
   GET_USERS_API,
+  GET_VETO_ACC_TO_APPROVE,
   LOGIN_API,
   LOG_OUT_API,
   REGISTER_API,
@@ -33,6 +35,22 @@ class UserService {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true
       }
+      );
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+
+
+
+  static async approveVetoRequest(email) {
+    try {
+      const response = await axiosPrivate.put(
+        APPROVE_VETO_ACC_API,
+        {'email':`${email}`},
+        { withCredentials: true }
       );
       return response.data;
     } catch (err) {
@@ -80,8 +98,19 @@ class UserService {
     localStorage.removeItem("id");
     }
 
-  
+
   }
+
+  static async getVetoAcoountToApproved(){
+    try{
+        const response = await axiosPrivate.get(GET_VETO_ACC_TO_APPROVE, 
+          { withCredentials: true }
+       )
+        return response.data;
+    }catch(err){
+        throw err;
+    }
+}
 
 
   static async getAllUsers(){

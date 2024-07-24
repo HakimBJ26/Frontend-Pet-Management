@@ -1,37 +1,31 @@
 import { useState } from 'react';
-import { useTheme } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PetsIcon from '@mui/icons-material/Pets';
 import UserService from '../service/UserService';
-import { tokens } from '../theme';
 import { StyledBox } from '../components/StyledBox';
 import CustomTextField from '../components/CustomTextField';
-import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsName';
-import { SIGN_IN_PATH } from '../common/configuration/constants/Paths';
-import { ERROR_SIGN_UP_TOAST, SUCCESS_SIGN_UP_TOAST } from '../common/configuration/constants/ToastConfig';
+import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsName'; // Ensure this constant is updated
+import { SUCCESS_REQUEST_JOIN_TOAST, ERROR_REQUEST_JOIN_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
 import Footer from '../components/global/Footer';
-import { ROLE_CLIENT } from '../common/configuration/constants/UserRole';
+import { ROLE_VETO } from '../common/configuration/constants/UserRole';
 
-export default function SignUp() {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+export default function RequestJoinAsVeterinarian() {
   const { showToast } = useToast();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
+    phone: '',
     city: '',
-    role: `${ROLE_CLIENT}`, 
-    phone: '',  // This will hold the concatenated phone number
-    countryCode: '+1',  // This is only for internal use
+    role: `${ROLE_VETO}`, 
+    countryCode: '+1',
   });
 
   const [errors, setErrors] = useState({});
@@ -52,9 +46,9 @@ export default function SignUp() {
         ? ''
         : 'Email is not valid'
       : 'Email is required';
-    tempErrors.password = formData.password ? '' : 'Password is required';
-    tempErrors.city = formData.city ? '' : 'City is required';
     tempErrors.phone = formData.phone ? '' : 'Phone number is required';
+    tempErrors.city = formData.city ? '' : 'City is required';
+    tempErrors.countryCode = formData.countryCode ? '' : 'Country code is required';
     setErrors(tempErrors);
     return Object.values(tempErrors).every((x) => x === '');
   };
@@ -63,22 +57,18 @@ export default function SignUp() {
     event.preventDefault();
     const validated = validate();
     if (validated) {
-      // Concatenate countryCode and phone number into phone
       const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
-      
-      // Create submission data without countryCode
       const { countryCode, ...submissionData } = formData;
-      submissionData.phone = fullPhoneNumber; // Use the concatenated phone number
+      submissionData.phone = fullPhoneNumber; 
+      submissionData.role = 'VETERINARIAN';  
 
       try {
-        await UserService.register(submissionData);
-        setTimeout(() => {
-          navigate(SIGN_IN_PATH);
-          showToast(SUCCESS_SIGN_UP_TOAST);
-        }, 2000);
+        await UserService.register(submissionData); 
+        showToast(SUCCESS_REQUEST_JOIN_TOAST);
+        navigate('/'); 
       } catch (error) {
-        showToast(ERROR_SIGN_UP_TOAST);
-        console.error('Error registering user:', error);
+        showToast(ERROR_REQUEST_JOIN_TOAST);
+        console.error('Error requesting to join as veterinarian:', error);
       }
     }
   };
@@ -88,7 +78,7 @@ export default function SignUp() {
     value: formData[field.name],
     error: errors[field.name],
     helperText: errors[field.name],
-  }));
+  })).filter(field => field.name !== 'message'); // Exclude message field
 
   return (
     <>
@@ -99,7 +89,7 @@ export default function SignUp() {
           <PetsIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Request to Join as a Veterinarian
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom: 10 }}>
           <Grid container spacing={2}>
@@ -122,15 +112,8 @@ export default function SignUp() {
             ))}
           </Grid>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Sign Up
+            Submit Request
           </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link style={{ color: colors.primary[400] }} to={SIGN_IN_PATH}>
-                <h3>Already have an account? Sign in</h3>
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </StyledBox>
       <Footer />

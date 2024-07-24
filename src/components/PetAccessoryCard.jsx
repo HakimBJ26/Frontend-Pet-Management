@@ -1,57 +1,35 @@
-import  { useState } from 'react';
-import { Card, CardContent, CardActions, CardMedia, TextField, Button } from '@mui/material';
+import React from 'react';
+import { Card, CardMedia, CardContent, Typography, Button, Box } from '@mui/material';
 
-const PetAccessoryCard = ({ product, onDelete, onUpdate }) => {
-  const [name, setName] = useState(product.name);
-  const [price, setPrice] = useState(product.price);
-  const handleUpdate = () => {
-    onUpdate(product.id, { name, price });
-  };
-
+const PetAccessoryCard = ({ product, onUpdate, onDelete }) => {
   return (
-    <Card className="custom-card">
+    <Card sx={{ display: 'flex', width: '100%', maxWidth: 600, position: 'relative', padding: 1 }}>
       <CardMedia
         component="img"
-        height="200"
+        sx={{ width: 100, height: 100, objectFit: 'cover' }}
         image={product.img}
         alt={product.name}
       />
-      <CardContent>
-        <TextField
-          label="ID"
-          value={product.id}
-          fullWidth
-          margin="normal"
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <TextField
-          label="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Price"
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-      </CardContent>
-      <CardActions>
-        <Button size="small" color="primary" variant='contained' onClick={handleUpdate}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, marginLeft: 2 }}>
+        <CardContent sx={{ flex: 1 }}>
+          <Typography component="h5" variant="h5">
+            {product.name}
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary">
+            ${product.price}
+          </Typography>
+        </CardContent>
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', position: 'absolute', top: 8, right: 8 }}>
+        <Button variant="contained" color="primary" sx={{ mb: 1 }} onClick={() => onUpdate(product)}>
           Update
         </Button>
-        <Button size="small" variant="contained" color="error" onClick={() => onDelete(product.id)}>
+        <Button variant="contained" color="secondary" onClick={() => onDelete(product.id)}>
           Delete
         </Button>
-      </CardActions>
+      </Box>
     </Card>
   );
 };
 
-export default PetAccessoryCard ;
+export default PetAccessoryCard;

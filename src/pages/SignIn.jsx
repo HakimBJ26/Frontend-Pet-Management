@@ -10,11 +10,12 @@ import { tokens } from '../theme';
 import { useState } from 'react';
 import {  useTheme } from '@mui/material';
 import UserService from '../service/UserService';
-import StyledBox from '../components/StyledBox';
+import {StyledBox} from '../components/StyledBox';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
 import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH} from '../common/configuration/constants/Paths';
 import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
+import Footer from '../components/global/Footer';
 
 export default function SignIn() {
  const theme = useTheme()
@@ -78,6 +79,7 @@ export default function SignIn() {
   };
 
   return (
+    <>
     <StyledBox
     >
 
@@ -137,7 +139,10 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Box>
-    
+   
     </StyledBox>
+     <Footer/>
+     </>
+
   );
 }
