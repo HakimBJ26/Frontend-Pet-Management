@@ -79,3 +79,33 @@ export const SUCCESS_SIGN_UP_TOAST = {
       color: '#ffffff', 
     },
   };
+  export const SUCCESS_RESET_PASSWORD_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Password reset successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_RESET_PASSWORD_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to reset',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+  
+  export const ERROR_INVALID_TOKEN_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Invalid or expired token. Redirecting to login...',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  

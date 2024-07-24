@@ -24,7 +24,9 @@ import {
   PET_PROFILE,
   PET_SHOP_MANAGEMENT,
   MANAGE_VETO_REQUEST,
-  SUBMIT_VETO_REQUEST
+  SUBMIT_VETO_REQUEST,
+  RESET_PASS_REQUEST,
+  ASK_TO_RESET_PASS
 } from './common/configuration/constants/Paths';
 import BottomBar from './components/global/ButtomBar';
 
@@ -37,14 +39,14 @@ function App() {
   useEffect(() => {
     const {role } = getAuthInfo();
     
-    if (location.pathname === SIGN_UP_PATH || location.pathname === SUBMIT_VETO_REQUEST) {
+    if (location.pathname === SIGN_UP_PATH || location.pathname === SUBMIT_VETO_REQUEST || location.pathname === RESET_PASS_REQUEST || location.pathname === ASK_TO_RESET_PASS) {
       return;
     }
     if (role) {
       switch (role) {
         case ROLE_ADMIN: {
           const adminpaths = [
-            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT , MANAGE_VETO_REQUEST
+            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT , MANAGE_VETO_REQUEST 
           ];
           if (adminpaths.some(path => location.pathname === `${ADMIN_DASH_PATH}${path}`)) {
             return;

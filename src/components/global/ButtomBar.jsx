@@ -1,5 +1,3 @@
-// src/components/BottomBar.js
-
 import { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction, Menu, MenuItem } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';

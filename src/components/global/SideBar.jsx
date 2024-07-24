@@ -44,10 +44,6 @@ import { useTheme } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 
 
-
-// Define a styled component for Sidebar
-
-
 function SideBar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState('');

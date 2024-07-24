@@ -7,8 +7,11 @@ import {
   LOGIN_API,
   LOG_OUT_API,
   REGISTER_API,
+  RESET_PASS,
+  SEND_RESET_PASS_MAIL,
   UPDATE_PROFILE_API,
   UPDATE_USER_PROFILE_BY_ADMIN,
+  VERIFY_RESET_PASS_TOKEN,
 } from "../common/configuration/constants/PathBack";
 
 class UserService {
@@ -42,6 +45,56 @@ class UserService {
     }
   }
 
+
+  static async sendResetPassMail (email){
+  
+  try{
+    const response=await axiosInstance.post(  SEND_RESET_PASS_MAIL,
+      {'email':`${email}`},
+    )
+    return response.data;
+  }catch(err){
+    console.log(err)
+  }
+
+
+  }
+
+  static async verifyResetPassToken (token){
+  
+    try{
+      const response=await axiosInstance.post(  VERIFY_RESET_PASS_TOKEN,
+        {'token':`${token}`},
+        { withCredentials: true }
+      )
+      console.log(response)
+      return response;
+    }catch(err){
+
+      console.log(err)
+      return err
+    }
+  
+  
+    }
+  
+
+
+    static async resetPassword(pass,confirmPass) {
+      try {
+        const response = await axiosPrivate.put(
+          RESET_PASS,
+          {
+            "newPassword": `${pass}`,
+            "confirmPassword": `${confirmPass}`
+        },
+        { withCredentials: true }
+        );
+        return response.data;
+      } catch (err) {
+        throw err;
+      }
+    }
 
 
 

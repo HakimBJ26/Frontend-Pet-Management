@@ -30,8 +30,8 @@ export default function SignUp() {
     password: '',
     city: '',
     role: `${ROLE_CLIENT}`, 
-    phone: '',  // This will hold the concatenated phone number
-    countryCode: '+1',  // This is only for internal use
+    phone: '',  
+    countryCode: '+1', 
   });
 
   const [errors, setErrors] = useState({});
@@ -63,12 +63,10 @@ export default function SignUp() {
     event.preventDefault();
     const validated = validate();
     if (validated) {
-      // Concatenate countryCode and phone number into phone
       const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
       
-      // Create submission data without countryCode
       const { countryCode, ...submissionData } = formData;
-      submissionData.phone = fullPhoneNumber; // Use the concatenated phone number
+      submissionData.phone = fullPhoneNumber; 
 
       try {
         await UserService.register(submissionData);

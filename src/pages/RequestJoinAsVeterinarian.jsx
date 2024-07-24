@@ -10,7 +10,7 @@ import PetsIcon from '@mui/icons-material/Pets';
 import UserService from '../service/UserService';
 import { StyledBox } from '../components/StyledBox';
 import CustomTextField from '../components/CustomTextField';
-import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsName'; // Ensure this constant is updated
+import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsName';
 import { SUCCESS_REQUEST_JOIN_TOAST, ERROR_REQUEST_JOIN_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
 import Footer from '../components/global/Footer';
@@ -78,7 +78,7 @@ export default function RequestJoinAsVeterinarian() {
     value: formData[field.name],
     error: errors[field.name],
     helperText: errors[field.name],
-  })).filter(field => field.name !== 'message'); // Exclude message field
+  })).filter(field => field.name !== 'message');
 
   return (
     <>

@@ -13,7 +13,7 @@ import DefineSafeZone from '../pages/client/DefineSafeZone';
 import HealthMonitor from '../pages/client/HealthMonitor';
 import HealthPassport from '../pages/client/HealthPassport';
 import SetActivityGoals from '../pages/client/SetActivityGoals';
-import { ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH, DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MANAGE_VETO_REQUEST, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, SET_ACTIVITY_GOALS_PATH, SUBMIT_VETO_REQUEST, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH } from '../common/configuration/constants/Paths';
+import { ACTIVITY_TRACKER_PATH, ASK_TO_RESET_PASS, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH, DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MANAGE_VETO_REQUEST, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, RESET_PASS_REQUEST, SET_ACTIVITY_GOALS_PATH, SUBMIT_VETO_REQUEST, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH } from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 
@@ -37,6 +37,8 @@ import Notifications from '../pages/veto/Notifications';
 import PetShopManagement from '../pages/admin/PetShopManagement';
 import ManageVetoRequest from '../pages/admin/ManageVetoRequest';
 import RequestJoinAsVeterinarian from '../pages/RequestJoinAsVeterinarian';
+import ResetPassword from '../pages/ResetPassword';
+import AskToResetPassword from '../pages/AskToResetPassword';
 
 const ProtectedRoutes = () => (
   <Routes>
@@ -108,6 +110,9 @@ const ProtectedRoutes = () => (
     <Route path={SIGN_IN_PATH} element={<SignIn />} />
     <Route path={SIGN_UP_PATH} element={<SignUp />} />
     <Route path={SUBMIT_VETO_REQUEST} element={<RequestJoinAsVeterinarian />} />
+    <Route path={RESET_PASS_REQUEST} element={<ResetPassword />} />
+    <Route path={ASK_TO_RESET_PASS} element={<AskToResetPassword />} />
+
 
 
 

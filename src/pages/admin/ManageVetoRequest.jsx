@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import UserService from '../../service/UserService'; // Adjust the import path as needed
+import UserService from '../../service/UserService'; 
 import { Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Avatar } from '@mui/material';
 import { CenteredContainer, StyledBox } from '../../components/StyledBox';
 
@@ -35,10 +35,7 @@ function ManageVetoRequest() {
   };
 
   const handleApprove = (email) => {
-    // Call API to approve request
-    console.log(email)
     UserService.approveVetoRequest(email).then(() => {
-      // Update state or refetch requests after approval
       setRequests(requests.filter(request => request.email !== email));
       setFilteredRequests(filteredRequests.filter(request => request.email !== email));
     });

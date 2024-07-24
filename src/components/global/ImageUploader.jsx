@@ -5,7 +5,7 @@ import { Button, TextField, Box, CircularProgress, Typography } from '@mui/mater
 
 const ImageUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
+  const [ setImageUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
@@ -33,7 +33,6 @@ const ImageUploader = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageUrl(downloadURL);
-          console.log(downloadURL)
           setLoading(false);
         });
       }
