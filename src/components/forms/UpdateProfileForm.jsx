@@ -1,6 +1,7 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { Avatar, Button, TextField, Typography, Box } from "@mui/material";
 import UserService from "../../service/UserService";
+import Loader from "../../Loading/Loader";
 
 const UpdateProfileForm = (props) => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,9 @@ const UpdateProfileForm = (props) => {
     phone: props.profileData.phone || "",
   });
 
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -16,12 +20,17 @@ const UpdateProfileForm = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     try {
       await UserService.updateUserProfile(formData);
       props.setProfileData(formData);
       props.handleClose();
     } catch (error) {
       console.error("Error updating profile:", error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(true);
+      }, 3000);
     }
   };
 
@@ -101,7 +110,7 @@ const UpdateProfileForm = (props) => {
           color="primary"
           sx={{ mt: 3, mb: 2 }}
         >
-          Save
+          {isLoading ? <Loader size={24} color="#ffffff" /> : <span>Save</span>}
         </Button>
       </Box>
     </Box>

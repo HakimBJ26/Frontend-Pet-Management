@@ -25,6 +25,7 @@ import {
   PET_SHOP_MANAGEMENT
 } from './common/configuration/constants/Paths';
 import BottomBar from './components/global/ButtomBar';
+import Loader from './Loading/Loader';
 
 function App() {
   const [colorMode, theme] = useMode();
@@ -32,9 +33,10 @@ function App() {
   const location = useLocation();
   const isMobile = useMediaQuery('(max-width: 600px)');
   const [showSidebar, setShowSidebar] = useState(!isMobile);
+
   useEffect(() => {
-    const {role } = getAuthInfo();
-    
+    const { role } = getAuthInfo();
+
     if (location.pathname === SIGN_UP_PATH) {
       return;
     }
@@ -88,21 +90,24 @@ function App() {
 
   return (
     <AuthContextProvider>
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="app">
-          {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
-          {shouldShowTopBar(location.pathname) && <TopBar />}
-          <main className="content">
-            <ProtectedRoutes />
-            <Toaster expand visibleToasts={9} />
-          </main>
-          {isMobile && shouldShowSideBar(location.pathname) &&<BottomBar />}
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
-  </AuthContextProvider>
+
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <div className="app">
+            {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
+            {shouldShowTopBar(location.pathname) && <TopBar />}
+            <main className="content">
+              <ProtectedRoutes />
+              <Toaster expand visibleToasts={9} />
+            </main>
+            {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
+          </div>
+          <Loader />
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+
+    </AuthContextProvider>
   );
 }
 
