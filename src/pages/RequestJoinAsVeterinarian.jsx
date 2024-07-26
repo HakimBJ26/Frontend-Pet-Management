@@ -13,7 +13,6 @@ import CustomTextField from '../components/CustomTextField';
 import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsName';
 import { SUCCESS_REQUEST_JOIN_TOAST, ERROR_REQUEST_JOIN_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
-import Footer from '../components/global/Footer';
 import { ROLE_VETO } from '../common/configuration/constants/UserRole';
 
 export default function RequestJoinAsVeterinarian() {
@@ -116,7 +115,6 @@ export default function RequestJoinAsVeterinarian() {
           </Button>
         </Box>
       </StyledBox>
-      <Footer />
     </>
   );
 }

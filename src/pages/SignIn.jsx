@@ -15,7 +15,6 @@ import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/cons
 import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH, ASK_TO_RESET_PASS } from '../common/configuration/constants/Paths' 
 import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig'
 import useToast from '../hooks/useToast'
-import Footer from '../components/global/Footer'
 
 export default function SignIn() {
   const theme = useTheme();
@@ -135,7 +134,6 @@ export default function SignIn() {
           </Grid>
         </Box>
       </StyledBox>
-      <Footer />
     </>
   );
 }

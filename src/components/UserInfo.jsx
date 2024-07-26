@@ -14,7 +14,7 @@ function UserInfo({ user }) {
 
   
       
-      if(idAdmin==data.id){
+      if(idAdmin===data.id){
         try {
           await  UserService.updateUserProfile({
               name: data.name,

@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
-import { Box, Modal, Typography, TextField, Button } from '@mui/material';
-import { CloudUpload as CloudUploadIcon } from '@mui/icons-material';
+import React, { useState, useEffect } from 'react';
+import { Box, Modal, Typography, TextField, Button, CircularProgress } from '@mui/material';
+import ImageUploader from '../global/ImageUploader';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../firebase';
 
 const AddProductModal = ({ open, onClose, onAdd }) => {
   const [newProduct, setNewProduct] = useState({ name: '', price: '', imageUrl: '' });
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (!open) {
+      setNewProduct({ name: '', price: '', imageUrl: '' });
+      setImage(null);
+      setLoading(false);
+      setErrors({});
+    }
+  }, [open]);
 
   const handleChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -12,12 +25,46 @@ const AddProductModal = ({ open, onClose, onAdd }) => {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
-    setNewProduct({ ...newProduct, imageUrl: URL.createObjectURL(e.target.files[0]) });
   };
 
-  const handleAdd = () => {
-    onAdd(newProduct);
-    onClose();
+  const validateFields = () => {
+    const errors = {};
+    if (!newProduct.name.trim()) errors.name = "Name is required";
+    if (!newProduct.price) errors.price = "Price is required";
+    return errors;
+  };
+
+  const handleAdd = async () => {
+    const validationErrors = validateFields();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    if (image) {
+      setLoading(true);
+      const storageRef = ref(storage, `images/${image.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, image);
+
+      uploadTask.on(
+        'state_changed',
+        null,
+        (error) => {
+          console.error('Upload error:', error);
+          setLoading(false);
+        },
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          const updatedProduct = { ...newProduct, imageUrl: downloadURL };
+          onAdd(updatedProduct);
+          setLoading(false);
+          onClose();
+        }
+      );
+    } else {
+      onAdd(newProduct);
+      onClose();
+    }
   };
 
   return (
@@ -33,6 +80,8 @@ const AddProductModal = ({ open, onClose, onAdd }) => {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          error={!!errors.name}
+          helperText={errors.name}
         />
         <TextField
           label="Price"
@@ -41,23 +90,26 @@ const AddProductModal = ({ open, onClose, onAdd }) => {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          error={!!errors.price}
+          helperText={errors.price}
         />
+        <ImageUploader onImageChange={handleImageChange} />
+        {image && (
+          <Box
+            component="img"
+            src={URL.createObjectURL(image)}
+            alt="Product"
+            sx={{ mt: 2, width: '100%', height: 'auto' }}
+          />
+        )}
         <Button
           variant="contained"
-          component="label"
-          startIcon={<CloudUploadIcon />}
+          color="primary"
+          onClick={handleAdd}
           sx={{ mt: 2 }}
+          disabled={loading}
         >
-          Upload Image
-          <input
-            type="file"
-            hidden
-            onChange={handleImageChange}
-          />
-        </Button>
-        {image && <Box component="img" src={newProduct.imageUrl} alt="Product" sx={{ mt: 2, width: '100%', height: 'auto' }} />}
-        <Button variant="contained" color="primary" onClick={handleAdd} sx={{ mt: 2 }}>
-          Add Product
+          {loading ? <CircularProgress size={24} /> : 'Add Product'}
         </Button>
         <Button variant="outlined" sx={{ mt: 2, ml: 2 }} onClick={onClose}>
           Cancel

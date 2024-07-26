@@ -109,3 +109,74 @@ export const SUCCESS_SIGN_UP_TOAST = {
     },
   };
   
+
+  export const SUCCESS_ADD_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Product added successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+  
+  export const ERROR_ADD_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to add product.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  
+  export const SUCCESS_UPDATE_PRODUCT_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Product updated successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+  
+  export const ERROR_UPDATE_PRODUCT_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to update product.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  
+  export const SUCCESS_DELETE_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Product deleted successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+  
+  export const ERROR_DELETE_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to delete product.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  
+  export const ERROR_FETCH_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to fetch products.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  

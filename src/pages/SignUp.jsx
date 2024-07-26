@@ -130,8 +130,9 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </Box>
+       
       </StyledBox>
-      <Footer />
+      <Footer/>
     </>
   );
 }

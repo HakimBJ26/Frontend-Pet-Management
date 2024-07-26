@@ -11,8 +11,10 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { storage } from '../../firebase'; 
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../firebase';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
+import { useTheme } from '@emotion/react';
 
 const StyledModal = styled(Modal)`
   display: flex;
@@ -21,8 +23,8 @@ const StyledModal = styled(Modal)`
 `;
 
 const ContentBox = styled(Box)`
-  background-color: white;
-  padding: 16px;
+background-color: ${({ theme }) => theme.palette.secondary.main};
+padding: 16px;
   border-radius: 8px;
   max-width: 500px;
   width: 100%;
@@ -36,14 +38,19 @@ const ImageCard = styled(Card)`
 const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
   const [name, setName] = useState(product?.name || '');
   const [price, setPrice] = useState(product?.price || '');
-  const [image, setImage] = useState(product?.image || '');
+  const [image, setImage] = useState(product?.imageUrl || '');
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [deleteModelConfir, setDeleteModelConfir] = useState(false);
+  const theme = useTheme();
+
 
   useEffect(() => {
     setName(product?.name || '');
     setPrice(product?.price || '');
-    setImage(product?.image || '');
+    setImage(product?.imageUrl || '');
+    setErrors({});
   }, [product]);
 
   const handleImageChange = (event) => {
@@ -60,8 +67,7 @@ const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
 
     uploadTask.on(
       'state_changed',
-      (snapshot) => {
-      },
+      null,
       (error) => {
         console.error('Upload error:', error);
         alert('Error uploading image');
@@ -71,21 +77,32 @@ const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImage(downloadURL);
           setUploadingImage(false);
-          handleUpdate(downloadURL); 
+          handleUpdate(downloadURL);
         });
       }
     );
   };
 
+  const validateFields = () => {
+    const errors = {};
+    if (!name.trim()) errors.name = "Name is required";
+    if (!price) errors.price = "Price is required";
+    return errors;
+  };
+
   const handleUpdate = (uploadedImageUrl) => {
+    const validationErrors = validateFields();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     const updatedProduct = {
       ...product,
       name,
       price,
-      image: uploadedImageUrl || image, 
+      imageUrl: uploadedImageUrl || image,
     };
-    console.log(updatedProduct.image)
-    console.log(JSON.stringify(updatedProduct, null, 2));
     onUpdate(updatedProduct);
   };
 
@@ -93,13 +110,13 @@ const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
     if (selectedFile) {
       handleImageUpload();
     } else {
-      handleUpdate(); 
+      handleUpdate();
     }
   };
 
   return (
     <StyledModal open={open} onClose={onClose}>
-      <ContentBox>
+   <ContentBox theme={theme}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h6">Update Product</Typography>
           <IconButton onClick={onClose}>
@@ -120,6 +137,8 @@ const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           sx={{ mb: 2 }}
+          error={!!errors.name}
+          helperText={errors.name}
         />
         <TextField
           fullWidth
@@ -128,6 +147,8 @@ const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           sx={{ mb: 2 }}
+          error={!!errors.price}
+          helperText={errors.price}
         />
         <TextField
           type="file"
@@ -143,10 +164,18 @@ const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
           >
             {uploadingImage ? 'Uploading...' : 'Update'}
           </Button>
-          <Button variant="contained" color="secondary" onClick={onDelete}>
+          <Button variant="contained" color="error" onClick={() => setDeleteModelConfir(true)}>
             Delete
           </Button>
         </Box>
+        <DeleteConfirmationModal
+          open={deleteModelConfir}
+          onConfirm={() => {
+            onDelete()
+            setDeleteModelConfir(false);
+          }}
+          onClose={() => setDeleteModelConfir(false)}
+        />
       </ContentBox>
     </StyledModal>
   );

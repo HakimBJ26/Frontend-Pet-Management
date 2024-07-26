@@ -31,9 +31,9 @@ axiosPrivate.interceptors.response.use(
                 localStorage.removeItem('id')
                   window.location.href = SIGN_IN_PATH
         }
-        console.log(error)
+        console.log(error.response.status)
       
-        if ( error && error.response.status === 500) {
+        if ( error && (error.response.status === 500 || error.response.status === 403)) {
             try {
                 await axiosPrivate.post(REFRESH_TOKEN_API, {}, { withCredentials: true })
                 const originalRequest = error.response.config

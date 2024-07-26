@@ -4,7 +4,6 @@ import { useTheme } from '@emotion/react'
 import { tokens } from '../../theme'
 import { useNavigate } from 'react-router-dom'
 import { ADMIN_DASH_PATH, MANAGE_VETO_REQUEST, PET_SHOP_MANAGEMENT, USER_MANAGEMENT_PATH } from '../../common/configuration/constants/Paths'
-import ImageUploader from '../../components/global/ImageUploader'
 import { useState } from 'react'
 
 const drawerWidth = 240
@@ -137,7 +136,6 @@ function Dashboard() {
             </Container>
           </Box>
         </Container>
-        <ImageUploader/>
       </Box>
     </Box>
   )

@@ -11,6 +11,8 @@ export const APPROVE_VETO_ACC_API='/api/auth/approveUserByEmail'
 export const SEND_RESET_PASS_MAIL='/api/auth/sendResetPasswordEmail'
 export const VERIFY_RESET_PASS_TOKEN='/api/auth/verifyResetPasswordToken'
 export const RESET_PASS='/api/auth/resetPassword'
+export const PET_SHOP='/api/accessories'
+
 
 
 

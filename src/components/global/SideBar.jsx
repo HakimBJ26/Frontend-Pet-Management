@@ -11,6 +11,7 @@ import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PetsOutlinedIcon from '@mui/icons-material/PetsOutlined';
 import MedicalServicesOutlinedIcon from '@mui/icons-material/MedicalServicesOutlined';
 import SideBarItem from './SideBarItem';
@@ -35,7 +36,8 @@ import {
   USER_PROFILE,
   ADMIN_DASH_PATH,
   PET_SHOP_MANAGEMENT,
-  USER_MANAGEMENT_PATH
+  USER_MANAGEMENT_PATH,
+  MANAGE_VETO_REQUEST
 } from '../../common/configuration/constants/Paths';
 import { getAuthInfo } from '../../utils/authCred';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../../common/configuration/constants/UserRole';
@@ -170,6 +172,9 @@ function SideBar() {
                       </Link>
                       <Link to={`${ADMIN_DASH_PATH}${PET_SHOP_MANAGEMENT}`} style={{ textDecoration: 'none' }}>
                         <SideBarItem title="Pet Shop Management" icon={<StorefrontOutlinedIcon />} selected={selected} setSelected={setSelected} />
+                      </Link>
+                      <Link to={`${ADMIN_DASH_PATH}${MANAGE_VETO_REQUEST}`} style={{ textDecoration: 'none' }}>
+                        <SideBarItem title="VETO Request Management" icon={<ManageAccountsIcon />} selected={selected} setSelected={setSelected} />
                       </Link>
                     </>
                   )}

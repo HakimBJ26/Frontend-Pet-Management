@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -19,10 +19,19 @@ import { products } from "../../common/configuration/constants/Products";
 import AddProductModal from "../../components/model/AddProductModal";
 import AddButtonCard from "../../components/AddButtonCard";
 import DetailModal from "../../components/model/DetailModel";
-
+import PetShopService from '../../service/PetShopService';
+import useToast from '../../hooks/useToast';
+import { 
+  SUCCESS_ADD_TOAST,
+  ERROR_ADD_TOAST,
+  SUCCESS_UPDATE_PRODUCT_TOAST,
+  ERROR_UPDATE_PRODUCT_TOAST,
+  SUCCESS_DELETE_TOAST,
+  ERROR_DELETE_TOAST,
+} from '../../common/configuration/constants/ToastConfig';
 
 const PageContainer = styled(Container)`
-  margin-top: 16px;
+  margin-top: 40px;
   width: 60%;
 `;
 
@@ -45,21 +54,58 @@ function PetShopManagement() {
   const [isDetailModalOpen, setDetailModalOpen] = useState(false);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [productList, setProductList] = useState(products);
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await PetShopService.getAllProducts();
+        setProductList(res);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    }
+    fetchData();
+  }, []);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  const handleDelete = (id) => {
-    setProductList(productList.filter(product => product.id !== id));
+  const handleDelete = async (id) => {
+    try {
+      await PetShopService.deleteProduct(id);
+      setProductList(productList.filter(product => product.id !== id));
+      showToast(SUCCESS_DELETE_TOAST);
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      showToast(ERROR_DELETE_TOAST);
+    }
   };
 
-  const handleUpdate = (updatedProduct) => {
-    setProductList(productList.map(product => product.id === updatedProduct.id ? updatedProduct : product));
+  const handleUpdate = async (updatedProduct) => {
+    try {
+      await PetShopService.updateProduct(updatedProduct);
+      const updatedProducts = await PetShopService.getAllProducts();
+      setProductList(updatedProducts);
+      showToast(SUCCESS_UPDATE_PRODUCT_TOAST);
+    } catch (error) {
+      console.error('Error updating product:', error);
+      showToast(ERROR_UPDATE_PRODUCT_TOAST);
+    }
   };
 
-  const handleAdd = (newProduct) => {
-    setProductList([...productList, { ...newProduct, id: productList.length + 1 }]);
+  const handleAdd = async (newProduct) => {
+    try {
+      await PetShopService.addProduct(newProduct);
+      const updatedProducts = await PetShopService.getAllProducts();
+      setProductList(updatedProducts);
+      setAddModalOpen(false);
+      showToast(SUCCESS_ADD_TOAST);
+    } catch (error) {
+      console.error('Error adding product:', error);
+      showToast(ERROR_ADD_TOAST);
+    }
   };
 
   const handleDetailClick = (product) => {
@@ -115,8 +161,8 @@ function PetShopManagement() {
           open={isDetailModalOpen}
           onClose={() => setDetailModalOpen(false)}
           product={selectedProduct}
-          onUpdate={(updatedProduct) => {
-            handleUpdate(updatedProduct);
+          onUpdate={(selectedProduct) => {
+            handleUpdate(selectedProduct);
             setDetailModalOpen(false);
           }}
           onDelete={() => {
