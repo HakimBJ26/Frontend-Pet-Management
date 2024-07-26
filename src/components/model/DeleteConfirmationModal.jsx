@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Modal, Typography, Button } from '@mui/material';
 
 const DeleteConfirmationModal = ({ open, onClose, onConfirm }) => {

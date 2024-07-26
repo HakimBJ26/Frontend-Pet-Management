@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardMedia, CardContent, Typography, Button, Box } from '@mui/material';
 
 const PetAccessoryCard = ({ product, onUpdate, onDelete }) => {

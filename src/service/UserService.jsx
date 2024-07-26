@@ -67,7 +67,6 @@ class UserService {
         {'token':`${token}`},
         { withCredentials: true }
       )
-      console.log(response)
       return response;
     }catch(err){
 
