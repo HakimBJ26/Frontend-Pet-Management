@@ -94,14 +94,7 @@ const AddProductModal = ({ open, onClose, onAdd }) => {
           helperText={errors.price}
         />
         <ImageUploader onImageChange={handleImageChange} />
-        {image && (
-          <Box
-            component="img"
-            src={URL.createObjectURL(image)}
-            alt="Product"
-            sx={{ mt: 2, width: '100%', height: 'auto' }}
-          />
-        )}
+     
         <Button
           variant="contained"
           color="primary"
