@@ -11,8 +11,42 @@ import {
   DialogContent,
   DialogActions,
   TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import PetService from "../../service/PetService"; // Adjust the path as needed
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
+// List of domestic animal breeds
+const breedOptions = [
+  "Labrador Retriever",
+  "German Shepherd",
+  "Golden Retriever",
+  "Bulldog",
+  "Beagle",
+  "Poodle",
+  "Rottweiler",
+  "Yorkshire Terrier",
+  "Dachshund",
+  "Boxer",
+  "Siamese Cat",
+  "Persian Cat",
+  "Maine Coon",
+  "Bengal Cat",
+  "Sphynx Cat",
+  "Cavalier King Charles Spaniel",
+  "Chihuahua",
+  "French Bulldog",
+  "Rabbit",
+  "Hamster",
+  "Guinea Pig",
+  "Ferret",
+  "Parrot",
+  "Canary",
+  // Add more species or breeds as needed
+];
 
 export default function PetProfile({ petId }) {
   // Step 2: Component Definition
@@ -28,6 +62,8 @@ export default function PetProfile({ petId }) {
     breed: "",
     age: "",
   });
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Fetch pet data when the component mounts
   useEffect(() => {
@@ -61,6 +97,16 @@ export default function PetProfile({ petId }) {
     setNewPetData({ ...newPetData, [name]: value });
   };
 
+  const handleAgeChange = (e) => {
+    const value = e.target.value;
+    setNewPetData({ ...newPetData, age: value });
+  };
+
+  const handleBreedChange = (e) => {
+    const value = e.target.value;
+    setNewPetData({ ...newPetData, breed: value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -71,20 +117,13 @@ export default function PetProfile({ petId }) {
     }
 
     try {
-      // Add the new pet using your API service
       await PetService.addPet(newPetData);
 
-      // Fetch the updated pet data
-      const response = await PetService.getPetById(petId);
-
-      // Update petData with the latest data
-      setPetData({
-        name: response.name,
-        breed: response.breed,
-        age: response.age,
-      });
+      // Update petData with the new pet data
+      setPetData(newPetData);
 
       handleClose(); // Close the modal
+      navigate(-1); // Go back to the previous page
     } catch (error) {
       console.error("Error adding pet:", error);
     }
@@ -164,24 +203,38 @@ export default function PetProfile({ petId }) {
               value={newPetData.name}
               onChange={handleInputChange}
             />
-            <TextField
-              margin="dense"
-              name="breed"
-              label="Breed"
-              fullWidth
-              variant="outlined"
-              value={newPetData.breed}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="dense"
-              name="age"
-              label="Age"
-              fullWidth
-              variant="outlined"
-              value={newPetData.age}
-              onChange={handleInputChange}
-            />
+            <FormControl fullWidth margin="dense">
+              <InputLabel id="breed-select-label">Breed</InputLabel>
+              <Select
+                labelId="breed-select-label"
+                name="breed"
+                value={newPetData.breed}
+                onChange={handleBreedChange}
+                label="Breed"
+              >
+                {breedOptions.map((breed, index) => (
+                  <MenuItem key={index} value={breed}>
+                    {breed}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth margin="dense">
+              <InputLabel id="age-select-label">Age</InputLabel>
+              <Select
+                labelId="age-select-label"
+                name="age"
+                value={newPetData.age}
+                onChange={handleAgeChange}
+                label="Age"
+              >
+                {Array.from({ length: 71 }, (_, index) => (
+                  <MenuItem key={index} value={index}>
+                    {index}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </form>
         </DialogContent>
         <DialogActions>
