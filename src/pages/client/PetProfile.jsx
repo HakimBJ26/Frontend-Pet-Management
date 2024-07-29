@@ -1,5 +1,3 @@
-// PetProfile.js
-
 import React, { useEffect, useState } from "react"; // Step 1: Imports
 import {
   Card,
@@ -65,8 +63,27 @@ export default function PetProfile({ petId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if all fields are filled
+    if (!newPetData.name || !newPetData.breed || !newPetData.age) {
+      alert("Please fill in all fields");
+      return;
+    }
+
     try {
-      await PetService.addPet(newPetData); // Your API call
+      // Add the new pet using your API service
+      await PetService.addPet(newPetData);
+
+      // Fetch the updated pet data
+      const response = await PetService.getPetById(petId);
+
+      // Update petData with the latest data
+      setPetData({
+        name: response.name,
+        breed: response.breed,
+        age: response.age,
+      });
+
       handleClose(); // Close the modal
     } catch (error) {
       console.error("Error adding pet:", error);
