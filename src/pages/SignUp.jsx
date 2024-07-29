@@ -18,6 +18,7 @@ import { ERROR_SIGN_UP_TOAST, SUCCESS_SIGN_UP_TOAST } from '../common/configurat
 import useToast from '../hooks/useToast';
 import Footer from '../components/global/Footer';
 import { ROLE_CLIENT } from '../common/configuration/constants/UserRole';
+import Loader from '../Loading/Loader';
 
 export default function SignUp() {
   const theme = useTheme();
@@ -35,6 +36,7 @@ export default function SignUp() {
   });
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -63,10 +65,10 @@ export default function SignUp() {
     event.preventDefault();
     const validated = validate();
     if (validated) {
+      setIsLoading(true);
       const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
-      
       const { countryCode, ...submissionData } = formData;
-      submissionData.phone = fullPhoneNumber; 
+      submissionData.phone = fullPhoneNumber;
 
       try {
         await UserService.register(submissionData);
@@ -77,6 +79,8 @@ export default function SignUp() {
       } catch (error) {
         showToast(ERROR_SIGN_UP_TOAST);
         console.error('Error registering user:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -90,49 +94,48 @@ export default function SignUp() {
 
   return (
     <>
-      <StyledBox>
-        <Typography variant="h1">PETAGORA</Typography>
-        <Divider variant="middle" sx={{ mb: 3 }} />
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <PetsIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom: 10 }}>
-          <Grid container spacing={2}>
-            {fields.map((field) => (
-              <Grid item xs={12} sm={field.name === 'countryCode' || field.name === 'phone' ? 6 : 12} key={field.id}>
-                <CustomTextField
-                  autoComplete={field.autoComplete}
-                  name={field.name}
-                  required
-                  fullWidth
-                  id={field.id}
-                  label={field.label}
-                  type={field.type}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  error={!!errors[field.name]}
-                  helperText={errors[field.name]}
-                />
-              </Grid>
-            ))}
-          </Grid>
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link style={{ color: colors.primary[400] }} to={SIGN_IN_PATH}>
-                <h3>Already have an account? Sign in</h3>
-              </Link>
+    <StyledBox>
+      <Typography variant="h1">PETAGORA</Typography>
+      <Divider variant="middle" sx={{ mb: 3 }} />
+      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+        <PetsIcon />
+      </Avatar>
+      <Typography component="h1" variant="h5">
+        Sign up
+      </Typography>
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom: 10 }}>
+        <Grid container spacing={2}>
+          {fields.map((field) => (
+            <Grid item xs={12} sm={field.name === 'countryCode' || field.name === 'phone' ? 6 : 12} key={field.id}>
+              <CustomTextField
+                autoComplete={field.autoComplete}
+                name={field.name}
+                required
+                fullWidth
+                id={field.id}
+                label={field.label}
+                type={field.type}
+                value={field.value}
+                onChange={handleChange}
+                error={!!field.error}
+                helperText={field.helperText}
+              />
             </Grid>
+          ))}
+        </Grid>
+        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          {isLoading ? <Loader size={24} color="#ffffff" /> : <span>Sign Up</span>}
+        </Button>
+        <Grid container justifyContent="flex-end">
+          <Grid item>
+            <Link style={{ color: colors.primary[400] }} to={SIGN_IN_PATH}>
+              <h3>Already have an account? Sign in</h3>
+            </Link>
           </Grid>
-        </Box>
-       
-      </StyledBox>
-      <Footer/>
+        </Grid>
+      </Box>
+    </StyledBox>
+    <Footer/>
     </>
   );
 }

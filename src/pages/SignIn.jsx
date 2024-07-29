@@ -2,19 +2,20 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box'
-import PetsIcon from '@mui/icons-material/Pets'
-import Typography from '@mui/material/Typography'
-import { Link, useNavigate } from 'react-router-dom'
-import { tokens } from '../theme'
-import { useState } from 'react'
-import { useTheme } from '@mui/material'
-import UserService from '../service/UserService'
-import { StyledBox } from '../components/StyledBox'
-import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole'
-import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH, ASK_TO_RESET_PASS } from '../common/configuration/constants/Paths' 
-import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig'
-import useToast from '../hooks/useToast'
+import Box from '@mui/material/Box';
+import PetsIcon from '@mui/icons-material/Pets';
+import Typography from '@mui/material/Typography';
+import { Link, useNavigate } from 'react-router-dom';
+import { tokens } from '../theme';
+import { useState } from 'react';
+import { useTheme } from '@mui/material';
+import UserService from '../service/UserService';
+import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
+import { ADMIN_DASH_PATH, ASK_TO_RESET_PASS, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH } from '../common/configuration/constants/Paths';
+import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig';
+import useToast from '../hooks/useToast';
+import Loader from '../Loading/Loader';
+import { StyledBox } from '../components/StyledBox';
 
 export default function SignIn() {
   const theme = useTheme();
@@ -24,9 +25,9 @@ export default function SignIn() {
     email: '',
     password: '',
   });
-
   const { showToast } = useToast();
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,6 +49,7 @@ export default function SignIn() {
     event.preventDefault();
     const validated = validate();
     if (validated) {
+      setIsLoading(true)
       try {
         const userData = await UserService.login(formData.email, formData.password);
         if (userData) {
@@ -67,12 +69,13 @@ export default function SignIn() {
       } catch (error) {
         console.log(error);
         showToast(ERROR_LOGIN_TOAST);
+      } finally {
+        setIsLoading(true);
       }
     }
   };
 
   return (
-    <>
       <StyledBox>
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <PetsIcon />
@@ -113,13 +116,13 @@ export default function SignIn() {
             </Grid>
           </Grid>
           <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          {isLoading ? <Loader size={24} color="#ffffff" /> : <span>Sign In</span>}
+        </Button>
           <Grid container justifyContent="space-between">
             <Grid item>
               <Link style={{ color: colors.primary[400] }} to={SIGN_UP_PATH}>
@@ -132,8 +135,10 @@ export default function SignIn() {
               </Link>
             </Grid>
           </Grid>
-        </Box>
-      </StyledBox>
-    </>
+      
+    
+      </Box>
+    </StyledBox>
+  
   );
 }
