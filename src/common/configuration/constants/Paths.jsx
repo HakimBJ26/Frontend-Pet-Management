@@ -24,5 +24,6 @@ export const PET_SHOP_MANAGEMENT = '/pet_shop_management'
 export const SUBMIT_VETO_REQUEST = '/submit_veto_request';
 export const RESET_PASS_REQUEST = '/resetPassword';
 export const ASK_TO_RESET_PASS = '/ask_to_reset_pass';
+export const CONSULT_VETO = '/consult_veto';
 
 //http://localhost:3000/resetPassword?token=d671634b-27ea-41ab-9359-d26be772623b

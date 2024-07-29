@@ -26,7 +26,8 @@ import {
   MANAGE_VETO_REQUEST,
   SUBMIT_VETO_REQUEST,
   RESET_PASS_REQUEST,
-  ASK_TO_RESET_PASS
+  ASK_TO_RESET_PASS,
+  CONSULT_VETO
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
 
@@ -59,7 +60,7 @@ function App() {
             GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
             COMMUNITY_PATH, USER_PROFILE, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
-            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE , CONSULT_VETO
           ]
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return

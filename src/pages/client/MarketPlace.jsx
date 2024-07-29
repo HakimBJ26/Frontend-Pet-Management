@@ -5,10 +5,10 @@ import ProductCard from '../../components/ProductCard';
 import PetShopService from '../../service/PetShopService';
 import { getCartFromLocalStorage, saveCartToLocalStorage } from '../../utils/cartStorage';
 import CartModal from '../../components/model/CartModel';
+import SearchBar from '../../components/SearchBar';
 
 function MarketPlace() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [productList, setProductList] = useState([]);
   const [cartCount, setCartCount] = useState(0); 
   const [isCartOpen, setIsCartOpen] = useState(false); 
@@ -32,6 +32,14 @@ function MarketPlace() {
     setCartCount(cart.reduce((total, item) => total + item.nb, 0)); 
   }, [userId]);
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredAccessories = productList.filter(prod =>
+    prod.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+  );
+
   const handleAddToCart = (product) => {
     let cart = getCartFromLocalStorage(userId);
     const productIndex = cart.findIndex(item => item.id === product.id);
@@ -49,8 +57,11 @@ function MarketPlace() {
   return (
     <Box sx={{ marginTop: '50px', paddingBottom: '100px' }}>
       <h2 style={{ textAlign: 'center' }}>Marketplace</h2>
+      <Box sx={{marginBottom:'20px'}}>
+      <SearchBar placeholder="Search Accessories By Name" value={searchQuery} onChange={handleSearchChange} />
+      </Box>
       <Grid container spacing={2} justifyContent="center">
-        {productList.map((product) => (
+        {filteredAccessories.map((product) => (
           <Grid item xs={6} sm={3} key={product.id}>
             <ProductCard product={product} onAddToCart={() => handleAddToCart(product)} />
           </Grid>

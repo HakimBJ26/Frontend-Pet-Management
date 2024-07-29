@@ -7,12 +7,15 @@ const CartModal = ({ open, onClose, userId }) => {
   const [cart, setCart] = useState(getCartFromLocalStorage(userId));
 
   const handleQuantityChange = (productId, change) => {
-    const updatedCart = cart.map(item => {
-      if (item.id === productId) {
-        return { ...item, nb: Math.max(item.nb + change, 1) }; 
-      }
-      return item;
-    });
+    const updatedCart = cart
+      .map(item => {
+        if (item.id === productId) {
+          return { ...item, nb: item.nb + change };
+        }
+        return item;
+      })
+      .filter(item => item.nb > 0); // Filter out items with nb <= 0
+
     setCart(updatedCart);
     saveCartToLocalStorage(userId, updatedCart);
   };

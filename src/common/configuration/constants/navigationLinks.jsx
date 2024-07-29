@@ -9,13 +9,14 @@ import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined'
 import PetsOutlinedIcon from '@mui/icons-material/PetsOutlined'
 import MedicalServicesOutlinedIcon from '@mui/icons-material/MedicalServicesOutlined'
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined'
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 import {
     CLIENT_DASH_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,
     DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH,
     MARKET_PLACE_PATH, SET_ACTIVITY_GOALS_PATH, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH,
     VETO_UPDATE_TREATMENT_PATH, VETO_DASH_PATH, PET_PROFILE, USER_PROFILE, ADMIN_DASH_PATH,
-    PET_SHOP_MANAGEMENT, USER_MANAGEMENT_PATH
+    PET_SHOP_MANAGEMENT, USER_MANAGEMENT_PATH, CONSULT_VETO
 } from '../constants/Paths'
 
 export const clientLinks = [
@@ -31,6 +32,8 @@ export const clientLinks = [
     { to: `${CLIENT_DASH_PATH}${MARKET_PLACE_PATH}`, icon: <StorefrontOutlinedIcon fontSize="small" />, label: 'Marketplace' },
     { to: `${CLIENT_DASH_PATH}${COMMUNITY_PATH}`, icon: <GroupOutlinedIcon fontSize="small" />, label: 'Community' },
     { to: `${CLIENT_DASH_PATH}${BREED_AUTHENTICITY_PATH}`, icon: <PetsOutlinedIcon fontSize="small" />, label: 'Breed Auth' },
+    { to: `${CLIENT_DASH_PATH}${CONSULT_VETO}`, icon: <PersonSearchIcon fontSize="small" />, label: 'Veto' },
+
 ]
 
 export const vetoLinks = [
