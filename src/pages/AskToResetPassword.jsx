@@ -16,7 +16,8 @@ function AskToResetPassword() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validate()) {
+    const validated = validate()
+    if (validated) {
         await UserService.sendResetPassMail(email)
       setEmailSent(true);
     }

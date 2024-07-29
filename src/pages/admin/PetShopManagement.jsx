@@ -13,7 +13,6 @@ import {
   Paper,
 } from '@mui/material';
 import { Visibility } from '@mui/icons-material';
-import styled from '@emotion/styled';
 import SearchBar from "../../components/SearchBar";
 import { products } from "../../common/configuration/constants/Products";
 import AddProductModal from "../../components/model/AddProductModal";
@@ -30,23 +29,10 @@ import {
   ERROR_DELETE_TOAST,
 } from '../../common/configuration/constants/ToastConfig';
 
-const PageContainer = styled(Container)`
-  margin-top: 40px;
-  width: 60%;
-`;
 
-const HeaderBox = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 16px;
-`;
 
-const CenteredBox = styled(Box)`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 16px;
-`;
+
+
 
 function PetShopManagement() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -118,8 +104,9 @@ function PetShopManagement() {
   );
 
   return (
-    <PageContainer>
-      <HeaderBox>
+    <Container sx={{  marginTop: '40px',
+      width: '60%'}}>
+      <Box className='header-box-pet-management'>
         <Typography variant="h4" component="h1" gutterBottom>
           Pet Shop Management
         </Typography>
@@ -127,10 +114,12 @@ function PetShopManagement() {
           Manage Accessory Information
         </Typography>
         <SearchBar placeholder="Search Accessories By Name" value={searchQuery} onChange={handleSearchChange} />
-      </HeaderBox>
-      <CenteredBox>
+      </Box>
+      <Box sx={{  display: 'flex',
+  justifyContent: 'center',
+  marginBottom: '16px'}}>
         <AddButtonCard onAdd={() => setAddModalOpen(true)} />
-      </CenteredBox>
+      </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -177,7 +166,7 @@ function PetShopManagement() {
         onClose={() => setAddModalOpen(false)}
         onAdd={handleAdd}
       />
-    </PageContainer>
+    </Container>
   );
 }
 

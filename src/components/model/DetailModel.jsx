@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Modal,
   Box,
   Typography,
   Button,
@@ -9,31 +8,16 @@ import {
   Card,
   CardMedia,
 } from '@mui/material';
-import { styled } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import { useTheme } from '@emotion/react';
+import StyledModel from '../styledComponents/StyledModel';
 
-const StyledModal = styled(Modal)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
-const ContentBox = styled(Box)`
-background-color: ${({ theme }) => theme.palette.secondary.main};
-padding: 16px;
-  border-radius: 8px;
-  max-width: 500px;
-  width: 100%;
-  outline: none;
-`;
 
-const ImageCard = styled(Card)`
-  margin-bottom: 16px;
-`;
+
 
 const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
   const [name, setName] = useState(product?.name || '');
@@ -115,22 +99,22 @@ const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
   };
 
   return (
-    <StyledModal open={open} onClose={onClose}>
-   <ContentBox theme={theme}>
+    <StyledModel open={open} onClose={onClose}>
+   <Box className='custom-content-box-detail-model' sx={{background:theme.palette.secondary.main}}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h6">Update Product</Typography>
           <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Box>
-        <ImageCard>
+        <Card sx={{marginBottom:'16px'}}>
           <CardMedia
             component="img"
             alt={product?.name}
             height="200"
             image={image}
           />
-        </ImageCard>
+        </Card>
         <TextField
           fullWidth
           label="Name"
@@ -176,8 +160,8 @@ const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
           }}
           onClose={() => setDeleteModelConfir(false)}
         />
-      </ContentBox>
-    </StyledModal>
+      </Box>
+    </StyledModel>
   );
 };
 

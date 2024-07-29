@@ -5,16 +5,6 @@ import { ERROR_UPDATE_TOAST, SUCCESS_UPDATE_TOAST } from '../../common/configura
 import useToast from '../../hooks/useToast';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../../common/configuration/constants/UserRole'
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
 
 function UpdateUserModal({ open, handleClose, user, onUserUpdate }) {
   const [data, setData] = useState(user);
@@ -49,7 +39,7 @@ function UpdateUserModal({ open, handleClose, user, onUserUpdate }) {
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Paper elevation={3} sx={style}>
+      <Paper elevation={3} className='custom-paper-update-user-model'>
         <Typography variant="h6" gutterBottom>
           Update User Information
         </Typography>

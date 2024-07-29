@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Modal, Typography, TextField, Button, CircularProgress } from '@mui/material';
+import { Box, Modal, Typography, TextField, Button, CircularProgress, useTheme } from '@mui/material';
 import ImageUploader from '../global/ImageUploader';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../firebase';
@@ -9,6 +9,7 @@ const AddProductModal = ({ open, onClose, onAdd }) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const theme = useTheme();
 
   useEffect(() => {
     if (!open) {
@@ -69,8 +70,8 @@ const AddProductModal = ({ open, onClose, onAdd }) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{ p: 4, backgroundColor: 'white', borderRadius: 2, margin: 'auto', maxWidth: 400 }}>
-        <Typography variant="h6" gutterBottom>
+      <Box className="custom-box-add-product-model" sx={{ background :theme.palette.background.paper }}>
+          <Typography variant="h6" gutterBottom>
           Add New Product
         </Typography>
         <TextField

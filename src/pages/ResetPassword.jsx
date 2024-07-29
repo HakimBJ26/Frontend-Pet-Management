@@ -4,6 +4,7 @@ import { TextField, Button, Box, Typography, Grid } from '@mui/material';
 import UserService from "../service/UserService";
 import useToast from '../hooks/useToast';
 import { SUCCESS_RESET_PASSWORD_TOAST, ERROR_INVALID_TOKEN_TOAST, ERROR_RESET_PASSWORD_TOAST } from '../common/configuration/constants/ToastConfig';
+import { SIGN_IN_PATH } from "../common/configuration/constants/Paths";
 
 function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -27,7 +28,7 @@ function ResetPassword() {
       setIsTokenValid(false);
       showToast(ERROR_INVALID_TOKEN_TOAST);
       setTimeout(() => {
-        navigate('/login');
+        navigate(SIGN_IN_PATH);
       }, 1000);
     }
   }, [showToast, navigate]);
@@ -54,12 +55,13 @@ function ResetPassword() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validate()) {
+    const validated = validate()
+    if (validated) {
       try {
         await UserService.resetPassword(password, confirmPassword, token);
         showToast(SUCCESS_RESET_PASSWORD_TOAST);
         setTimeout(() => {
-          navigate('/login');
+          navigate(SIGN_IN_PATH);
         }, 1000);
       } catch (error) {
         console.error('Password reset failed:', error);

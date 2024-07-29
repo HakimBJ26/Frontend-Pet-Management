@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
-import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar';
+import { Menu } from 'react-pro-sidebar';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import FitnessCenterOutlinedIcon from '@mui/icons-material/FitnessCenterOutlined';
@@ -43,7 +43,8 @@ import { getAuthInfo } from '../../utils/authCred';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../../common/configuration/constants/UserRole';
 import { tokens } from '../../theme';
 import { useTheme } from '@emotion/react';
-import { styled } from '@mui/material/styles';
+import StyledSidebar from '../styledComponents/StyledSideBar';
+import StyledMenuItem from '../styledComponents/StyledMenuItem';
 
 
 function SideBar() {
@@ -53,22 +54,8 @@ function SideBar() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const StyledSidebar = styled(Sidebar)(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-    '.pro-menu-item': {
-       backgroundColor: colors.neutral[200],
-      '&.active': {
-          backgroundColor: colors.neutral[200]
-      },
-    },
-  }));
+
   
-  const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-    '&.active': {
-        backgroundColor: colors.neutral[200]
-    },
-  }));
 
   return (
     <Box
@@ -87,7 +74,7 @@ function SideBar() {
       {role ? (
         <StyledSidebar collapsed={isCollapsed}>
           <Menu iconShape="square">
-            <StyledMenuItem 
+            <StyledMenuItem
               onClick={() => setIsCollapsed(!isCollapsed)}
               icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             >

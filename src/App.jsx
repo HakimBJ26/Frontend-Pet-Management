@@ -30,7 +30,6 @@ import {
   CONSULT_VETO
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
-import Loader from './Loading/Loader'
 
 function App() {
   const [colorMode, theme] = useMode()
@@ -107,7 +106,6 @@ function App() {
             </main>
             {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
           </div>
-          <Loader />
         </ThemeProvider>
       </ColorModeContext.Provider>
 

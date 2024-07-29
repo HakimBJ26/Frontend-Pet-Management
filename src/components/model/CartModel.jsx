@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { Modal, Box, Typography, IconButton, Button, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Modal, Box, Typography, IconButton, Button, Grid, useTheme } from '@mui/material';
 import { Close as CloseIcon, Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { getCartFromLocalStorage, saveCartToLocalStorage } from '../../utils/cartStorage';
 
 const CartModal = ({ open, onClose, userId }) => {
   const [cart, setCart] = useState(getCartFromLocalStorage(userId));
+  const theme = useTheme()
 
+  useEffect(()=>{
+    setCart(getCartFromLocalStorage(userId))
+  },[open,userId])
   const handleQuantityChange = (productId, change) => {
     const updatedCart = cart
       .map(item => {
@@ -14,7 +18,7 @@ const CartModal = ({ open, onClose, userId }) => {
         }
         return item;
       })
-      .filter(item => item.nb > 0); // Filter out items with nb <= 0
+      .filter(item => item.nb > 0); 
 
     setCart(updatedCart);
     saveCartToLocalStorage(userId, updatedCart);
@@ -26,8 +30,8 @@ const CartModal = ({ open, onClose, userId }) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box sx={{ width: 300, margin: 'auto', marginTop: '100px', backgroundColor: 'background.paper', padding: 2, borderRadius: 2 }}>
-        <IconButton onClick={onClose} sx={{ position: 'absolute', top: 16, right: 16 }}>
+   <Box className="custom-cart-box" sx={{ background :theme.palette.background.paper }}>
+          <IconButton onClick={onClose} sx={{ position: 'absolute', top: 16, right: 16 }}>
           <CloseIcon />
         </IconButton>
         <Typography variant="h6">Cart</Typography>

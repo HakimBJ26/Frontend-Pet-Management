@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Box, Badge, IconButton, useTheme } from '@mui/material';
+import { Grid, Box, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ProductCard from '../../components/ProductCard';
 import PetShopService from '../../service/PetShopService';
 import { getCartFromLocalStorage, saveCartToLocalStorage } from '../../utils/cartStorage';
 import CartModal from '../../components/model/CartModel';
 import SearchBar from '../../components/SearchBar';
+import FloatingCartIcon from '../../components/styledComponents/FloatingCartIcon';
 
 function MarketPlace() {
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
   const [cartCount, setCartCount] = useState(0); 
   const [isCartOpen, setIsCartOpen] = useState(false); 
-  const theme = useTheme();
   const userId = localStorage.getItem('id'); 
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function MarketPlace() {
   useEffect(() => {
     const cart = getCartFromLocalStorage(userId);
     setCartCount(cart.reduce((total, item) => total + item.nb, 0)); 
-  }, [userId]);
+  }, [userId,isCartOpen,cartCount]);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -68,25 +68,12 @@ function MarketPlace() {
         ))}
       </Grid>
 
-      {/* Floating Cart Icon */}
-      <IconButton
-        sx={{
-          position: 'fixed',
-          bottom: 80,
-          right: 16,
-          backgroundColor: theme.palette.secondary.dark,
-          color: '#fff',
-          '&:hover': {
-            backgroundColor: theme.palette.primary.dark,
-          },
-        }}
-        color="inherit"
-        onClick={() => setIsCartOpen(true)} 
-      >
+    
+      <FloatingCartIcon color="inherit" onClick={() => setIsCartOpen(true)}>
         <Badge badgeContent={cartCount} color="error">
           <ShoppingCartIcon />
         </Badge>
-      </IconButton>
+      </FloatingCartIcon>
 
      
       <CartModal open={isCartOpen} onClose={() => setIsCartOpen(false)} userId={userId} />
