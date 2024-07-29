@@ -8,26 +8,26 @@ import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
 import { tokens } from '../theme';
 import { useState } from 'react';
-import {  useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import UserService from '../service/UserService';
 import StyledBox from '../components/StyledBox';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
-import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH} from '../common/configuration/constants/Paths';
+import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH } from '../common/configuration/constants/Paths';
 import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
+import Loader from '../Loading/Loader';
 
 export default function SignIn() {
- const theme = useTheme()
- const navigate=useNavigate()
+  const theme = useTheme();
+  const navigate = useNavigate();
   const colors = tokens(theme.palette.mode);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-
-  const {showToast}= useToast()
-
+  const { showToast } = useToast();
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -45,52 +45,46 @@ export default function SignIn() {
     return Object.values(tempErrors).every(x => x === '');
   };
 
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const validated= validate()
+    const validated = validate();
     if (validated) {
-      try{
-        const userData=  await UserService.login(formData.email,formData.password)
-            if (userData) {
-                localStorage.setItem('role', userData.role)
-                localStorage.setItem('id', userData.id)
-                showToast(SUCCESS_LOGIN_TOAST);
-                setTimeout(()=>{
-                  if(userData.role===ROLE_ADMIN){
-                    navigate(ADMIN_DASH_PATH)
-                }else if(userData.role===ROLE_CLIENT){
-                  navigate(CLIENT_DASH_PATH)   
-                }else if(userData.role===ROLE_VETO){
-                  navigate(VETO_DASH_PATH)
-                }
-                }, 2000);
-             
+      setIsLoading(true)
+      try {
+        const userData = await UserService.login(formData.email, formData.password);
+        if (userData) {
+          localStorage.setItem('role', userData.role);
+          localStorage.setItem('id', userData.id);
+          showToast(SUCCESS_LOGIN_TOAST);
+          setTimeout(() => {
+            if (userData.role === ROLE_ADMIN) {
+              navigate(ADMIN_DASH_PATH);
+            } else if (userData.role === ROLE_CLIENT) {
+              navigate(CLIENT_DASH_PATH);
+            } else if (userData.role === ROLE_VETO) {
+              navigate(VETO_DASH_PATH);
             }
-
-      }catch(error){
-          console.log(error)
-          showToast(ERROR_LOGIN_TOAST);
-        
+          }, 2000);
+        }
+      } catch (error) {
+        console.log(error);
+        showToast(ERROR_LOGIN_TOAST);
+      } finally {
+        setIsLoading(true);
       }
     }
   };
 
   return (
-    <StyledBox
-    >
-
-
-          
+    <StyledBox>
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-      <PetsIcon/>
+        <PetsIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-        <Grid  container spacing={2}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               required
@@ -127,7 +121,7 @@ export default function SignIn() {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Sign In
+          {isLoading ? <Loader size={24} color="#ffffff" /> : <span>Sign In</span>}
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
@@ -137,7 +131,6 @@ export default function SignIn() {
           </Grid>
         </Grid>
       </Box>
-    
     </StyledBox>
   );
 }

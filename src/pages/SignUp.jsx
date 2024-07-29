@@ -20,6 +20,7 @@ import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsNa
 import { SIGN_IN_PATH } from '../common/configuration/constants/Paths';
 import { ERROR_SIGN_UP_TOAST, SUCCESS_SIGN_UP_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
+import Loader from '../Loading/Loader';
 
 export default function SignUp() {
   const theme = useTheme();
@@ -37,6 +38,7 @@ export default function SignUp() {
   });
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value, checked } = event.target;
@@ -74,9 +76,10 @@ export default function SignUp() {
     event.preventDefault();
     const validated = validate();
     if (validated) {
-    const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
-    const { countryCode, ...submissionData } = formData;
-    submissionData.phone = fullPhoneNumber;
+      setIsLoading(true);
+      const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
+      const { countryCode, ...submissionData } = formData;
+      submissionData.phone = fullPhoneNumber;
 
       try {
         await UserService.register(submissionData);
@@ -87,6 +90,8 @@ export default function SignUp() {
       } catch (error) {
         showToast(ERROR_SIGN_UP_TOAST);
         console.error('Error registering user:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -99,7 +104,7 @@ export default function SignUp() {
   }));
 
   return (
-    <StyledBox >
+    <StyledBox>
       <Typography variant="h1">PETAGORA</Typography>
       <Divider variant="middle" sx={{ mb: 3 }} />
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -108,7 +113,7 @@ export default function SignUp() {
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom:10 }}>
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom: 10 }}>
         <Grid container spacing={2}>
           {fields.map((field) => (
             <Grid item xs={12} sm={field.name === 'countryCode' || field.name === 'phone' ? 6 : 12} key={field.id}>
@@ -161,7 +166,7 @@ export default function SignUp() {
           </Grid>
         </Grid>
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          Sign Up
+          {isLoading ? <Loader size={24} color="#ffffff" /> : <span>Sign Up</span>}
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
