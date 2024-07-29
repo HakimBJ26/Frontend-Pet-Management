@@ -6,3 +6,8 @@ export const GET_USERS_API = "/api/auth/GetAllUsers" ;
 export const LOG_OUT_API="/api/auth/logout"
 export const UPDATE_USER_PROFILE_BY_ADMIN= "/api/auth/updateUserByAdmin"
 export const REFRESH_TOKEN_API='/api/auth/refreshToken'
+
+
+export const ADD_PET_API = "/api/pets"; 
+export const GET_PETS_API = '/api/pets';
+export const GET_PET_BY_ID_API = '/api/pets'; 

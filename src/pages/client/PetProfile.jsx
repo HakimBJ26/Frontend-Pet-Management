@@ -7,32 +7,31 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import UserService from "../../service/UserService";
+import PetService from "../../service/PetService"; // Import your PetService
 
-export default function UserProfile() {
-  const [profileData, setProfileData] = useState({
+export default function PetProfile({ petId }) {
+  // Accept petId as a prop
+  const [petData, setPetData] = useState({
     name: "",
-    email: "",
+    breed: "",
+    age: "",
   });
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const fetchPetProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
-        if (token) {
-          const response = await UserService.getUserProfile(token);
-          const userData = response.ourUsers;
-          setProfileData({
-            name: userData.name,
-            email: userData.email,
-          });
-        }
+        const response = await PetService.getPetById(petId);
+        setPetData({
+          name: response.name,
+          breed: response.breed,
+          age: response.age,
+        });
       } catch (error) {
-        console.error("Error fetching user profile:", error);
+        console.error("Error fetching pet profile:", error);
       }
     };
-    fetchUserProfile();
-  }, []);
+    fetchPetProfile();
+  }, [petId]); // Fetch pet data when petId changes
 
   return (
     <Box sx={{ mt: 5 }}>
@@ -44,7 +43,7 @@ export default function UserProfile() {
       <Card sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
           <Avatar
-            src="/placeholder-user.jpg"
+            src="/placeholder-pet.jpg" // Placeholder image for pets
             sx={{
               width: 80,
               height: 80,
@@ -52,7 +51,7 @@ export default function UserProfile() {
               borderColor: "background.default",
             }}
           >
-            AC
+            {petData.name.charAt(0)} {/* Display first letter of pet's name */}
           </Avatar>
         </Box>
         <CardContent sx={{ p: 3 }}>
@@ -60,13 +59,19 @@ export default function UserProfile() {
             <Typography variant="subtitle1" fontWeight="bold">
               Name
             </Typography>
-            <Typography variant="body2">{profileData.name}</Typography>
+            <Typography variant="body2">{petData.name}</Typography>
           </Box>
           <Box display="flex" justifyContent="space-between" mb={2}>
             <Typography variant="subtitle1" fontWeight="bold">
-              Email
+              Breed
             </Typography>
-            <Typography variant="body2">{profileData.email}</Typography>
+            <Typography variant="body2">{petData.breed}</Typography>
+          </Box>
+          <Box display="flex" justifyContent="space-between" mb={2}>
+            <Typography variant="subtitle1" fontWeight="bold">
+              Age
+            </Typography>
+            <Typography variant="body2">{petData.age}</Typography>
           </Box>
           <Box display="flex" flexDirection="column" gap={2}>
             <Button variant="outlined">Edit</Button>
