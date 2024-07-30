@@ -1,5 +1,8 @@
 import { axiosPrivate } from "../common/configuration/ApiAuth";
-import { ADD_PET_API } from "../common/configuration/constants/PathBack";
+import {
+  ADD_PET_API,
+  GET_PETS_API,
+} from "../common/configuration/constants/PathBack";
 
 class PetService {
   static async addPet(petData) {
@@ -12,7 +15,26 @@ class PetService {
     }
   }
 
+  static async getPets() {
+    try {
+      const res = await axiosPrivate.get(GET_PETS_API, {
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
   // Other methods...
+  static async getPetProfile(petId) {
+    try {
+      const response = await axiosPrivate.get(`/pets/${petId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching pet profile:", error);
+      throw error;
+    }
+  }
 }
 
 export default PetService;

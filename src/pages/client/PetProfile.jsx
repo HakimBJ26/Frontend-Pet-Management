@@ -45,7 +45,6 @@ const breedOptions = [
   "Ferret",
   "Parrot",
   "Canary",
-  "Other", // Add an "Other" option
   // Add more species or breeds as needed
 ];
 
@@ -63,8 +62,8 @@ export default function PetProfile({ petId }) {
     breed: "",
     age: "",
   });
-  const [customBreed, setCustomBreed] = useState(""); // State for custom breed
-  const [isCustomBreed, setIsCustomBreed] = useState(false); // State to show/hide custom breed field
+
+
 
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -72,7 +71,8 @@ export default function PetProfile({ petId }) {
   useEffect(() => {
     const fetchPetProfile = async () => {
       try {
-        const response = await PetService.getPetById(petId);
+        const response = await PetService.getPets();
+        console.log(response)
         setPetData({
           name: response.name,
           breed: response.breed,
@@ -83,7 +83,7 @@ export default function PetProfile({ petId }) {
       }
     };
     fetchPetProfile();
-  }, [petId]); // Step 3: Fetch data
+  }, []);
 
   // Step 4: Modal handling functions
   const handleOpen = () => {
@@ -93,8 +93,6 @@ export default function PetProfile({ petId }) {
   const handleClose = () => {
     setOpen(false);
     setNewPetData({ name: "", breed: "", age: "" }); // Reset form fields
-    setCustomBreed(""); // Reset custom breed field
-    setIsCustomBreed(false); // Reset custom breed state
   };
 
   const handleInputChange = (e) => {
@@ -109,18 +107,6 @@ export default function PetProfile({ petId }) {
 
   const handleBreedChange = (e) => {
     const value = e.target.value;
-    if (value === "Other") {
-      setIsCustomBreed(true);
-      setNewPetData({ ...newPetData, breed: "" });
-    } else {
-      setIsCustomBreed(false);
-      setNewPetData({ ...newPetData, breed: value });
-    }
-  };
-
-  const handleCustomBreedChange = (e) => {
-    const value = e.target.value;
-    setCustomBreed(value);
     setNewPetData({ ...newPetData, breed: value });
   };
 
@@ -164,7 +150,7 @@ export default function PetProfile({ petId }) {
               borderColor: "background.default",
             }}
           >
-            {petData.name.charAt(0)}
+            {petData.name}
           </Avatar>
         </Box>
         <CardContent sx={{ p: 3 }}>
@@ -225,7 +211,7 @@ export default function PetProfile({ petId }) {
               <Select
                 labelId="breed-select-label"
                 name="breed"
-                value={isCustomBreed ? "Other" : newPetData.breed}
+                value={newPetData.breed}
                 onChange={handleBreedChange}
                 label="Breed"
               >
@@ -236,17 +222,6 @@ export default function PetProfile({ petId }) {
                 ))}
               </Select>
             </FormControl>
-            {isCustomBreed && (
-              <TextField
-                margin="dense"
-                name="customBreed"
-                label="Enter Breed"
-                fullWidth
-                variant="outlined"
-                value={customBreed}
-                onChange={handleCustomBreedChange}
-              />
-            )}
             <FormControl fullWidth margin="dense">
               <InputLabel id="age-select-label">Age</InputLabel>
               <Select
