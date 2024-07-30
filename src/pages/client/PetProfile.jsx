@@ -50,11 +50,7 @@ const breedOptions = [
 
 export default function PetProfile({ petId }) {
   // Step 2: Component Definition
-  const [petData, setPetData] = useState({
-    name: "",
-    breed: "",
-    age: "",
-  });
+  const [petData, setPetData] = useState([]);
 
   const [open, setOpen] = useState(false); // Modal state
   const [newPetData, setNewPetData] = useState({
@@ -63,8 +59,6 @@ export default function PetProfile({ petId }) {
     age: "",
   });
 
-
-
   const navigate = useNavigate(); // Initialize useNavigate
 
   // Fetch pet data when the component mounts
@@ -72,12 +66,8 @@ export default function PetProfile({ petId }) {
     const fetchPetProfile = async () => {
       try {
         const response = await PetService.getPets();
-        console.log(response)
-        setPetData({
-          name: response.name,
-          breed: response.breed,
-          age: response.age,
-        });
+        console.log(response);
+        setPetData(response);
       } catch (error) {
         console.error("Error fetching pet profile:", error);
       }
@@ -132,6 +122,11 @@ export default function PetProfile({ petId }) {
     }
   };
 
+  // COMMENTED OUT <div>
+  // COMMENTED OUT{petData.map((pet) => (
+  // COMMENTED OUT<CPetCard breed={pet.breed} ... />
+  // COMMENTED OUT)}
+  // COMMENTED OUT</div>
   return (
     <Box sx={{ mt: 5 }}>
       <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
@@ -139,57 +134,61 @@ export default function PetProfile({ petId }) {
           Pet Profile
         </Typography>
       </Box>
-      <Card sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-          <Avatar
-            src="/placeholder-pet.jpg" // Placeholder image
-            sx={{
-              width: 80,
-              height: 80,
-              border: "4px solid",
-              borderColor: "background.default",
-            }}
-          >
-            {petData.name}
-          </Avatar>
-        </Box>
-        <CardContent sx={{ p: 3 }}>
-          {/* Display pet information */}
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              Name
-            </Typography>
-            <Typography variant="body2">{petData.name}</Typography>
-          </Box>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              Breed
-            </Typography>
-            <Typography variant="body2">{petData.breed}</Typography>
-          </Box>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              Age
-            </Typography>
-            <Typography variant="body2">{petData.age}</Typography>
-          </Box>
-          <Box display="flex" flexDirection="column" gap={2}>
-            <Button variant="outlined">Edit</Button>
-            <Button variant="outlined">Add Photo</Button>
-            <Button variant="outlined">Health Passport</Button>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleOpen} // Open modal
-                sx={{ mb: 2 }}
+      {petData.map(p=>{
+        return (
+          <Card sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+              <Avatar
+                src="/placeholder-pet.jpg" // Placeholder image
+                sx={{
+                  width: 80,
+                  height: 80,
+                  border: "4px solid",
+                  borderColor: "background.default",
+                }}
               >
-                Add Pet
-              </Button>
+                {p.name}
+              </Avatar>
             </Box>
-          </Box>
-        </CardContent>
-      </Card>
+            <CardContent sx={{ p: 3 }}>
+              {/* Display pet information */}
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Name
+                </Typography>
+                <Typography variant="body2">{p.name}</Typography>
+              </Box>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Breed
+                </Typography>
+                <Typography variant="body2">{p.breed}</Typography>
+              </Box>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Age
+                </Typography>
+                <Typography variant="body2">{p.age}</Typography>
+              </Box>
+              <Box display="flex" flexDirection="column" gap={2}>
+                <Button variant="outlined">Edit</Button>
+                <Button variant="outlined">Add Photo</Button>
+                <Button variant="outlined">Health Passport</Button>
+                <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleOpen} // Open modal
+                    sx={{ mb: 2 }}
+                  >
+                    Add Pet
+                  </Button>
+                </Box>
+              </Box>
+            </CardContent>
+          </Card>
+        );
+      })}
 
       {/* Modal for Adding Pet */}
       <Dialog open={open} onClose={handleClose}>
