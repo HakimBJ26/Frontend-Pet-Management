@@ -113,7 +113,7 @@ export default function PetProfile({ petId }) {
       await PetService.addPet(newPetData);
 
       // Update petData with the new pet data
-      setPetData(newPetData);
+      setPetData([...petData, newPetData]);
 
       handleClose(); // Close the modal
       navigate(-1); // Go back to the previous page
@@ -122,11 +122,6 @@ export default function PetProfile({ petId }) {
     }
   };
 
-  // COMMENTED OUT <div>
-  // COMMENTED OUT{petData.map((pet) => (
-  // COMMENTED OUT<CPetCard breed={pet.breed} ... />
-  // COMMENTED OUT)}
-  // COMMENTED OUT</div>
   return (
     <Box sx={{ mt: 5 }}>
       <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
@@ -134,61 +129,69 @@ export default function PetProfile({ petId }) {
           Pet Profile
         </Typography>
       </Box>
-      {petData.map(p=>{
-        return (
-          <Card sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-              <Avatar
-                src="/placeholder-pet.jpg" // Placeholder image
-                sx={{
-                  width: 80,
-                  height: 80,
-                  border: "4px solid",
-                  borderColor: "background.default",
-                }}
+
+      {/* Add Pet Card */}
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+        <Card sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
+          <CardContent sx={{ p: 3 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleOpen} // Open modal
+                sx={{ mb: 2 }}
               >
-                {p.name}
-              </Avatar>
+                Add Pet
+              </Button>
             </Box>
-            <CardContent sx={{ p: 3 }}>
-              {/* Display pet information */}
-              <Box display="flex" justifyContent="space-between" mb={2}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  Name
-                </Typography>
-                <Typography variant="body2">{p.name}</Typography>
-              </Box>
-              <Box display="flex" justifyContent="space-between" mb={2}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  Breed
-                </Typography>
-                <Typography variant="body2">{p.breed}</Typography>
-              </Box>
-              <Box display="flex" justifyContent="space-between" mb={2}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  Age
-                </Typography>
-                <Typography variant="body2">{p.age}</Typography>
-              </Box>
-              <Box display="flex" flexDirection="column" gap={2}>
-                <Button variant="outlined">Edit</Button>
-                <Button variant="outlined">Add Photo</Button>
-                <Button variant="outlined">Health Passport</Button>
-                <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleOpen} // Open modal
-                    sx={{ mb: 2 }}
-                  >
-                    Add Pet
-                  </Button>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
-        );
-      })}
+          </CardContent>
+        </Card>
+      </Box>
+
+      {/* Pet Cards */}
+      {petData.map((p) => (
+        <Card key={p.id} sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+            <Avatar
+              src="/placeholder-pet.jpg" // Placeholder image
+              sx={{
+                width: 80,
+                height: 80,
+                border: "4px solid",
+                borderColor: "background.default",
+              }}
+            >
+              {p.name}
+            </Avatar>
+          </Box>
+          <CardContent sx={{ p: 3 }}>
+            {/* Display pet information */}
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Name
+              </Typography>
+              <Typography variant="body2">{p.name}</Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Breed
+              </Typography>
+              <Typography variant="body2">{p.breed}</Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Age
+              </Typography>
+              <Typography variant="body2">{p.age}</Typography>
+            </Box>
+            <Box display="flex" flexDirection="column" gap={2}>
+              <Button variant="outlined">Edit</Button>
+              <Button variant="outlined">Add Photo</Button>
+              <Button variant="outlined">Health Passport</Button>
+            </Box>
+          </CardContent>
+        </Card>
+      ))}
 
       {/* Modal for Adding Pet */}
       <Dialog open={open} onClose={handleClose}>
