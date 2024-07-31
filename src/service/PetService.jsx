@@ -35,6 +35,18 @@ class PetService {
       throw error;
     }
   }
+
+  static async uploadPetPhoto(petId, file) {
+    const formData = new FormData();
+    formData.append("photo", file);
+
+    const response = await axiosPrivate.post(`/pets/${petId}/photo`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  }
 }
 
 export default PetService;

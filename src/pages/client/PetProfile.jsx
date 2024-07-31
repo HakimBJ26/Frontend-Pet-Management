@@ -45,6 +45,7 @@ const breedOptions = [
   "Ferret",
   "Parrot",
   "Canary",
+  "Other", // Add "Other" option
   // Add more species or breeds as needed
 ];
 
@@ -58,6 +59,8 @@ export default function PetProfile({ petId }) {
     breed: "",
     age: "",
   });
+  const [isOtherBreed, setIsOtherBreed] = useState(false); // State to handle "Other" breed
+  const [otherBreed, setOtherBreed] = useState(""); // State to handle the value of "Other" breed
 
   const navigate = useNavigate(); // Initialize useNavigate
 
@@ -83,6 +86,8 @@ export default function PetProfile({ petId }) {
   const handleClose = () => {
     setOpen(false);
     setNewPetData({ name: "", breed: "", age: "" }); // Reset form fields
+    setIsOtherBreed(false); // Reset "Other" breed state
+    setOtherBreed(""); // Reset other breed value
   };
 
   const handleInputChange = (e) => {
@@ -97,6 +102,13 @@ export default function PetProfile({ petId }) {
 
   const handleBreedChange = (e) => {
     const value = e.target.value;
+    setNewPetData({ ...newPetData, breed: value });
+    setIsOtherBreed(value === "Other"); // Show/hide other breed input based on selection
+  };
+
+  const handleOtherBreedChange = (e) => {
+    const value = e.target.value;
+    setOtherBreed(value);
     setNewPetData({ ...newPetData, breed: value });
   };
 
@@ -224,6 +236,17 @@ export default function PetProfile({ petId }) {
                 ))}
               </Select>
             </FormControl>
+            {isOtherBreed && (
+              <TextField
+                margin="dense"
+                name="otherBreed"
+                label="Other Breed"
+                fullWidth
+                variant="outlined"
+                value={otherBreed}
+                onChange={handleOtherBreedChange}
+              />
+            )}
             <FormControl fullWidth margin="dense">
               <InputLabel id="age-select-label">Age</InputLabel>
               <Select
