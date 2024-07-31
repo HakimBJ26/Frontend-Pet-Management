@@ -38,7 +38,8 @@ function BottomBar() {
                         label={link.label}
                         icon={link.icon}
                         value={link.to}
-                        className='bottom-navigation-action'
+                      
+                        sx={{width:40}}
                     />
                 ))}
                 {moreLinks.length > 0 && (
@@ -46,7 +47,7 @@ function BottomBar() {
                         label="More"
                         icon={<MoreVertIcon />}
                         onClick={handleMoreClick}
-                        className='bottom-navigation-action'
+                       
                     />
                 )}
             </BottomNavigation>

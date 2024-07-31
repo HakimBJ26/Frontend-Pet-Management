@@ -27,7 +27,7 @@ import {
   SUBMIT_VETO_REQUEST,
   RESET_PASS_REQUEST,
   ASK_TO_RESET_PASS,
-  CONSULT_VETO
+  SEARCH_VETO_PRODUCTS
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
 
@@ -39,7 +39,6 @@ function App() {
   const [showSidebar, setShowSidebar] = useState(!isMobile)
   useEffect(() => {
     const {role } = getAuthInfo()
-    
     if (location.pathname === SIGN_UP_PATH || location.pathname === SUBMIT_VETO_REQUEST || location.pathname === RESET_PASS_REQUEST || location.pathname === ASK_TO_RESET_PASS) {
       return
     }
@@ -60,7 +59,7 @@ function App() {
             GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
             COMMUNITY_PATH, USER_PROFILE, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
-            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE , CONSULT_VETO
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE , SEARCH_VETO_PRODUCTS
           ]
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return
@@ -97,15 +96,14 @@ function App() {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <div className="app">
+         
             {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
             {shouldShowTopBar(location.pathname) && <TopBar />}
-            <main className="content">
               <ProtectedRoutes />
               <Toaster expand visibleToasts={9} />
-            </main>
+           
             {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
-          </div>
+         
         </ThemeProvider>
       </ColorModeContext.Provider>
 

@@ -1,4 +1,4 @@
-import { PET_SHOP } from "../common/configuration/constants/PathBack";
+import { PET_SHOP, SEARCH_IN_PET_SHOP_BY_NAME } from "../common/configuration/constants/PathBack";
 import {  axiosPrivate } from '../common/configuration/ApiAuth'; 
 
 class PetShopService {
@@ -13,6 +13,16 @@ class PetShopService {
     } catch (err) {
       throw err;
     }
+  }
+
+  static async getProductByName (name){
+      try{
+        const response = await axiosPrivate.get(`${SEARCH_IN_PET_SHOP_BY_NAME}?name=${name}`, { withCredentials: true });
+        return response.data ;
+      }catch(err){
+        console.log(err)
+        throw err ;
+      }
   }
 
   static async updateProduct(productData) {

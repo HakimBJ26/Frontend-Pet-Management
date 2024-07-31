@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button, Paper, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
 import UserService from '../../service/UserService';
 import { ERROR_UPDATE_TOAST, SUCCESS_UPDATE_TOAST } from '../../common/configuration/constants/ToastConfig';

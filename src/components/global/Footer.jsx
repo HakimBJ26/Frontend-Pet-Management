@@ -18,24 +18,16 @@ function Copyright() {
 
 export default function Footer() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
-        zIndex: 1000, // Ensure the footer is above other elements
-      }}
-    >
+    <Box className="footer-container">
       <Box
         component="footer"
+        className="footer-content"
         sx={{
-          py: 3,
-          px: 2,
           backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[200]
+              : theme.palette.grey[800],
+          '--footer-bg-color': (theme) =>
             theme.palette.mode === 'light'
               ? theme.palette.grey[200]
               : theme.palette.grey[800],

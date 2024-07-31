@@ -28,9 +28,14 @@ function TopBar() {
         </IconButton>
 
         <IconButton color="inherit" onClick={() => {
+        try{
           UserService.logout();
           setCurrentUser(null)
           navigate(`${SIGN_IN_PATH}`)
+        }catch(err){
+
+          console.log(err)
+        }
         }}>
           <ExitToAppOutlinedIcon sx={{ mr: 1 }} />
           <Typography variant="body1">Logout</Typography>

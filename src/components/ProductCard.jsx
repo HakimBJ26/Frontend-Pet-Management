@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardMedia, CardContent, Typography, Button } from '@mui/material';
 import { useTheme } from '@emotion/react';
 

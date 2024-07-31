@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, Box, Typography, IconButton, Button, Grid, useTheme } from '@mui/material';
 import { Close as CloseIcon, Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 import { getCartFromLocalStorage, saveCartToLocalStorage } from '../../utils/cartStorage';

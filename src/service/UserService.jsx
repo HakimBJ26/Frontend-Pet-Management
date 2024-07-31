@@ -8,6 +8,7 @@ import {
   LOG_OUT_API,
   REGISTER_API,
   RESET_PASS,
+  SEARCH_VET_BY_NAME_API,
   SEND_RESET_PASS_MAIL,
   UPDATE_PROFILE_API,
   UPDATE_USER_PROFILE_BY_ADMIN,
@@ -47,7 +48,6 @@ class UserService {
 
 
   static async sendResetPassMail (email){
-  
   try{
     const response=await axiosInstance.post(  SEND_RESET_PASS_MAIL,
       {'email':`${email}`},
@@ -61,7 +61,6 @@ class UserService {
   }
 
   static async verifyResetPassToken (token){
-  
     try{
       const response=await axiosInstance.post(  VERIFY_RESET_PASS_TOKEN,
         {'token':`${token}`},
@@ -113,7 +112,6 @@ class UserService {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });
-
       return response.data;
     } catch (err) {
       throw err;
@@ -180,6 +178,15 @@ class UserService {
         userData,
         { withCredentials: true }
       );
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  static async searchVeterinariansByName(name) {
+    try {
+      const response = await axiosPrivate.get(`${SEARCH_VET_BY_NAME_API}?name=${name}`, { withCredentials: true });
       return response.data;
     } catch (err) {
       throw err;

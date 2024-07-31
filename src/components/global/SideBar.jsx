@@ -41,36 +41,18 @@ import {
 } from '../../common/configuration/constants/Paths';
 import { getAuthInfo } from '../../utils/authCred';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../../common/configuration/constants/UserRole';
-import { tokens } from '../../theme';
-import { useTheme } from '@emotion/react';
 import StyledSidebar from '../styledComponents/StyledSideBar';
 import StyledMenuItem from '../styledComponents/StyledMenuItem';
-
 
 function SideBar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState('');
   const role = getAuthInfo().role;
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
-
-  
 
   return (
     <Box
-      sx={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: isCollapsed ? '80px' : '250px',
-        height: '100vh',
-        boxShadow: '2px 0 10px rgba(0, 0, 0, 0.1)',
-        marginTop: '64px',
-        overflowY: 'auto',
-        backgroundColor: colors.neutral[200],
-      }}
-    >
+    className={`sidebar-box ${isCollapsed ? 'collapsed' : 'expanded'}`}
+  >
       {role ? (
         <StyledSidebar collapsed={isCollapsed}>
           <Menu iconShape="square">

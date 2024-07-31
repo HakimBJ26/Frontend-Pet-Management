@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Modal, Typography, TextField, Button, CircularProgress, useTheme } from '@mui/material';
 import ImageUploader from '../global/ImageUploader';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';

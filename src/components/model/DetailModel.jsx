@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -14,10 +14,6 @@ import { storage } from '../../firebase';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 import { useTheme } from '@emotion/react';
 import StyledModel from '../styledComponents/StyledModel';
-
-
-
-
 
 const DetailModal = ({ open, onClose, product, onUpdate, onDelete }) => {
   const [name, setName] = useState(product?.name || '');

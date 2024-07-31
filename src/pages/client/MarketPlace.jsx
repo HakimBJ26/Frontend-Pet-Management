@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Box, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ProductCard from '../../components/ProductCard';
@@ -55,7 +55,7 @@ function MarketPlace() {
   };
 
   return (
-    <Box sx={{ marginTop: '50px', paddingBottom: '100px' }}>
+    <Box sx={{ marginTop: '50px', padding: '10px' }}>
       <h2 style={{ textAlign: 'center' }}>Marketplace</h2>
       <Box sx={{marginBottom:'20px'}}>
       <SearchBar placeholder="Search Accessories By Name" value={searchQuery} onChange={handleSearchChange} />

@@ -20,8 +20,6 @@ function ClientDashboard() {
         style={{
           fontSize: '3rem',
           fontWeight: 'bold',
-          marginBottom: '2rem',
-          marginTop: '10%',
           color: theme.palette.primary.main,
         }}
       >
