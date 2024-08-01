@@ -49,6 +49,8 @@ export const tokens = (mode) => ({
         800: "#292929",
         900: "#141414",
       },
+      safeZoneColor : 'rgba(64,224,208)',
+       DangerZoneColor : 'rgba(255, 0, 0, 0.2)',
     }
     : {
       grey: {
@@ -95,6 +97,8 @@ export const tokens = (mode) => ({
         800: "#808080",
         900: "#666666",
       },
+      safeZoneColor : 'rgba(64,224,208)',
+      DangerZoneColor : 'rgba(255, 0, 0, 0.2)',
     }),
 });
 
@@ -139,6 +143,11 @@ export const themeSettings = (mode) => {
             paper: colors.primary[100],
           },
         }),
+        custom: {
+         circleMapSafe : colors.safeZoneColor,
+          DangerMap:colors.DangerZoneColor,
+
+        },
     },
     typography: {
       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),

@@ -1,0 +1,47 @@
+.map-container {
+  width: 50vw;
+  height: 50vw;
+  max-width: 300px;
+  max-height: 300px;
+  margin: 110px auto 0;
+  position: relative;
+  transform: translateX(+2%);
+  border-radius: 10px;
+}
+
+.add-safe-zone-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+.add-safe-zone-button .MuiButton-root {
+  background-color: green;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.safe-zones-panel {
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  background-color: white;
+  position: absolute;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  max-width: 500px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 600px) {
+  .map-container {
+    width: 90vw;
+    height: 90vw;
+  }
+
+}
+
+
