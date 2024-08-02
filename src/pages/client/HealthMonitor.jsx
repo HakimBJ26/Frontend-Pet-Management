@@ -52,6 +52,21 @@ function HealthMonitor() {
 
   },[])
 
+
+  useEffect( ()=>{
+    const fetchHOverview = async()=>{
+     try{
+      const res = await petDataService.getOverview('1')
+      setOverview(res)
+     }catch(err){
+      console.log(err)
+     }
+
+    }
+    fetchHOverview()
+
+  },[])
+
   return (
     <Container sx={{marginTop:10}}>
       <Grid container spacing={1}>

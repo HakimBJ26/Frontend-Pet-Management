@@ -17,7 +17,7 @@ export const SEARCH_VET_BY_NAME_API='/api/auth/search-veterinarians'
 export const PET_VITAL_SIGNS='/api/vital-signs/pet'
 export const HEALTH_ALERTS_API='/api/health-alerts/pet'
 export const DISMISS_HEALTH_ALERTS_API='/api/health-alerts/'
-
+export const OVERVIEW_API='/api/overview/pet'
 
 
 

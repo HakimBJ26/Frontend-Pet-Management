@@ -1,12 +1,12 @@
 export const getEmojiByHealthStatus = (healthStatus) => {
     switch (healthStatus) {
-      case 'Good':
+      case 'GOOD':
         return '😊';
-      case 'Fair':
+      case 'FAIR':
         return '😐';
-      case 'Poor':
+      case 'POOR':
         return '😟';
-      case 'Terrible':
+      case 'TERRIBLE':
         return '😢';
       default:
         return '🤔'; 

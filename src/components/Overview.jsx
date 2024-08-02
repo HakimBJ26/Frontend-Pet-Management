@@ -3,9 +3,8 @@ import { Box, Paper, Typography } from '@mui/material';
 import { getEmojiByHealthStatus } from '../utils/emojiByHealthStatus';
 
 const Overview = ({overviewData}) => {
-  console.log(overviewData.recentActivity.length)
   return (
-    <Paper style={{ padding: '16px' }}>
+    <Paper style={{ padding: '16px', marginBottom:'80px'}}>
     <Typography variant="h4" fontWeight='bold' gutterBottom>Recent Activities:</Typography>
     
     <Box sx={{display:'flex',gap:1}}>
