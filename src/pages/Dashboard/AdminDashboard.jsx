@@ -57,7 +57,7 @@ function Dashboard() {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        className='boxMainAdminDash'
       >
         <Container maxWidth="md">
           <Typography variant="h4" gutterBottom>

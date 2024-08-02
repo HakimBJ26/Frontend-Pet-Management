@@ -11,6 +11,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import {
     CLIENT_DASH_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,
     DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH,
@@ -25,7 +26,7 @@ export const clientLinks = [
     { to: `${CLIENT_DASH_PATH}${PET_PROFILE}`, icon: <PetsIcon  />},
     { to: `${CLIENT_DASH_PATH}${ACTIVITY_TRACKER_PATH}`, icon: <EventAvailableIcon  /> },
     { to: `${CLIENT_DASH_PATH}${SET_ACTIVITY_GOALS_PATH}`, icon: <NoteAddIcon  />},
-    { to: `${CLIENT_DASH_PATH}${HEALTH_MONITOR_PATH}`, icon: <MonitorHeartIcon  /> },
+    { to: `${CLIENT_DASH_PATH}${HEALTH_MONITOR_PATH}`, icon: <FavoriteIcon  /> },
     { to: `${CLIENT_DASH_PATH}${HEALTH_PASSPORT_PATH}`, icon: <MapOutlinedIcon  />},
     { to: `${CLIENT_DASH_PATH}${DEFINE_SAFE_ZONE_PATH}`, icon: <HomeIcon  /> },
     { to: `${CLIENT_DASH_PATH}${GPS_LOCATOR_PATH}`, icon: <LocationOnIcon  /> },

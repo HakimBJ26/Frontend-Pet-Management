@@ -3,10 +3,12 @@ import { Box, Card, CardContent, CardMedia, Typography, Button, LinearProgress }
 import PetShopService from '../service/PetShopService';
 import '../styles/Accessories.css';
 import { ACCESSORIES_CATEGORIES } from '../common/configuration/constants/CategoriesToSearch';
+import { getCartFromLocalStorage, saveCartToLocalStorage } from '../utils/cartStorage';
 
 const Accessories = ({ selectedCategory, searchQuery }) => {
   const [accessories, setAccessories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const userId= localStorage.getItem('id')
 
   useEffect(() => {
     const fetchAccessories = async () => {
@@ -30,6 +32,19 @@ const Accessories = ({ selectedCategory, searchQuery }) => {
     }
   }, [selectedCategory, searchQuery]);
 
+  const handleAddToCart=(product)=>{
+    let cart = getCartFromLocalStorage(userId);
+    const productIndex = cart.findIndex(item => item.id === product.id);
+
+    if (productIndex > -1) {
+      cart[productIndex].nb += 1;
+    } else {
+      cart = [...cart, { ...product, nb: 1 }];
+    }
+
+    saveCartToLocalStorage(userId, cart);
+  }
+
   if (selectedCategory !== ACCESSORIES_CATEGORIES) return null;
 
   return (
@@ -49,7 +64,9 @@ const Accessories = ({ selectedCategory, searchQuery }) => {
               <Typography variant="body2" color="textSecondary">
                 {item.price} TND
               </Typography>
-              <Button variant="contained" color="success" fullWidth>
+              <Button variant="contained" color="success" fullWidth onClick={()=>{
+                handleAddToCart(item);
+              }}>
                 Add to Cart
               </Button>
             </CardContent>

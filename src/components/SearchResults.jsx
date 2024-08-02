@@ -23,7 +23,7 @@ const SearchResults = ({ results, selectedCategory }) => {
     <Box className="boxScrollClassSearchResult">
       {loading && <LinearProgress />}
       <Box sx={{ display: 'inline-flex', flexDirection: 'row' }}>
-        {results?.length === 0 ? (
+        {results?.length === 0 && !loading ? (
           <Typography variant="body1">No results found.</Typography>
         ) : (
           results?.map((result) => (
