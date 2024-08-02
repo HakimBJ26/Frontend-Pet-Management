@@ -168,7 +168,15 @@
   padding: 16px; 
   border-radius: 8px; 
 }
-
+.boxMainAdminDash {
+  flex-grow: 1;
+  background-color: var(--background-default);
+  padding: 16px; /* Adjust as needed */
+  margin-top: 64px; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 
 .bottom-navigation-action {
