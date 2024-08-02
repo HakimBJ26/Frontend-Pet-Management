@@ -1,23 +1,27 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, styled } from '@mui/material';
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.dark,
+  color: theme.palette.neutral.darker,
+  borderRadius: '15px',
+  padding: '10px 20px',
+  width: '70%', 
+  height: '40px',
+  position: 'absolute',
+  bottom: '540px',
+  left: '50.2%',
+  transform: 'translateX(-50%)',
+  zIndex: 1,
+  '@media (min-width:600px)': {
+   width: '320px',},
+}));
 const AddSafeZoneButton = ({ onClick }) => {
   return (
-    <Button
+    <StyledButton
       variant="contained"
-      onClick={onClick}
-      sx={{
-        backgroundColor: 'green',
-        color: 'white',
-        borderRadius: '15px',
-        padding: '10px 20px',
-        width: { xs: '70%', sm: '320px' },
-        height: '40px',
-        position: 'absolute',
-        bottom: '540px',
-        left: '50.2%',
-        transform: 'translateX(-50%)',
-        zIndex: 1,
-        '&:hover': {
-          backgroundColor: 'darkgreen', },
-      }} > Set Safe Zone </Button>);};
+      onClick={onClick}>
+      Set Safe Zone
+    </StyledButton>
+  );
+};
 export default AddSafeZoneButton;

@@ -9,7 +9,8 @@ import AddSafeZoneButton from '../../components/AddSafeZoneButton';
 import '../../maps.css';
 import { addZones } from '../../mapUtils';
 import Footer from '../../common/configuration/constants/Footer';
-import NavBar from '../../components/global/NavBar'; 
+import MapNavBar from '../../components/global/MapNavBar'; 
+import  { GOOGLE_MAPS_API_KEY } from '../../../src/common/configuration/constants/ApiKey'
 
 const GpsLocator = () => {
   const theme = useTheme();
@@ -47,8 +48,8 @@ const GpsLocator = () => {
     { name: 'Vet', description: 'For health checkups', icon: <LocalHospitalIcon sx={{ color: 'black' }} /> }, ];
   return (
     <div style={{ position: 'relative', height: '100vh', paddingBottom: '60px' }}>
-      <NavBar /> 
-      <LoadScript googleMapsApiKey="AIzaSyBxYz6aB-VGm2mWqocqrQNH6auzLrWNKaE">
+      <MapNavBar /> 
+      <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerClassName="map-container"
           center={center}
