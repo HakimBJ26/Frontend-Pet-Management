@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; // Step 1: Imports
+import React, { useEffect, useState, useRef } from "react";
 import {
   Card,
   CardContent,
@@ -16,10 +16,10 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import PetService from "../../service/PetService"; // Adjust the path as needed
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import PetService from "../../service/PetService";
+import { toast } from "sonner";
 
-// List of domestic animal breeds
+// List of animal breeds
 const breedOptions = [
   "Labrador Retriever",
   "German Shepherd",
@@ -45,31 +45,28 @@ const breedOptions = [
   "Ferret",
   "Parrot",
   "Canary",
-  "Other", // Add "Other" option
-  // Add more species or breeds as needed
+  "Other",
 ];
 
-export default function PetProfile({ petId }) {
-  // Step 2: Component Definition
+export default function PetProfile() {
   const [petData, setPetData] = useState([]);
-
-  const [open, setOpen] = useState(false); // Modal state
+  const pageEndRef = useRef(null);
+  const [open, setOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editPetId, setEditPetId] = useState(null);
   const [newPetData, setNewPetData] = useState({
     name: "",
     breed: "",
     age: "",
   });
-  const [isOtherBreed, setIsOtherBreed] = useState(false); // State to handle "Other" breed
-  const [otherBreed, setOtherBreed] = useState(""); // State to handle the value of "Other" breed
+  const [isOtherBreed, setIsOtherBreed] = useState(false);
+  const [otherBreed, setOtherBreed] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null); // To hold the selected file
 
-  const navigate = useNavigate(); // Initialize useNavigate
-
-  // Fetch pet data when the component mounts
   useEffect(() => {
     const fetchPetProfile = async () => {
       try {
-        const response = await PetService.getPets();
-        console.log(response);
+        const response = await PetService.getCurrentUserPets();
         setPetData(response);
       } catch (error) {
         console.error("Error fetching pet profile:", error);
@@ -78,16 +75,28 @@ export default function PetProfile({ petId }) {
     fetchPetProfile();
   }, []);
 
-  // Step 4: Modal handling functions
-  const handleOpen = () => {
+  const handleOpen = (pet = null) => {
+    if (pet) {
+      setIsEditMode(true);
+      setEditPetId(pet.id);
+      setNewPetData({ name: pet.name, breed: pet.breed, age: pet.age });
+      setIsOtherBreed(pet.breed === "Other");
+      setOtherBreed(pet.breed === "Other" ? pet.breed : "");
+    } else {
+      setIsEditMode(false);
+      setNewPetData({ name: "", breed: "", age: "" });
+      setIsOtherBreed(false);
+      setOtherBreed("");
+    }
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setNewPetData({ name: "", breed: "", age: "" }); // Reset form fields
-    setIsOtherBreed(false); // Reset "Other" breed state
-    setOtherBreed(""); // Reset other breed value
+    setNewPetData({ name: "", breed: "", age: "" });
+    setIsOtherBreed(false);
+    setOtherBreed("");
+    setSelectedFile(null); // Clear the selected file when closing
   };
 
   const handleInputChange = (e) => {
@@ -103,7 +112,7 @@ export default function PetProfile({ petId }) {
   const handleBreedChange = (e) => {
     const value = e.target.value;
     setNewPetData({ ...newPetData, breed: value });
-    setIsOtherBreed(value === "Other"); // Show/hide other breed input based on selection
+    setIsOtherBreed(value === "Other");
   };
 
   const handleOtherBreedChange = (e) => {
@@ -115,22 +124,46 @@ export default function PetProfile({ petId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if all fields are filled
     if (!newPetData.name || !newPetData.breed || !newPetData.age) {
-      alert("Please fill in all fields");
+      toast.error("Please fill in all fields.");
       return;
     }
 
     try {
-      await PetService.addPet(newPetData);
+      if (isEditMode) {
+        await PetService.updatePet(editPetId, newPetData);
+        toast.success("Pet updated successfully.");
+        setPetData(
+          petData.map((pet) =>
+            pet.id === editPetId ? { ...newPetData, id: editPetId } : pet
+          )
+        );
+      } else {
+        await PetService.addPet(newPetData);
+        toast.success("Pet added successfully.");
+        setPetData([...petData, { ...newPetData, id: Date.now() }]); // Using a temporary ID
+        requestAnimationFrame(() => {
+          pageEndRef.current.scrollIntoView({ behavior: "smooth" });
+        });
+      }
 
-      // Update petData with the new pet data
-      setPetData([...petData, newPetData]);
-
-      handleClose(); // Close the modal
-      navigate(-1); // Go back to the previous page
+      handleClose();
     } catch (error) {
-      console.error("Error adding pet:", error);
+      console.error("Error adding/updating pet:", error);
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file && editPetId) {
+      try {
+        await PetService.uploadPetPhoto(editPetId, file);
+        setSelectedFile(URL.createObjectURL(file)); // Update the avatar with the new photo
+        toast.success("Photo uploaded successfully.");
+      } catch (error) {
+        console.error("Error uploading photo:", error);
+        toast.error("Error uploading photo.");
+      }
     }
   };
 
@@ -150,7 +183,7 @@ export default function PetProfile({ petId }) {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleOpen} // Open modal
+                onClick={() => handleOpen()}
                 sx={{ mb: 2 }}
               >
                 Add Pet
@@ -164,17 +197,34 @@ export default function PetProfile({ petId }) {
       {petData.map((p) => (
         <Card key={p.id} sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
           <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-            <Avatar
-              src="/placeholder-pet.jpg" // Placeholder image
-              sx={{
-                width: 80,
-                height: 80,
-                border: "4px solid",
-                borderColor: "background.default",
-              }}
-            >
-              {p.name}
-            </Avatar>
+            <label htmlFor={`upload-photo-${p.id}`}>
+              <input
+                type="file"
+                accept="image/*"
+                id={`upload-photo-${p.id}`}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+              <Avatar
+                src={
+                  p.image
+                    ? `data:image/jpeg;base64,${p.image}`
+                    : "/placeholder-pet.jpg"
+                }
+                sx={{
+                  width: 80,
+                  height: 80,
+                  border: "4px solid",
+                  borderColor: "background.default",
+                }}
+                onClick={() => {
+                  setEditPetId(p.id); // Set editPetId to the current pet id
+                  document.getElementById(`upload-photo-${p.id}`).click(); // Trigger file input
+                }}
+              >
+                {p.name ? p.name[0] : "?"} {/* Fallback to pet's initial */}
+              </Avatar>
+            </label>
           </Box>
           <CardContent sx={{ p: 3 }}>
             {/* Display pet information */}
@@ -197,17 +247,20 @@ export default function PetProfile({ petId }) {
               <Typography variant="body2">{p.age}</Typography>
             </Box>
             <Box display="flex" flexDirection="column" gap={2}>
-              <Button variant="outlined">Edit</Button>
+              <Button variant="outlined" onClick={() => handleOpen(p)}>
+                Edit
+              </Button>
               <Button variant="outlined">Add Photo</Button>
               <Button variant="outlined">Health Passport</Button>
             </Box>
           </CardContent>
         </Card>
       ))}
+      <div ref={pageEndRef} />
 
-      {/* Modal for Adding Pet */}
+      {/* Modal for Adding/Editing Pet */}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add New Pet</DialogTitle>
+        <DialogTitle>{isEditMode ? "Edit Pet" : "Add New Pet"}</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit}>
             <TextField
@@ -270,7 +323,7 @@ export default function PetProfile({ petId }) {
             Cancel
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            Add Pet
+            {isEditMode ? "Update Pet" : "Add Pet"}
           </Button>
         </DialogActions>
       </Dialog>
