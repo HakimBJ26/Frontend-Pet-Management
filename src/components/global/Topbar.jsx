@@ -17,7 +17,7 @@ function TopBar() {
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
+    <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1}}>
       <Toolbar>
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
         </Typography>
@@ -28,9 +28,14 @@ function TopBar() {
         </IconButton>
 
         <IconButton color="inherit" onClick={() => {
+        try{
           UserService.logout();
           setCurrentUser(null)
           navigate(`${SIGN_IN_PATH}`)
+        }catch(err){
+
+          console.log(err)
+        }
         }}>
           <ExitToAppOutlinedIcon sx={{ mr: 1 }} />
           <Typography variant="body1">Logout</Typography>

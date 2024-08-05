@@ -12,22 +12,22 @@ function UserInfo({ user }) {
     const idAdmin = localStorage.getItem('id');
 
 
-
-
-    if (idAdmin === data.id) {
-      try {
-        await UserService.updateUserProfile({
-          name: data.name,
-          email: data.email,
-          role: data.role,
-        });
-        showToast(SUCCESS_UPDATE_TOAST)
-
-      } catch (error) {
-        showToast(ERROR_UPDATE_TOAST)
-        console.error('Error Updating user:', error);
+  
+      
+      if(idAdmin===data.id){
+        try {
+          await  UserService.updateUserProfile({
+              name: data.name,
+              email: data.email,
+              role: data.role,
+            } );
+            showToast(SUCCESS_UPDATE_TOAST)
+         
+        } catch (error) {
+          showToast(ERROR_UPDATE_TOAST)
+          console.error('Error Updating user:', error);
+        }
       }
-    }
     else {
 
       try {
@@ -73,6 +73,9 @@ function UserInfo({ user }) {
         <TextField
           fullWidth
           label="Email"
+          InputProps={{
+            readOnly: true,
+          }}
           value={data.email}
           onChange={(e) => setData({ ...data, email: e.target.value })}
           variant="outlined"
