@@ -10,7 +10,6 @@ import '../../maps.css';
 import { addZones } from '../../mapUtils';
 import Footer from '../../common/configuration/constants/Footer';
 import MapNavBar from '../../components/global/MapNavBar'; 
-//import  { GOOGLE_MAPS_API_KEY } from '../../../src/common/configuration/constants/ApiKey'
 
 const GpsLocator = () => {
   const theme = useTheme();
@@ -25,7 +24,6 @@ const GpsLocator = () => {
       addZones(map, center, theme);
     }
   }, [map]);
-
   const handleAddSafeZone = () => {setZones((prevZones) => [ ...prevZones, { center, radius: 100 },]);};
   useEffect(() => {
     if (map && zones.length > 0) {
@@ -80,5 +78,4 @@ const GpsLocator = () => {
     </div>
   );
 };
-
 export default GpsLocator;
