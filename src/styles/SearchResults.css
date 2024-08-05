@@ -1,0 +1,44 @@
+.boxScrollClassSearchResult {
+    margin: 2px;
+    margin-bottom: 2px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+  }
+  
+  .boxScrollClassSearchResult::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .boxScrollClassSearchResult::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .boxScrollClassSearchResult::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  .cardClassSearchResult {
+    min-width: 320px;
+    display: inline-block;
+    margin:10px;
+  }
+  
+  .cardClass:last-of-type {
+    margin-right: 16px;
+  }
+  
+  .cardMediaClassSearchResult {
+    border-radius: 50%;
+    min-width: 40px;
+  }
+  
+  .boxFlexClass {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 10px;
+  }
+  

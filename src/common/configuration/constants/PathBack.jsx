@@ -12,3 +12,16 @@ export const GET_ALL_PETS_API = "/api/pets";
 export const GET_PET_BY_ID_API = "/api/pets";
 export const UPDATE_PET_API = "/api/pets";
 export const GET_CURRENT_USER_PETS_API = "/api/pets/current";
+export const GET_VETO_ACC_TO_APPROVE='/api/auth/unapprovedUsers'
+export const APPROVE_VETO_ACC_API='/api/auth/approveUserByEmail'
+export const SEND_RESET_PASS_MAIL='/api/auth/sendResetPasswordEmail'
+export const VERIFY_RESET_PASS_TOKEN='/api/auth/verifyResetPasswordToken'
+export const RESET_PASS='/api/auth/resetPassword'
+export const PET_SHOP='/api/accessories'
+export const SEARCH_IN_PET_SHOP_BY_NAME='/api/accessories/search'
+export const SEARCH_VET_BY_NAME_API='/api/auth/search-veterinarians'
+
+
+
+
+

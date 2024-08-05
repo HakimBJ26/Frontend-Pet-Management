@@ -1,0 +1,8 @@
+.paperClass {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 3px #ccc;
+  }
