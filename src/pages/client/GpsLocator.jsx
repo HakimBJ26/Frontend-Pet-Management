@@ -15,16 +15,16 @@ const GpsLocator = () => {
   const theme = useTheme();
   const [map, setMap] = useState(null);
   const [zones, setZones] = useState([]);
+  const [selectedsafeZone,setSelectedSafeZone]=useState('Home')
+  const [selectedCenter,setSelectedCenter]=useState()
   const mapRef = useRef(null);
-  const center = {
-    lat: 36.8358120199345,
-    lng: 10.208134407944877,};
+
   useEffect(() => {
     if (map) {
-      addZones(map, center, theme);
+      addZones(map, selectedCenter, theme);
     }
-  }, [map]);
-  const handleAddSafeZone = () => {setZones((prevZones) => [ ...prevZones, { center, radius: 100 },]);};
+  }, [map,selectedCenter]);
+  const handleAddSafeZone = () => {setZones((prevZones) => [ ...prevZones, { selectedCenter, radius: 100 },]);};
   useEffect(() => {
     if (map && zones.length > 0) {
         map.data.forEach((feature) => {
@@ -40,17 +40,18 @@ const GpsLocator = () => {
           strokeWeight: 2,
           map: map,});
       });}}, [map, zones, theme]);
-  const safeZones = [
-    { name: 'Home', description: 'Your cozy place', icon: <HomeIcon sx={{ color: 'black' }} /> },
-    { name: 'Park', description: 'A fun outdoor space', icon: <ParkIcon sx={{ color: 'black' }} /> },
-    { name: 'Vet', description: 'For health checkups', icon: <LocalHospitalIcon sx={{ color: 'black' }} /> }, ];
+      const safeZones = [
+        { name: 'Home', description: 'Your cozy place', icon: <HomeIcon sx={{ color: 'black' }} />, center: { lat: 36.8358120199345,  lng: 10.208134407944877 } },
+        { name: 'Park', description: 'A fun outdoor space', icon: <ParkIcon sx={{ color: 'black' }} />, center: { lat: 35.8358120199345,  lng: 10.208134407944877 } },
+        { name: 'Vet', description: 'For health checkups', icon: <LocalHospitalIcon sx={{ color: 'black' }} />, center: { lat: 30.836702, lng: 10.208513 } },
+      ]; 
   return (
     <div style={{ position: 'relative', height: '100vh', paddingBottom: '60px' }}>
       <MapNavBar /> 
       <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerClassName="map-container"
-          center={center}
+          center={selectedCenter}
           zoom={15}
           onLoad={(map) => setMap(map)}
           ref={mapRef} >
@@ -61,8 +62,12 @@ const GpsLocator = () => {
         <h2 style={{ marginTop: '0' }}>Predefined Safe Zones</h2>
         <List>
           {safeZones.map((zone) => (
-            <ListItem key={zone.name} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <ListItem  key={zone.name} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' ,background:`${zone.name===selectedsafeZone? 'green': ''}`}}>
               <ListItemText
+               onClick={()=>{
+                setSelectedCenter(zone.center)
+                setSelectedSafeZone(zone.name)
+               }}
                 primary={<span style={{ fontWeight: 'bold' }}>{zone.name}</span>}
                 secondary={<span>{zone.description}</span>}
                 primaryTypographyProps={{ style: { fontWeight: 'bold' } }}
