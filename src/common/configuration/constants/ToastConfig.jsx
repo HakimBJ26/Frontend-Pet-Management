@@ -179,4 +179,24 @@ export const SUCCESS_SIGN_UP_TOAST = {
       color: '#ffffff',
     },
   };
+  export const SUCCESS_DELETE_ALERT_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Alert deleted successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+  export const ERROR_DELETE_ALERT_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to delete Alert.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  
+
   

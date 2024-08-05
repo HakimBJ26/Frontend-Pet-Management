@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Paper, Typography, Button, Box } from '@mui/material';
 import '../styles/HealthAlerts.css';
 import { getSeverityColor } from '../utils/SeverityColor';
 import AlertsService from '../service/AlertsService';
-
-
-
+import useToast from '../hooks/useToast';
+import { ERROR_DELETE_ALERT_TOAST, SUCCESS_DELETE_ALERT_TOAST } from '../common/configuration/constants/ToastConfig';
 
 const HealthAlerts = ({ healthAlertsData }) => {
+  const {showToast} = useToast();
+  const [alerts,setAlerts]= useState([])
+  useEffect(()=>{
+    setAlerts(healthAlertsData)
 
-  const handleDelete= (id)=>{
-    const dismissALert=async()=>{
-      try{
-        const res = await AlertsService.deleteAlerts(id)
-      }catch(err){
-        console.log(err)
-      }
+  },[healthAlertsData])  
+
+  const dismissAlert = async (id) => {
+    try {
+      await AlertsService.deleteAlerts(id);
+      showToast(SUCCESS_DELETE_ALERT_TOAST)
+      setAlerts(prevAlerts => prevAlerts.filter(alert => alert.id !== id));
+    } catch (err) {
+      showToast(ERROR_DELETE_ALERT_TOAST)
+      console.error('Error dismissing alert:', err);
     }
-    dismissALert()
-  }
+  };
+
+  const handleDelete = (id) => {
+    dismissAlert(id);
+  };
+
   return (
     <Box className="health-alerts-container">
-      {healthAlertsData.map((healthAlert, index) => (
+      {alerts.map((healthAlert, index) => (
         <Paper key={index} className="health-alert-paper">
           <Box className="health-alert-header">
             <Typography variant="h5" fontWeight="bold">{healthAlert.title}</Typography>
@@ -33,9 +43,14 @@ const HealthAlerts = ({ healthAlertsData }) => {
             </Typography>
           </Box>
           <Typography textAlign="center">Action: {healthAlert.action}.</Typography>
-          <Button variant="contained" fullWidth color="success" onClick={()=>{
-            handleDelete(healthAlert.id)
-          }}>Dismiss</Button>
+          <Button 
+            variant="contained" 
+            fullWidth 
+            color="success" 
+            onClick={() => handleDelete(healthAlert.id)}
+          >
+            Dismiss
+          </Button>
         </Paper>
       ))}
     </Box>

@@ -1,4 +1,4 @@
-import { DISMISS_HEALTH_ALERTS_API, HEALTH_ALERTS_API, PET_VITAL_SIGNS } from "../common/configuration/constants/PathBack";
+import { DISMISS_HEALTH_ALERTS_API, HEALTH_ALERTS_API } from "../common/configuration/constants/PathBack";
 import {  axiosPrivate } from '../common/configuration/ApiAuth'; 
 
 class AlertsService {
@@ -19,8 +19,11 @@ class AlertsService {
   static async deleteAlerts(id) {
     try {
       const response = await axiosPrivate.delete(
-        `${DISMISS_HEALTH_ALERTS_API}${id}`,
-        { withCredentials: true }
+        `${DISMISS_HEALTH_ALERTS_API}/${id}`,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        }
       );
       return response.data;
     } catch (err) {
@@ -28,12 +31,6 @@ class AlertsService {
       throw err;
     }
   }
-
-
-
-
-
-
 
 }
 export default AlertsService;
