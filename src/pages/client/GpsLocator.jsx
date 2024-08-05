@@ -10,7 +10,7 @@ import '../../maps.css';
 import { addZones } from '../../mapUtils';
 import Footer from '../../common/configuration/constants/Footer';
 import MapNavBar from '../../components/global/MapNavBar'; 
-import  { GOOGLE_MAPS_API_KEY } from '../../../src/common/configuration/constants/ApiKey'
+//import  { GOOGLE_MAPS_API_KEY } from '../../../src/common/configuration/constants/ApiKey'
 
 const GpsLocator = () => {
   const theme = useTheme();
@@ -49,7 +49,7 @@ const GpsLocator = () => {
   return (
     <div style={{ position: 'relative', height: '100vh', paddingBottom: '60px' }}>
       <MapNavBar /> 
-      <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerClassName="map-container"
           center={center}
