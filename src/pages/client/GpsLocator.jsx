@@ -47,7 +47,7 @@ const GpsLocator = () => {
       ]; 
   return (
     <div style={{ position: 'relative', height: '100vh', paddingBottom: '60px' }}>
-      <MapNavBar /> 
+    
       <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerClassName="map-container"

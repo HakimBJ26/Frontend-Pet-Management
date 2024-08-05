@@ -48,7 +48,7 @@ function VetoDashboard() {
                 "Easily access all essential features to provide the best care for your furry patients. Manage appointment requests, update medical notes, and track pets' health and activities in real-time."
               </Typography>
 
-              <Grid container marginLeft={1} spacing={4} style={{ maxWidth: 1100, padding: '8px', backgroundColor: theme.palette.background.paper }}>
+              <Grid container  spacing={4} style={{ maxWidth: 1100, padding: '8px', backgroundColor: theme.palette.background.paper }}>
                 <Grid item xs={12} sm={6} md={4}>
                   <Card style={{ maxWidth: 345, margin: 'auto', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                     <CardMedia

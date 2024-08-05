@@ -29,4 +29,4 @@ export const products = [
       name: 'Pet Bowl',
       price: 7.99,
     },
-  ];
+  ]

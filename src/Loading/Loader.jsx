@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, CircularProgress } from '@mui/material';
 const Loader = ({ size = 24, color = '#ffffff' }) => {
     return (

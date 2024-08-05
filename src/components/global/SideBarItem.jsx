@@ -3,7 +3,7 @@ import { tokens } from '../../theme';
 import { Typography, useTheme } from '@mui/material';
 import { MenuItem } from "react-pro-sidebar";
 
-const SideBarItem = ({ title, nav, icon, selected, setSelected }) => {
+const SideBarItem = ({ title, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 

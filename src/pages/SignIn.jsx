@@ -10,12 +10,12 @@ import { tokens } from '../theme';
 import { useState } from 'react';
 import { useTheme } from '@mui/material';
 import UserService from '../service/UserService';
-import StyledBox from '../components/StyledBox';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
-import { ADMIN_DASH_PATH, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH } from '../common/configuration/constants/Paths';
+import { ADMIN_DASH_PATH, ASK_TO_RESET_PASS, CLIENT_DASH_PATH, SIGN_UP_PATH, VETO_DASH_PATH } from '../common/configuration/constants/Paths';
 import { ERROR_LOGIN_TOAST, SUCCESS_LOGIN_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
 import Loader from '../Loading/Loader';
+import { StyledBox } from '../components/StyledBox';
 
 export default function SignIn() {
   const theme = useTheme();
@@ -76,46 +76,46 @@ export default function SignIn() {
   };
 
   return (
-    <StyledBox>
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <PetsIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Sign in
-      </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={!!errors.email}
-              helperText={errors.email}
-            />
+      <StyledBox>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <PetsIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={formData.password}
+                onChange={handleChange}
+                error={!!errors.password}
+                helperText={errors.password}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={formData.password}
-              onChange={handleChange}
-              error={!!errors.password}
-              helperText={errors.password}
-            />
-          </Grid>
-        </Grid>
-        <Button
+          <Button
           type="submit"
           fullWidth
           variant="contained"
@@ -123,14 +123,22 @@ export default function SignIn() {
         >
           {isLoading ? <Loader size={24} color="#ffffff" /> : <span>Sign In</span>}
         </Button>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Link style={{ color: colors.primary[400] }} to={SIGN_UP_PATH}>
-              <h3>Don't have an account? Sign Up</h3>
-            </Link>
+          <Grid container justifyContent="space-between">
+            <Grid item>
+              <Link style={{ color: colors.primary[400] }} to={SIGN_UP_PATH}>
+                <h3>Don't have an account? Sign Up</h3>
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link style={{ color: colors.primary[400] }} to={ASK_TO_RESET_PASS}>
+                <h3>Forgot Password?</h3>
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
+      
+    
       </Box>
     </StyledBox>
+  
   );
 }

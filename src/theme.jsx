@@ -51,6 +51,7 @@ export const tokens = (mode) => ({
       },
       safeZoneColor : 'rgba(64,224,208)',
        DangerZoneColor : 'rgba(255, 0, 0, 0.2)',
+      customShadowColor: 'rgba(0, 0, 0, 0.1)',
     }
     : {
       grey: {
@@ -99,6 +100,7 @@ export const tokens = (mode) => ({
       },
       safeZoneColor : 'rgba(64,224,208)',
       DangerZoneColor : 'rgba(255, 0, 0, 0.2)',
+      customShadowColor: 'rgba(0, 0, 0, 0.1)',
     }),
 });
 
@@ -147,6 +149,7 @@ export const themeSettings = (mode) => {
          circleMapSafe : colors.safeZoneColor,
           DangerMap:colors.DangerZoneColor,
 
+          shadowColor: colors.customShadowColor,
         },
     },
     typography: {
