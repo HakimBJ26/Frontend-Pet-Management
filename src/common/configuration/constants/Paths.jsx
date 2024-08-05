@@ -1,4 +1,3 @@
-
 export const SIGN_UP_PATH = '/sign_up';
 export const SIGN_IN_PATH = '/sign_in';
 export const ADMIN_DASH_PATH = '/dashboard_admin';
@@ -19,4 +18,10 @@ export const VETO_UPDATE_NOTES_PATH = '/veto/update_notes';
 export const VETO_UPDATE_TREATMENT_PATH = '/veto/update_treatment';
 export const PET_PROFILE = '/pet-profile/:id';
 export const USER_PROFILE = '/profile';
-export const PET_SHOP_MANAGEMENT = '/pet_shop_management'
+export const PET_SHOP_MANAGEMENT = '/pet_shop_management';
+export const TASK_DIALOG_PATH = '/task_dialog';
+export const VACCINE_RECORD_PATH = '/vaccine_records';
+export const HEALTH_SCORE_PATH = '/health_score';
+export const VISIT_RECORD_PATH = '/visit_records';
+export const SURGERY_RECORD_PATH = '/surgery_records';
+export const MEDICAL_RECORD_PATH = '/medical_records';

@@ -22,7 +22,13 @@ import {
   VETO_UPDATE_TREATMENT_PATH,
   USER_PROFILE,
   PET_PROFILE,
-  PET_SHOP_MANAGEMENT
+  PET_SHOP_MANAGEMENT,
+  VACCINE_RECORD_PATH,
+  HEALTH_SCORE_PATH,
+  VISIT_RECORD_PATH,
+  SURGERY_RECORD_PATH,
+  Medical_RECORD_PATH,
+  MEDICAL_RECORD_PATH,
 } from './common/configuration/constants/Paths';
 import BottomBar from './components/global/ButtomBar';
 
@@ -33,8 +39,8 @@ function App() {
   const isMobile = useMediaQuery('(max-width: 600px)');
   const [showSidebar, setShowSidebar] = useState(!isMobile);
   useEffect(() => {
-    const {role } = getAuthInfo();
-    
+    const { role } = getAuthInfo();
+
     if (location.pathname === SIGN_UP_PATH) {
       return;
     }
@@ -55,7 +61,8 @@ function App() {
             GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
             COMMUNITY_PATH, USER_PROFILE, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
-            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, VACCINE_RECORD_PATH, VISIT_RECORD_PATH, SURGERY_RECORD_PATH,
+            MEDICAL_RECORD_PATH
           ];
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return;
@@ -88,21 +95,21 @@ function App() {
 
   return (
     <AuthContextProvider>
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="app">
-          {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
-          {shouldShowTopBar(location.pathname) && <TopBar />}
-          <main className="content">
-            <ProtectedRoutes />
-            <Toaster expand visibleToasts={9} />
-          </main>
-          {isMobile && shouldShowSideBar(location.pathname) &&<BottomBar />}
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
-  </AuthContextProvider>
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <div className="app">
+            {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
+            {shouldShowTopBar(location.pathname) && <TopBar />}
+            <main className="content">
+              <ProtectedRoutes />
+              <Toaster expand visibleToasts={9} />
+            </main>
+            {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
+          </div>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </AuthContextProvider>
   );
 }
 
