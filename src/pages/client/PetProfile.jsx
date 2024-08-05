@@ -15,11 +15,12 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  InputAdornment,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search"; 
 import PetService from "../../service/PetService";
 import { toast } from "sonner";
 
-// List of animal breeds
 const breedOptions = [
   "Labrador Retriever",
   "German Shepherd",
@@ -50,6 +51,8 @@ const breedOptions = [
 
 export default function PetProfile() {
   const [petData, setPetData] = useState([]);
+  const [filteredPetData, setFilteredPetData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const pageEndRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -61,19 +64,32 @@ export default function PetProfile() {
   });
   const [isOtherBreed, setIsOtherBreed] = useState(false);
   const [otherBreed, setOtherBreed] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null); // To hold the selected file
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     const fetchPetProfile = async () => {
       try {
         const response = await PetService.getCurrentUserPets();
         setPetData(response);
+        setFilteredPetData(response); 
       } catch (error) {
         console.error("Error fetching pet profile:", error);
       }
     };
     fetchPetProfile();
   }, []);
+
+  useEffect(() => {
+    // Filter pets based on search term
+    const filteredPets = petData.filter((pet) => {
+      return (
+        pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pet.breed.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pet.age.toString().includes(searchTerm)
+      );
+    });
+    setFilteredPetData(filteredPets);
+  }, [searchTerm, petData]);
 
   const handleOpen = (pet = null) => {
     if (pet) {
@@ -96,7 +112,7 @@ export default function PetProfile() {
     setNewPetData({ name: "", breed: "", age: "" });
     setIsOtherBreed(false);
     setOtherBreed("");
-    setSelectedFile(null); // Clear the selected file when closing
+    setSelectedFile(null);
   };
 
   const handleInputChange = (e) => {
@@ -141,7 +157,7 @@ export default function PetProfile() {
       } else {
         await PetService.addPet(newPetData);
         toast.success("Pet added successfully.");
-        setPetData([...petData, { ...newPetData, id: Date.now() }]); // Using a temporary ID
+        setPetData([...petData, { ...newPetData, id: Date.now() }]);
         requestAnimationFrame(() => {
           pageEndRef.current.scrollIntoView({ behavior: "smooth" });
         });
@@ -158,7 +174,7 @@ export default function PetProfile() {
     if (file && editPetId) {
       try {
         await PetService.uploadPetPhoto(editPetId, file);
-        setSelectedFile(URL.createObjectURL(file)); // Update the avatar with the new photo
+        setSelectedFile(URL.createObjectURL(file));
         toast.success("Photo uploaded successfully.");
       } catch (error) {
         console.error("Error uploading photo:", error);
@@ -173,6 +189,24 @@ export default function PetProfile() {
         <Typography variant="h5" gutterBottom>
           Pet Profile
         </Typography>
+      </Box>
+
+      
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+        <TextField
+          label="Find your Pet"
+          variant="outlined"
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
       </Box>
 
       {/* Add Pet Card */}
@@ -193,8 +227,7 @@ export default function PetProfile() {
         </Card>
       </Box>
 
-      {/* Pet Cards */}
-      {petData.map((p) => (
+      {filteredPetData.map((p) => (
         <Card key={p.id} sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
           <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
             <label htmlFor={`upload-photo-${p.id}`}>
@@ -218,16 +251,15 @@ export default function PetProfile() {
                   borderColor: "background.default",
                 }}
                 onClick={() => {
-                  setEditPetId(p.id); // Set editPetId to the current pet id
-                  document.getElementById(`upload-photo-${p.id}`).click(); // Trigger file input
+                  setEditPetId(p.id);
+                  document.getElementById(`upload-photo-${p.id}`).click();
                 }}
               >
-                {p.name ? p.name[0] : "?"} {/* Fallback to pet's initial */}
+                {p.name ? p.name[0] : "?"}
               </Avatar>
             </label>
           </Box>
           <CardContent sx={{ p: 3 }}>
-            {/* Display pet information */}
             <Box display="flex" justifyContent="space-between" mb={2}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Name
@@ -258,7 +290,6 @@ export default function PetProfile() {
       ))}
       <div ref={pageEndRef} />
 
-      {/* Modal for Adding/Editing Pet */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{isEditMode ? "Edit Pet" : "Add New Pet"}</DialogTitle>
         <DialogContent>

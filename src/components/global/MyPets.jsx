@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Card, CardContent } from "@mui/material";
-import PetService from "../../service/PetService"; // Adjust the path as needed
-import { useAuth } from "../../context/AuthContext"; // Adjust according to your authentication context
+import PetService from "../../service/PetService"; 
+import { useAuth } from "../../context/AuthContext"; 
 
 const MyPets = () => {
   const [pets, setPets] = useState([]);
-  const { user } = useAuth(); // Assuming you have a context to get the logged-in user
+  const { user } = useAuth(); 
 
   useEffect(() => {
     const fetchPets = async () => {

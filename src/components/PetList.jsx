@@ -16,7 +16,7 @@ export default function PetList() {
     };
 
     fetchPets();
-  }, []); // Fetch pets when the component mounts
+  }, []); 
 
   return (
     <Box sx={{ mt: 5 }}>
