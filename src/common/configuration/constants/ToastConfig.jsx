@@ -179,4 +179,41 @@ export const SUCCESS_SIGN_UP_TOAST = {
       color: '#ffffff',
     },
   };
+  export const SUCCESS_DELETE_ALERT_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Alert deleted successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+  export const ERROR_DELETE_ALERT_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to delete Alert.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  export const SUCCESS_RESET_PASS_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'A reset password mail has send to!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_RESET_PASS_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Please check your email.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
   

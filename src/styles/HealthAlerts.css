@@ -1,0 +1,32 @@
+.health-alerts-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 4px;
+    gap: 16px;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+  }
+  
+  .health-alerts-container::-webkit-scrollbar {
+    display: none;  
+  }
+  
+  .health-alert-paper {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    min-width: 300px; 
+  }
+  
+  .health-alert-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+  
+  .health-alert-severity {
+    color: red;
+  }
+  

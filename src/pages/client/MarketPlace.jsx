@@ -60,7 +60,7 @@ function MarketPlace() {
       <Box sx={{marginBottom:'20px'}}>
       <SearchBar placeholder="Search Accessories By Name" value={searchQuery} onChange={handleSearchChange} />
       </Box>
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={2} justifyContent="center" sx={{marginBottom:'50px'}}>
         {filteredAccessories.map((product) => (
           <Grid item xs={6} sm={3} key={product.id}>
             <ProductCard product={product} onAddToCart={() => handleAddToCart(product)} />

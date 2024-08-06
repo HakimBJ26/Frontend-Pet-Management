@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { TextField, Button, Box, Typography, Grid } from '@mui/material';
 import UserService from '../service/UserService';
+import useToast from '../hooks/useToast'
+import { ERROR_RESET_PASS_TOAST, SUCCESS_RESET_PASS_TOAST } from '../common/configuration/constants/ToastConfig';
 
 function AskToResetPassword() {
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState({});
   const [emailSent, setEmailSent] = useState(false);
+  const {showToast}=useToast();
 
   const validate = () => {
     let tempErrors = {};
@@ -18,13 +21,19 @@ function AskToResetPassword() {
     event.preventDefault();
     const validated = validate()
     if (validated) {
+      try{
         await UserService.sendResetPassMail(email)
-      setEmailSent(true);
+        setEmailSent(true);
+        showToast(SUCCESS_RESET_PASS_TOAST)
+      }catch(err){
+        showToast(ERROR_RESET_PASS_TOAST)
+        console.log(err)
+      }
     }
   };
 
   return (
-    <Box sx={{ mt: 3, maxWidth: '400px', mx: 'auto' }}>
+    <Box sx={{ mt: 3, maxWidth: '400px',padding:5}}>
       <Typography component="h1" variant="h5" gutterBottom>
         Reset Password
       </Typography>

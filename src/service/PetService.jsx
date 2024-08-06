@@ -2,7 +2,6 @@ import { axiosPrivate } from "../common/configuration/ApiAuth";
 import {
   ADD_PET_API,
   GET_ALL_PETS_API,
-  GET_PET_BY_ID_API,
   UPDATE_PET_API,
   GET_CURRENT_USER_PETS_API,
 } from "../common/configuration/constants/PathBack";
