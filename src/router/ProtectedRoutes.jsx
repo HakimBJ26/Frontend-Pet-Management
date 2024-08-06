@@ -13,7 +13,7 @@ import DefineSafeZone from '../pages/client/DefineSafeZone';
 import HealthMonitor from '../pages/client/HealthMonitor';
 import HealthPassport from '../pages/client/HealthPassport';
 import SetActivityGoals from '../pages/client/SetActivityGoals';
-import { ACTIVITY_TRACKER_PATH, ASK_TO_RESET_PASS, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,  DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MANAGE_VETO_REQUEST, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, RESET_PASS_REQUEST, SEARCH_VETO_PRODUCTS, SET_ACTIVITY_GOALS_PATH, SUBMIT_VETO_REQUEST, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH } from '../common/configuration/constants/Paths';
+import { ACTIVITY_TRACKER_PATH, ASK_TO_RESET_PASS, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,  DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, HEALTH_SCORE_PATH, MANAGE_VETO_REQUEST, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, RESET_PASS_REQUEST, SEARCH_VETO_PRODUCTS, SET_ACTIVITY_GOALS_PATH, SUBMIT_VETO_REQUEST, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH } from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 
@@ -40,6 +40,7 @@ import RequestJoinAsVeterinarian from '../pages/RequestJoinAsVeterinarian';
 import ResetPassword from '../pages/ResetPassword';
 import AskToResetPassword from '../pages/AskToResetPassword';
 import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
+import HealthScore from '../pages/client/HealthScore';
 
 const ProtectedRoutes = () => (
   <Routes>
@@ -76,6 +77,11 @@ const ProtectedRoutes = () => (
             <Route path={SET_ACTIVITY_GOALS_PATH} element={<SetActivityGoals />} />
             <Route path={PET_PROFILE} element={<PetProfile />} />
             <Route path={SEARCH_VETO_PRODUCTS} element={<SearchForVetoAndProds/> } />
+            <Route path={HEALTH_SCORE_PATH} element={<HealthScore/> } />
+
+            
+            
+            
 
 
           </Routes>

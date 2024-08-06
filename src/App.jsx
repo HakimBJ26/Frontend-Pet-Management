@@ -27,7 +27,8 @@ import {
   SUBMIT_VETO_REQUEST,
   RESET_PASS_REQUEST,
   ASK_TO_RESET_PASS,
-  SEARCH_VETO_PRODUCTS
+  SEARCH_VETO_PRODUCTS,
+  HEALTH_SCORE_PATH
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
 
@@ -38,7 +39,7 @@ function App() {
   const isMobile = useMediaQuery('(max-width: 600px)')
   const [showSidebar, setShowSidebar] = useState(!isMobile)
   useEffect(() => {
-    const {role } = getAuthInfo()
+    const { role } = getAuthInfo()
     if (location.pathname === SIGN_UP_PATH || location.pathname === SUBMIT_VETO_REQUEST || location.pathname === RESET_PASS_REQUEST || location.pathname === ASK_TO_RESET_PASS) {
       return
     }
@@ -46,7 +47,7 @@ function App() {
       switch (role) {
         case ROLE_ADMIN: {
           const adminpaths = [
-            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT , MANAGE_VETO_REQUEST 
+            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT, MANAGE_VETO_REQUEST
           ]
           if (adminpaths.some(path => location.pathname === `${ADMIN_DASH_PATH}${path}`)) {
             return
@@ -59,7 +60,7 @@ function App() {
             GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
             COMMUNITY_PATH, USER_PROFILE, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
-            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE , SEARCH_VETO_PRODUCTS
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE, SEARCH_VETO_PRODUCTS, HEALTH_SCORE_PATH
           ]
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return
@@ -96,14 +97,14 @@ function App() {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-         
-            {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
-            {shouldShowTopBar(location.pathname) && <TopBar />}
-              <ProtectedRoutes />
-              <Toaster expand visibleToasts={9} />
-           
-            {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
-         
+
+          {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
+          {shouldShowTopBar(location.pathname) && <TopBar />}
+          <ProtectedRoutes />
+          <Toaster expand visibleToasts={9} />
+
+          {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
+
         </ThemeProvider>
       </ColorModeContext.Provider>
 
