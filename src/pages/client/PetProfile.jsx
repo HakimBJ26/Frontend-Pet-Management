@@ -191,7 +191,6 @@ export default function PetProfile() {
         </Typography>
       </Box>
 
-      
       <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
         <TextField
           label="Find your Pet"
@@ -199,6 +198,8 @@ export default function PetProfile() {
           fullWidth
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          size="medium" // This makes the TextField smaller
+          sx={{ width: 400 }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -228,7 +229,8 @@ export default function PetProfile() {
       </Box>
 
       {filteredPetData.map((p) => (
-        <Card key={p.id} sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
+        <Card key={p.id} sx={{ maxWidth: 345, mx: "auto", mt:10}}>
+          
           <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
             <label htmlFor={`upload-photo-${p.id}`}>
               <input
