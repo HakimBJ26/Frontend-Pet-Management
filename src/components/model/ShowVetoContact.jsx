@@ -6,7 +6,6 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 function ShowVetoContact({ open, onClose, vetoContact}) {
     const theme = useTheme()
-    console.log(vetoContact)
 
     const handleCopyToClipboard = (text) => {
         navigator.clipboard.writeText(text).then(() => {
