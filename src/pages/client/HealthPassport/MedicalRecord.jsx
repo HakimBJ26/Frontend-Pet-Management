@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import MedicalRecordService from '../../../service/MedicalRecordService';
-import { Box, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton } from '@mui/material';
+import { Box, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton, colors } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import Loader from '../../../Loading/Loader';
 
 const MedicalRecord = () => {
     const [records, setRecords] = useState([]);
@@ -14,18 +15,20 @@ const MedicalRecord = () => {
     const [filterType, setFilterType] = useState('');
     const location = useLocation();
     const { state } = location;
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         loadSortedMedicalRecords();
     }, [healthPassportId]);
 
     const loadMedicalRecords = async () => {
+        setIsLoading(true)
         try {
             const result = await MedicalRecordService.getAllMedicalRecordsByHealthPassportId(healthPassportId);
             setRecords(result);
         } catch (error) {
             console.error('Error loading medical records:', error);
-        }
+        } finally { setIsLoading(false) }
     };
 
     const loadSortedMedicalRecords = async () => {
@@ -133,7 +136,8 @@ const MedicalRecord = () => {
                     onChange={(e) => setFilterType(e.target.value)}
                 />
                 <Button variant="contained" color="primary" onClick={filterMedicalRecords}>
-                    Search
+                    {isLoading ? <Loader size={24} color={colors.grey[200]} /> : <span>Search</span>}
+
                 </Button>
             </Box>
             <TableContainer component={Paper}>

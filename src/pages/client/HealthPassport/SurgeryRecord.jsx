@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import SurgeryRecordService from '../../../service/SurgeryRecordService';
-import { Box, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton } from '@mui/material';
+import { Box, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton, colors } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import Loader from '../../../Loading/Loader';
 
 const SurgeryRecord = () => {
     const [records, setRecords] = useState([]);
@@ -14,6 +15,7 @@ const SurgeryRecord = () => {
     const [filterType, setFilterType] = useState('');
     const location = useLocation();
     const { state } = location;
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         loadSortedSurgeryRecords();
@@ -38,12 +40,14 @@ const SurgeryRecord = () => {
     };
 
     const filterSurgeryRecords = async () => {
+        setIsLoading(true)
         try {
             const result = await SurgeryRecordService.getAllSurgeryRecordsByHealthPassportIdAndSurgeryType(healthPassportId, filterType);
             setRecords(result);
         } catch (error) {
             console.error('Error filtering surgery records:', error);
-        }
+        } finally { setIsLoading(false) }
+
     };
 
     const saveOrUpdateSurgeryRecord = async (e) => {
@@ -90,7 +94,7 @@ const SurgeryRecord = () => {
     return (
         <Box sx={{ padding: 3, marginTop: 5 }}>
             <Typography variant="h4" component="h2" gutterBottom>
-            Surgery Records
+                Surgery Records
             </Typography>
             <Paper sx={{ padding: 3, marginBottom: 3 }}>
                 <form onSubmit={saveOrUpdateSurgeryRecord}>
@@ -133,7 +137,8 @@ const SurgeryRecord = () => {
                     onChange={(e) => setFilterType(e.target.value)}
                 />
                 <Button variant="contained" color="primary" onClick={filterSurgeryRecords}>
-                    Search
+                    {isLoading ? <Loader size={24} color={colors.grey[200]} /> : <span>Search</span>}
+
                 </Button>
             </Box>
             <TableContainer component={Paper}>

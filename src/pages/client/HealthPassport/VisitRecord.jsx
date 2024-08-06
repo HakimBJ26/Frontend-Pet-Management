@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import VisitRecordService from '../../../service/VisitRecordService';
-import { Box, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton } from '@mui/material';
+import { Box, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton, colors } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import Loader from '../../../Loading/Loader';
 
 const VisitRecord = () => {
     const [records, setRecords] = useState([]);
@@ -14,6 +15,8 @@ const VisitRecord = () => {
     const [filterType, setFilterType] = useState('');
     const location = useLocation();
     const { state } = location;
+    const [isLoading, setIsLoading] = useState(false);
+
 
     useEffect(() => {
         loadSortedVisitRecords();
@@ -38,12 +41,14 @@ const VisitRecord = () => {
     };
 
     const filterVisitRecords = async () => {
+        setIsLoading(true)
         try {
             const result = await VisitRecordService.getAllVisitRecordsByHealthPassportIdAndVisitType(healthPassportId, filterType);
             setRecords(result);
         } catch (error) {
             console.error('Error filtering visit records:', error);
         }
+        finally { setIsLoading(false) }
     };
 
     const saveOrUpdateVisitRecord = async (e) => {
@@ -133,7 +138,8 @@ const VisitRecord = () => {
                     onChange={(e) => setFilterType(e.target.value)}
                 />
                 <Button variant="contained" color="primary" onClick={filterVisitRecords}>
-                    Search
+                    {isLoading ? <Loader size={24} color={colors.grey[200]} /> : <span>Search</span>}
+
                 </Button>
             </Box>
             <TableContainer component={Paper}>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import VaccineRecordService from '../../../../service/VaccinRecordService';
-import { Box, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton } from '@mui/material';
+import { Box, TextField, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton, colors } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import Loader from '../../../../Loading/Loader';
 
 const VaccineRecord = () => {
     const [records, setRecords] = useState([]);
@@ -14,6 +15,7 @@ const VaccineRecord = () => {
     const [filterName, setFilterName] = useState('');
     const location = useLocation();
     const { state } = location;
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         loadSortedVaccineRecords();
@@ -38,12 +40,13 @@ const VaccineRecord = () => {
     };
 
     const filterVaccineRecords = async () => {
+        setIsLoading(true)
         try {
             const result = await VaccineRecordService.getAllVaccineRecordsByHealthPassportIdAndVaccineName(healthPassportId, filterName);
             setRecords(result);
         } catch (error) {
             console.error('Error filtering vaccine records:', error);
-        }
+        } finally { setIsLoading(false) }
     };
 
     const saveOrUpdateVaccineRecord = async (e) => {
@@ -134,7 +137,7 @@ const VaccineRecord = () => {
                     onChange={(e) => setFilterName(e.target.value)}
                 />
                 <Button variant="contained" color="primary" onClick={filterVaccineRecords}>
-                    Search
+                    {isLoading ? <Loader size={24} color={colors.grey[200]} /> : <span>Search</span>}
                 </Button>
             </Box>
             <TableContainer component={Paper}>
