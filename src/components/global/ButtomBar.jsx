@@ -1,5 +1,3 @@
-// src/components/BottomBar.js
-
 import { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction, Menu, MenuItem } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
@@ -40,7 +38,8 @@ function BottomBar() {
                         label={link.label}
                         icon={link.icon}
                         value={link.to}
-                        className='bottom-navigation-action'
+                      
+                        sx={{width:40}}
                     />
                 ))}
                 {moreLinks.length > 0 && (
@@ -48,7 +47,7 @@ function BottomBar() {
                         label="More"
                         icon={<MoreVertIcon />}
                         onClick={handleMoreClick}
-                        className='bottom-navigation-action'
+                       
                     />
                 )}
             </BottomNavigation>

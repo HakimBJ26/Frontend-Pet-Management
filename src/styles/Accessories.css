@@ -1,0 +1,33 @@
+.boxScrollClass {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+  }
+  
+  .boxScrollClass::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .boxScrollClass::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  
+  .boxScrollClass::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  .cardClass {
+    min-width: 200px;
+    margin:10px;
+    padding: 10px;
+    display: inline-block;
+  }
+  
+  .cardClass:last-of-type {
+    margin-right: 16px;
+  }
+  

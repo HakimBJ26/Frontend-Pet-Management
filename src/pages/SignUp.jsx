@@ -6,20 +6,19 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import { Link, useNavigate } from 'react-router-dom';
 import PetsIcon from '@mui/icons-material/Pets';
 import UserService from '../service/UserService';
 import { tokens } from '../theme';
-import StyledBox from '../components/StyledBox';
-import { ROLE_CLIENT, ROLE_VETO } from '../common/configuration/constants/UserRole';
+import { StyledBox } from '../components/StyledBox';
 import CustomTextField from '../components/CustomTextField';
 import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsName';
 import { SIGN_IN_PATH } from '../common/configuration/constants/Paths';
 import { ERROR_SIGN_UP_TOAST, SUCCESS_SIGN_UP_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
+import Footer from '../components/global/Footer';
+import { ROLE_CLIENT } from '../common/configuration/constants/UserRole';
+import Loader from '../Loading/Loader';
 
 export default function SignUp() {
   const theme = useTheme();
@@ -31,26 +30,20 @@ export default function SignUp() {
     email: '',
     password: '',
     city: '',
-    role: '',
-    phone: '',
-    countryCode: '+1', // Default country code
+    role: `${ROLE_CLIENT}`, 
+    phone: '',  
+    countryCode: '+1', 
   });
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (event) => {
-    const { name, value, checked } = event.target;
-    if (name === 'role') {
-      setFormData({
-        ...formData,
-        role: checked ? value : '',
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const validate = () => {
@@ -63,9 +56,7 @@ export default function SignUp() {
       : 'Email is required';
     tempErrors.password = formData.password ? '' : 'Password is required';
     tempErrors.city = formData.city ? '' : 'City is required';
-    tempErrors.role = formData.role ? '' : 'Role is required';
     tempErrors.phone = formData.phone ? '' : 'Phone number is required';
-    tempErrors.countryCode = formData.countryCode ? '' : 'Country code is required';
     setErrors(tempErrors);
     return Object.values(tempErrors).every((x) => x === '');
   };
@@ -74,9 +65,10 @@ export default function SignUp() {
     event.preventDefault();
     const validated = validate();
     if (validated) {
-    const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
-    const { countryCode, ...submissionData } = formData;
-    submissionData.phone = fullPhoneNumber;
+      setIsLoading(true);
+      const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
+      const { countryCode, ...submissionData } = formData;
+      submissionData.phone = fullPhoneNumber;
 
       try {
         await UserService.register(submissionData);
@@ -87,6 +79,8 @@ export default function SignUp() {
       } catch (error) {
         showToast(ERROR_SIGN_UP_TOAST);
         console.error('Error registering user:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -99,7 +93,8 @@ export default function SignUp() {
   }));
 
   return (
-    <StyledBox >
+    <>
+    <StyledBox>
       <Typography variant="h1">PETAGORA</Typography>
       <Divider variant="middle" sx={{ mb: 3 }} />
       <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -108,7 +103,7 @@ export default function SignUp() {
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom:10 }}>
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, marginBottom: 10 }}>
         <Grid container spacing={2}>
           {fields.map((field) => (
             <Grid item xs={12} sm={field.name === 'countryCode' || field.name === 'phone' ? 6 : 12} key={field.id}>
@@ -127,41 +122,9 @@ export default function SignUp() {
               />
             </Grid>
           ))}
-          <Grid item xs={12}>
-            <FormGroup>
-              <Typography variant="subtitle1">Select Role</Typography>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="role"
-                    value={ROLE_CLIENT}
-                    checked={formData.role === ROLE_CLIENT}
-                    onChange={handleChange}
-                  />
-                }
-                label="Client"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="role"
-                    value={ROLE_VETO}
-                    checked={formData.role === ROLE_VETO}
-                    onChange={handleChange}
-                  />
-                }
-                label="Veterinarian"
-              />
-            </FormGroup>
-            {errors.role && (
-              <Typography color="error" variant="caption">
-                {errors.role}
-              </Typography>
-            )}
-          </Grid>
         </Grid>
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          Sign Up
+          {isLoading ? <Loader size={24} color="#ffffff" /> : <span>Sign Up</span>}
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
@@ -172,5 +135,7 @@ export default function SignUp() {
         </Grid>
       </Box>
     </StyledBox>
+    <Footer/>
+    </>
   );
 }

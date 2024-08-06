@@ -12,6 +12,10 @@ import DefineSafeZone from '../pages/client/DefineSafeZone';
 import HealthMonitor from '../pages/client/HealthMonitor';
 import HealthPassport from '../pages/client/HealthPassport/HealthPassport';
 import SetActivityGoals from '../pages/client/SetActivityGoals';
+import { ACTIVITY_TRACKER_PATH, ASK_TO_RESET_PASS, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,  DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MANAGE_VETO_REQUEST, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, RESET_PASS_REQUEST, SEARCH_VETO_PRODUCTS, SET_ACTIVITY_GOALS_PATH, SUBMIT_VETO_REQUEST, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH,  VACCINE_RECORD_PATH,
+  VISIT_RECORD_PATH,
+  SURGERY_RECORD_PATH,
+  MEDICAL_RECORD_PATH } from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 import UserManagement from '../pages/admin/UserManagement';
@@ -21,15 +25,7 @@ import UpdateMedicalNotes from '../pages/veto/UpdateMedicalNotes';
 import UpdateTreatmentPlans from '../pages/veto/UpdateTreatmentPlans';
 import Notifications from '../pages/veto/Notifications';
 import PetShopManagement from '../pages/admin/PetShopManagement';
-import {
-  ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH, HEALTH_PASSPORT_PATH, COMMUNITY_PATH, DEFINE_SAFE_ZONE_PATH,
-  GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, SET_ACTIVITY_GOALS_PATH,
-  VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH,
-  VACCINE_RECORD_PATH,
-  VISIT_RECORD_PATH,
-  SURGERY_RECORD_PATH,
-  MEDICAL_RECORD_PATH
-} from '../common/configuration/constants/Paths';
+
 import {
   SIGN_UP_PATH, SIGN_IN_PATH, ADMIN_DASH_PATH, CLIENT_DASH_PATH, VETO_DASH_PATH, USER_MANAGEMENT_PATH,
   PET_PROFILE, USER_PROFILE
@@ -40,6 +36,11 @@ import VisitRecord from '../pages/client/HealthPassport/VisitRecord';
 import SurgeryRecord from '../pages/client/HealthPassport/SurgeryRecord';
 import MedicalRecord from '../pages/client/HealthPassport/MedicalRecord';
 
+import ManageVetoRequest from '../pages/admin/ManageVetoRequest';
+import RequestJoinAsVeterinarian from '../pages/RequestJoinAsVeterinarian';
+import ResetPassword from '../pages/ResetPassword';
+import AskToResetPassword from '../pages/AskToResetPassword';
+import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
 
 const ProtectedRoutes = () => (
   <Routes>
@@ -53,6 +54,7 @@ const ProtectedRoutes = () => (
             <Route path="/" element={<AdminDashboard />} />
             <Route path={USER_MANAGEMENT_PATH} element={<UserManagement />} />
             <Route path={PET_SHOP_MANAGEMENT} element={<PetShopManagement />} />
+            <Route path={MANAGE_VETO_REQUEST} element={<ManageVetoRequest />} />
           </Routes>
         </ProtectedRoute>
       }
@@ -79,10 +81,15 @@ const ProtectedRoutes = () => (
             <Route path={VISIT_RECORD_PATH} element={<VisitRecord />} />
             <Route path={SURGERY_RECORD_PATH} element={<SurgeryRecord />} />
             <Route path={MEDICAL_RECORD_PATH} element={<MedicalRecord />} />
+            <Route path={SEARCH_VETO_PRODUCTS} element={<SearchForVetoAndProds/> } />
+
+
           </Routes>
         </ProtectedRoute>
       }
     />
+
+ 
 
     <Route
       path={`${VETO_DASH_PATH}/*`}
@@ -99,6 +106,13 @@ const ProtectedRoutes = () => (
     />
     <Route path={SIGN_IN_PATH} element={<SignIn />} />
     <Route path={SIGN_UP_PATH} element={<SignUp />} />
+    <Route path={SUBMIT_VETO_REQUEST} element={<RequestJoinAsVeterinarian />} />
+    <Route path={RESET_PASS_REQUEST} element={<ResetPassword />} />
+    <Route path={ASK_TO_RESET_PASS} element={<AskToResetPassword />} />
+
+
+
+
   </Routes>
 );
 

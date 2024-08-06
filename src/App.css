@@ -45,10 +45,156 @@
   border: 2px solid var(--primary-color);
 }
 
+.custom-paper-update-user-model {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  box-shadow: 24px 24px 48px rgba(0, 0, 0, 0.1); 
+  padding: 16px;
+}
+
+.sidebar-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 64px;
+  overflow-y: auto;
+  background-color: #f0f0f0;
+  transition: width 0.3s ease;
+}
+
+.sidebar-box.collapsed {
+  width: 80px;
+}
+
+.sidebar-box.expanded {
+  width: 250px;
+}
+
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.footer-content {
+  padding: 16px 32px; 
+  background-color: var(--footer-bg-color); 
+}
+
+
+.custom-product-card {
+  width: 150px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--theme-border-radius);
+  overflow: hidden;
+}
+
+.header-box-pet-management{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+
+.custom-drawer-admin-dash {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.custom-drawer-admin-dash .MuiDrawer-paper {
+  width: 240px;
+  box-sizing: border-box;
+}
+
+
+.custom-card-content-product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 140px);
+  overflow: hidden;
+  padding: 8px;
+}
+
+.custom-typography-h6-product-card {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1rem;
+}
+
+.custom-typography-body2-product-card {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+
+
+.custom-box-add-product-model{
+  padding: 16px; 
+  border-radius: 8px; 
+  margin: auto;
+  max-width: 400px;
+}
+.custom-content-box-detail-model {
+  padding: 16px; 
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  outline: none;
+}
+
+
+.custom-cart-box {
+  width: 300px;
+  margin: auto;
+  margin-top: 100px;
+  padding: 16px; 
+  border-radius: 8px; 
+}
+.boxMainAdminDash {
+  flex-grow: 1;
+  background-color: var(--background-default);
+  padding: 16px; /* Adjust as needed */
+  margin-top: 64px; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 .bottom-navigation-action {
-  min-width: auto;
+min-width: 100%;
   padding: 0 1px;
 }
+
+
+.boxMainAdminDash {
+  flex-grow: 1;
+  background-color: var(--background-default);
+  padding: 16px;
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 .bottom-navigation-action .MuiBottomNavigationAction-label {
   font-size: 0.5rem;

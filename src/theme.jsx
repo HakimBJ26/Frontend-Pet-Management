@@ -49,6 +49,7 @@ export const tokens = (mode) => ({
         800: "#292929",
         900: "#141414",
       },
+      customShadowColor: 'rgba(0, 0, 0, 0.1)',
     }
     : {
       grey: {
@@ -95,6 +96,7 @@ export const tokens = (mode) => ({
         800: "#808080",
         900: "#666666",
       },
+      customShadowColor: 'rgba(0, 0, 0, 0.1)',
     }),
 });
 
@@ -139,6 +141,9 @@ export const themeSettings = (mode) => {
             paper: colors.primary[100],
           },
         }),
+        custom: {
+          shadowColor: colors.customShadowColor,
+        },
     },
     typography: {
       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
