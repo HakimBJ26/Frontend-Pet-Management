@@ -22,6 +22,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import PetService from "../../service/PetService";
 import { toast } from "sonner";
 import '../../styles/HealthAlerts.css'
+import AddIcon from "@mui/icons-material/Add";
+
+
+
 
 
 const breedOptions = [
@@ -187,7 +191,7 @@ export default function PetProfile() {
   };
 
   return (
-    <Container sx={{ mt: 7}}>
+    <Container sx={{ mt: 7 }}>
       <Box className="health-alerts-container">
         <Typography variant="h5" gutterBottom>
           Pet Profile
@@ -215,22 +219,30 @@ export default function PetProfile() {
 
       <Box className="health-alerts-container">
         {/* Add Pet Card */}
-        <Box sx={{ display: "flex", mt:1,justifyContent: "center" }}>
-          <Card sx={{ mx: "auto"}}>
+        <Box sx={{ display: "flex", mt: 1, justifyContent: "center" }}>
+          <Card sx={{ mx: "auto" }}>
             <CardContent sx={{ p: 3 }}>
-              <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={() => handleOpen()}
-                  sx={{ mb: 2 }}
+                  sx={{ mb: 13}} // Margin below the button
                 >
                   Add Pet
                 </Button>
+                <AddIcon sx={{ fontSize: 70 }} /> {/* Plus icon */}
               </Box>
             </CardContent>
           </Card>
         </Box>
+
         {filteredPetData.map((p) => (
           <Card key={p.id} sx={{ mt: 1, minWidth: "300px", overflowX: "auto" }}>
             <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
