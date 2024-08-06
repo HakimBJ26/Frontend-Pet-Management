@@ -20,6 +20,10 @@ export const RESET_PASS='/api/auth/resetPassword'
 export const PET_SHOP='/api/accessories'
 export const SEARCH_IN_PET_SHOP_BY_NAME='/api/accessories/search'
 export const SEARCH_VET_BY_NAME_API='/api/auth/search-veterinarians'
+export const PET_VITAL_SIGNS='/api/vital-signs/pet'
+export const HEALTH_ALERTS_API='/api/health-alerts/pet'
+export const DISMISS_HEALTH_ALERTS_API='/api/health-alerts'
+export const OVERVIEW_API='/api/overview/pet'
 
 
 
