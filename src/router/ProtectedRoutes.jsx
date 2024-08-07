@@ -15,7 +15,8 @@ import SetActivityGoals from '../pages/client/SetActivityGoals';
 import { ACTIVITY_TRACKER_PATH, ASK_TO_RESET_PASS, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,  DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MANAGE_VETO_REQUEST, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, RESET_PASS_REQUEST, SEARCH_VETO_PRODUCTS, SET_ACTIVITY_GOALS_PATH, SUBMIT_VETO_REQUEST, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH,  VACCINE_RECORD_PATH,
   VISIT_RECORD_PATH,
   SURGERY_RECORD_PATH,
-  MEDICAL_RECORD_PATH } from '../common/configuration/constants/Paths';
+  MEDICAL_RECORD_PATH, 
+  HEALTH_SCORE_PATH} from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 import UserManagement from '../pages/admin/UserManagement';
@@ -42,9 +43,10 @@ import ResetPassword from '../pages/ResetPassword';
 import AskToResetPassword from '../pages/AskToResetPassword';
 import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
 
+
 const ProtectedRoutes = () => (
   <Routes>
-    <Route path="/" element={<Navigate to={SIGN_IN_PATH} replace />} /> {/* Redirect to SignIn by default */}
+    <Route path="/" element={<Navigate to={SIGN_IN_PATH} replace />} /> {}
 
     <Route
       path={`${ADMIN_DASH_PATH}/*`}
