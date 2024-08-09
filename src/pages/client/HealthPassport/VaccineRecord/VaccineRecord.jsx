@@ -11,7 +11,7 @@ const VaccineRecord = () => {
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [editId, setEditId] = useState(null);
-    const [healthPassportId, setHealthPassportId] = useState(2);
+    const [healthPassportId, setHealthPassportId] = useState();
     const [filterName, setFilterName] = useState('');
     const location = useLocation();
     const { state } = location;
@@ -52,7 +52,6 @@ const VaccineRecord = () => {
     const saveOrUpdateVaccineRecord = async (e) => {
         e.preventDefault();
         const record = { id: editId, vaccineName, description, date };
-        console.log(record, editId)
 
         try {
             if (editId) {

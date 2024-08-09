@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { axiosPrivate } from '../common/configuration/ApiAuth';
+import { HEADER_CREDENTIALS } from '../common/configuration/constants/Paths';
 
 const API_URL = 'http://localhost:8090/api/surgery_records';
 
@@ -7,10 +8,7 @@ class SurgeryRecordService {
     static async createSurgeryRecord(healthPassportId, surgeryRecordDto) {
         try {
             const response = await axiosPrivate.post(`${API_URL}/${healthPassportId}`, surgeryRecordDto,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
             return response.data;
         } catch (error) {
@@ -34,10 +32,7 @@ class SurgeryRecordService {
     static async deleteSurgeryRecord(id) {
         try {
             await axiosPrivate.delete(`${API_URL}/${id}`,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
         } catch (error) {
             console.error('Error deleting surgery record:', error);
@@ -48,10 +43,7 @@ class SurgeryRecordService {
     static async getAllSurgeryRecordsByHealthPassportId(healthPassportId) {
         try {
             const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}`,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
             return response.data;
         } catch (error) {
@@ -63,10 +55,7 @@ class SurgeryRecordService {
     static async getAllSurgeryRecordsByHealthPassportIdSortedByDateDesc(healthPassportId) {
         try {
             const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/sorted`,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
             return response.data;
         } catch (error) {
@@ -80,10 +69,7 @@ class SurgeryRecordService {
             const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/search`, {
                 params: { surgeryType }
             },
-            {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: true
-            });
+            HEADER_CREDENTIALS);
             return response.data;
         } catch (error) {
             console.error('Error fetching filtered surgery records:', error);

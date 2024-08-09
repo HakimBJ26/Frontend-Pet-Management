@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { axiosPrivate } from '../common/configuration/ApiAuth';
+import { HEADER_CREDENTIALS } from '../common/configuration/constants/Paths';
 
 const API_URL = 'http://localhost:8090/api/vaccine_records';
 
@@ -7,10 +8,7 @@ class VaccineRecordService {
     static async createVaccineRecord(healthPassportId, vaccineRecordDto) {
         try {
             const response = await axiosPrivate.post(`${API_URL}/health_passport/${healthPassportId}`, vaccineRecordDto,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
             return response.data;
         } catch (error) {
@@ -34,10 +32,7 @@ class VaccineRecordService {
     static async deleteVaccineRecord(id) {
         try {
             await axiosPrivate.delete(`${API_URL}/${id}`,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
         } catch (error) {
             console.error('Error deleting vaccine record:', error);
@@ -48,10 +43,7 @@ class VaccineRecordService {
     static async getVaccineRecordById(id) {
         try {
             const response = await axiosPrivate.get(`${API_URL}/${id}`,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
             return response.data;
         } catch (error) {
@@ -65,10 +57,7 @@ class VaccineRecordService {
     ) {
         try {
             const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}`,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
             return response.data;
         } catch (error) {
@@ -81,10 +70,7 @@ class VaccineRecordService {
     static async getAllVaccineRecordsByHealthPassportIdSortedByDateDesc(healthPassportId) {
         try {
             const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/sorted`,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+                HEADER_CREDENTIALS
             );
             return response.data;
         } catch (error) {
@@ -100,10 +86,7 @@ class VaccineRecordService {
                 params: { vaccineName },
 
             },
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
+            HEADER_CREDENTIALS
             );
             return response.data;
         } catch (error) {

@@ -11,7 +11,7 @@ const SurgeryRecord = () => {
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [editId, setEditId] = useState(null);
-    const [healthPassportId, setHealthPassportId] = useState(3);
+    const [healthPassportId, setHealthPassportId] = useState();
     const [filterType, setFilterType] = useState('');
     const location = useLocation();
     const { state } = location;
@@ -53,7 +53,6 @@ const SurgeryRecord = () => {
     const saveOrUpdateSurgeryRecord = async (e) => {
         e.preventDefault();
         const record = { id: editId, surgeryType, description, date };
-        console.log(record, editId)
         try {
             if (editId) {
                 await SurgeryRecordService.updateSurgeryRecord(editId, record);

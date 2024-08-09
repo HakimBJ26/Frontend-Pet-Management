@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { axiosPrivate } from '../common/configuration/ApiAuth';
+import { HEADER_CREDENTIALS } from '../common/configuration/constants/Paths';
 
 const API_URL = 'http://localhost:8090/api/visit_records';
 
 class VisitRecordService {
     static async createVisitRecord(healthPassportId, visitRecordDto) {
-        console.log(healthPassportId
-        )
         try {
-            const response = await axiosPrivate.post(`${API_URL}/${healthPassportId}`, visitRecordDto);
+            const response = await axiosPrivate.post(`${API_URL}/${healthPassportId}`, visitRecordDto, HEADER_CREDENTIALS);
             return response.data;
         } catch (error) {
             console.error('Error creating visit record:', error);
@@ -30,7 +29,7 @@ class VisitRecordService {
 
     static async deleteVisitRecord(id) {
         try {
-            await axiosPrivate.delete(`${API_URL}/${id}`);
+            await axiosPrivate.delete(`${API_URL}/${id}`, HEADER_CREDENTIALS);
         } catch (error) {
             console.error('Error deleting visit record:', error);
             throw error;
@@ -39,7 +38,7 @@ class VisitRecordService {
 
     static async getAllVisitRecordsByHealthPassportId(healthPassportId) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}`);
+            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}`, HEADER_CREDENTIALS);
             return response.data;
         } catch (error) {
             console.error('Error fetching visit records by health passport ID:', error);
@@ -49,7 +48,7 @@ class VisitRecordService {
 
     static async getAllVisitRecordsByHealthPassportIdSortedByDateDesc(healthPassportId) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/sorted`);
+            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/sorted`, HEADER_CREDENTIALS);
             return response.data;
         } catch (error) {
             console.error('Error fetching sorted visit records:', error);
@@ -60,7 +59,7 @@ class VisitRecordService {
     static async getAllVisitRecordsByHealthPassportIdAndVisitType(healthPassportId, visitType) {
         try {
             const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/search`, {
-                params: { visitType }
+                params: { visitType }, HEADER_CREDENTIALS
             });
             return response.data;
         } catch (error) {
