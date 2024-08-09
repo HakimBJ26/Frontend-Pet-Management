@@ -1,13 +1,12 @@
-import axios from 'axios';
 import { axiosPrivate } from '../common/configuration/ApiAuth';
 import { HEADER_CREDENTIALS } from '../common/configuration/constants/Paths';
+import { VACCINE_RECORD_API } from '../common/configuration/constants/PathBack';
 
-const API_URL = 'http://localhost:8090/api/vaccine_records';
 
 class VaccineRecordService {
     static async createVaccineRecord(healthPassportId, vaccineRecordDto) {
         try {
-            const response = await axiosPrivate.post(`${API_URL}/health_passport/${healthPassportId}`, vaccineRecordDto,
+            const response = await axiosPrivate.post(`${VACCINE_RECORD_API}/health_passport/${healthPassportId}`, vaccineRecordDto,
                 HEADER_CREDENTIALS
             );
             return response.data;
@@ -19,7 +18,7 @@ class VaccineRecordService {
 
     static async updateVaccineRecord(id, vaccineRecordDto) {
         try {
-            const response = await axiosPrivate.put(`${API_URL}/${id}`, vaccineRecordDto,
+            const response = await axiosPrivate.put(`${VACCINE_RECORD_API}/${id}`, vaccineRecordDto,
                 { withCredentials: true }
             );
             return response.data;
@@ -31,7 +30,7 @@ class VaccineRecordService {
 
     static async deleteVaccineRecord(id) {
         try {
-            await axiosPrivate.delete(`${API_URL}/${id}`,
+            await axiosPrivate.delete(`${VACCINE_RECORD_API}/${id}`,
                 HEADER_CREDENTIALS
             );
         } catch (error) {
@@ -42,7 +41,7 @@ class VaccineRecordService {
 
     static async getVaccineRecordById(id) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/${id}`,
+            const response = await axiosPrivate.get(`${VACCINE_RECORD_API}/${id}`,
                 HEADER_CREDENTIALS
             );
             return response.data;
@@ -56,7 +55,7 @@ class VaccineRecordService {
 
     ) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}`,
+            const response = await axiosPrivate.get(`${VACCINE_RECORD_API}/health_passport/${healthPassportId}`,
                 HEADER_CREDENTIALS
             );
             return response.data;
@@ -69,7 +68,7 @@ class VaccineRecordService {
 
     static async getAllVaccineRecordsByHealthPassportIdSortedByDateDesc(healthPassportId) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/sorted`,
+            const response = await axiosPrivate.get(`${VACCINE_RECORD_API}/health_passport/${healthPassportId}/sorted`,
                 HEADER_CREDENTIALS
             );
             return response.data;
@@ -82,7 +81,7 @@ class VaccineRecordService {
 
     static async getAllVaccineRecordsByHealthPassportIdAndVaccineName(healthPassportId, vaccineName) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/search`, {
+            const response = await axiosPrivate.get(`${VACCINE_RECORD_API}/health_passport/${healthPassportId}/search`, {
                 params: { vaccineName },
 
             },

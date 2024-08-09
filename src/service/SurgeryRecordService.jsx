@@ -1,13 +1,11 @@
-import axios from 'axios';
 import { axiosPrivate } from '../common/configuration/ApiAuth';
 import { HEADER_CREDENTIALS } from '../common/configuration/constants/Paths';
-
-const API_URL = 'http://localhost:8090/api/surgery_records';
+import { SURGERY_RECORD_API } from '../common/configuration/constants/PathBack';
 
 class SurgeryRecordService {
     static async createSurgeryRecord(healthPassportId, surgeryRecordDto) {
         try {
-            const response = await axiosPrivate.post(`${API_URL}/${healthPassportId}`, surgeryRecordDto,
+            const response = await axiosPrivate.post(`${SURGERY_RECORD_API}/${healthPassportId}`, surgeryRecordDto,
                 HEADER_CREDENTIALS
             );
             return response.data;
@@ -19,7 +17,7 @@ class SurgeryRecordService {
 
     static async updateSurgeryRecord(id, surgeryRecordDto) {
         try {
-            const response = await axiosPrivate.put(`${API_URL}/${id}`, surgeryRecordDto,
+            const response = await axiosPrivate.put(`${SURGERY_RECORD_API}/${id}`, surgeryRecordDto,
                 { withCredentials: true }
             );
             return response.data;
@@ -31,7 +29,7 @@ class SurgeryRecordService {
 
     static async deleteSurgeryRecord(id) {
         try {
-            await axiosPrivate.delete(`${API_URL}/${id}`,
+            await axiosPrivate.delete(`${SURGERY_RECORD_API}/${id}`,
                 HEADER_CREDENTIALS
             );
         } catch (error) {
@@ -42,7 +40,7 @@ class SurgeryRecordService {
 
     static async getAllSurgeryRecordsByHealthPassportId(healthPassportId) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}`,
+            const response = await axiosPrivate.get(`${SURGERY_RECORD_API}/health_passport/${healthPassportId}`,
                 HEADER_CREDENTIALS
             );
             return response.data;
@@ -54,7 +52,7 @@ class SurgeryRecordService {
 
     static async getAllSurgeryRecordsByHealthPassportIdSortedByDateDesc(healthPassportId) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/sorted`,
+            const response = await axiosPrivate.get(`${SURGERY_RECORD_API}/health_passport/${healthPassportId}/sorted`,
                 HEADER_CREDENTIALS
             );
             return response.data;
@@ -66,7 +64,7 @@ class SurgeryRecordService {
 
     static async getAllSurgeryRecordsByHealthPassportIdAndSurgeryType(healthPassportId, surgeryType) {
         try {
-            const response = await axiosPrivate.get(`${API_URL}/health_passport/${healthPassportId}/search`, {
+            const response = await axiosPrivate.get(`${SURGERY_RECORD_API}/health_passport/${healthPassportId}/search`, {
                 params: { surgeryType }
             },
             HEADER_CREDENTIALS);
