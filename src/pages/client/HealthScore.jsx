@@ -20,6 +20,8 @@ const HealthScore = () => {
     const endSessionButtonColor = "#00A43C";
     const textColor = "#000000";
 
+    
+
     return (
         <Box
             sx={{
