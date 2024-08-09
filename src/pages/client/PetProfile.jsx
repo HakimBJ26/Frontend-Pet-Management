@@ -88,7 +88,7 @@ export default function PetProfile() {
 
   useEffect(() => {
     // Filter pets based on search term
-    const filteredPets = petData.filter((pet) => {
+    const filteredPets = petData?.filter((pet) => {
       return (
         pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         pet.breed.toLowerCase().includes(searchTerm.toLowerCase()) ||

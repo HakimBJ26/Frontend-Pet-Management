@@ -30,6 +30,7 @@ import {
   SEARCH_VETO_PRODUCTS
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
+import Location from './components/Location'
 
 function App() {
   const [colorMode, theme] = useMode()
@@ -96,7 +97,7 @@ function App() {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-         
+    
             {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
             {shouldShowTopBar(location.pathname) && <TopBar />}
               <ProtectedRoutes />
@@ -105,6 +106,7 @@ function App() {
             {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
          
         </ThemeProvider>
+
       </ColorModeContext.Provider>
 
     </AuthContextProvider>

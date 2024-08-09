@@ -70,7 +70,7 @@ export default function SignIn() {
         console.log(error);
         showToast(ERROR_LOGIN_TOAST);
       } finally {
-        setIsLoading(true);
+        setIsLoading(false);
       }
     }
   };
