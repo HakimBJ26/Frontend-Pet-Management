@@ -16,10 +16,17 @@ import {
   FormControl,
   InputLabel,
   InputAdornment,
+  Container
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"; 
 import PetService from "../../service/PetService";
 import { toast } from "sonner";
+import '../../styles/HealthAlerts.css'
+import AddIcon from "@mui/icons-material/Add";
+
+
+
+
 
 const breedOptions = [
   "Labrador Retriever",
@@ -184,21 +191,22 @@ export default function PetProfile() {
   };
 
   return (
-    <Box sx={{ mt: 5 }}>
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+    <Container sx={{ mt: 7 }}>
+      <Box className="health-alerts-container">
         <Typography variant="h5" gutterBottom>
           Pet Profile
         </Typography>
       </Box>
 
-      
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <TextField
           label="Find your Pet"
           variant="outlined"
           fullWidth
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          size="medium" // This makes the TextField smaller
+          sx={{ width: 400 }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -209,85 +217,94 @@ export default function PetProfile() {
         />
       </Box>
 
-      {/* Add Pet Card */}
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
-        <Card sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
-          <CardContent sx={{ p: 3 }}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => handleOpen()}
-                sx={{ mb: 2 }}
-              >
-                Add Pet
-              </Button>
-            </Box>
-          </CardContent>
-        </Card>
-      </Box>
-
-      {filteredPetData.map((p) => (
-        <Card key={p.id} sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-            <label htmlFor={`upload-photo-${p.id}`}>
-              <input
-                type="file"
-                accept="image/*"
-                id={`upload-photo-${p.id}`}
-                style={{ display: "none" }}
-                onChange={handleFileChange}
-              />
-              <Avatar
-                src={
-                  p.image
-                    ? `data:image/jpeg;base64,${p.image}`
-                    : "/placeholder-pet.jpg"
-                }
+      <Box className="health-alerts-container">
+        {/* Add Pet Card */}
+        <Box sx={{ display: "flex", mt: 1, justifyContent: "center" }}>
+          <Card sx={{ mx: "auto" }}>
+            <CardContent sx={{ p: 3 }}>
+              <Box
                 sx={{
-                  width: 80,
-                  height: 80,
-                  border: "4px solid",
-                  borderColor: "background.default",
-                }}
-                onClick={() => {
-                  setEditPetId(p.id);
-                  document.getElementById(`upload-photo-${p.id}`).click();
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
-                {p.name ? p.name[0] : "?"}
-              </Avatar>
-            </label>
-          </Box>
-          <CardContent sx={{ p: 3 }}>
-            <Box display="flex" justifyContent="space-between" mb={2}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Name
-              </Typography>
-              <Typography variant="body2">{p.name}</Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleOpen()}
+                  sx={{ mb: 13}} // Margin below the button
+                >
+                  Add Pet
+                </Button>
+                <AddIcon sx={{ fontSize: 70 }} /> {/* Plus icon */}
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+
+        {filteredPetData.map((p) => (
+          <Card key={p.id} sx={{ mt: 1, minWidth: "300px", overflowX: "auto" }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+              <label htmlFor={`upload-photo-${p.id}`}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  id={`upload-photo-${p.id}`}
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+                <Avatar
+                  src={
+                    p.image
+                      ? `data:image/jpeg;base64,${p.image}`
+                      : "/placeholder-pet.jpg"
+                  }
+                  sx={{
+                    width: 80,
+                    height: 80,
+                    border: "4px solid",
+                    borderColor: "background.default",
+                  }}
+                  onClick={() => {
+                    setEditPetId(p.id);
+                    document.getElementById(`upload-photo-${p.id}`).click();
+                  }}
+                >
+                  {p.name ? p.name[0] : "?"}
+                </Avatar>
+              </label>
             </Box>
-            <Box display="flex" justifyContent="space-between" mb={2}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Breed
-              </Typography>
-              <Typography variant="body2">{p.breed}</Typography>
-            </Box>
-            <Box display="flex" justifyContent="space-between" mb={2}>
-              <Typography variant="subtitle1" fontWeight="bold">
-                Age
-              </Typography>
-              <Typography variant="body2">{p.age}</Typography>
-            </Box>
-            <Box display="flex" flexDirection="column" gap={2}>
-              <Button variant="outlined" onClick={() => handleOpen(p)}>
-                Edit
-              </Button>
-              <Button variant="outlined">Add Photo</Button>
-              <Button variant="outlined">Health Passport</Button>
-            </Box>
-          </CardContent>
-        </Card>
-      ))}
+            <CardContent sx={{ p: 3 }}>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Name
+                </Typography>
+                <Typography variant="body2">{p.name}</Typography>
+              </Box>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Breed
+                </Typography>
+                <Typography variant="body2">{p.breed}</Typography>
+              </Box>
+              <Box display="flex" justifyContent="space-between" mb={2}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Age
+                </Typography>
+                <Typography variant="body2">{p.age}</Typography>
+              </Box>
+              <Box display="flex" flexDirection="column" gap={2}>
+                <Button variant="outlined" onClick={() => handleOpen(p)}>
+                  Edit
+                </Button>
+                <Button variant="outlined">Add Photo</Button>
+                <Button variant="outlined">Health Passport</Button>
+              </Box>
+            </CardContent>
+          </Card>
+        ))}
+      </Box>
       <div ref={pageEndRef} />
 
       <Dialog open={open} onClose={handleClose}>
@@ -358,6 +375,6 @@ export default function PetProfile() {
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </Container>
   );
 }
