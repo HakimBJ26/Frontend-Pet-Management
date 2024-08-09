@@ -38,8 +38,6 @@ function HealthMonitor() {
   },[])
 
   useEffect(() => {
-    console.log("Attempting to open WebSocket connections...");
-
     const fetchVitalSigns = async () => {
       try {
         const res = await petDataService.getVitalSigns('1');

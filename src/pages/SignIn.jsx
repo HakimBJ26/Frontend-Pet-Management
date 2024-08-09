@@ -69,7 +69,6 @@ export default function SignIn() {
       } catch (error) {
         console.log(error);
         showToast(ERROR_LOGIN_TOAST);
-      //  setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
