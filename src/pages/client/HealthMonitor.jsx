@@ -29,7 +29,6 @@ function HealthMonitor() {
       try {
         const res = await petDataService.getVitalSigns('1');
         setVitalSignsData(res);
-        console.log(res)
       } catch (err) {
         console.log("Error fetching vital signs data:", err);
       }
@@ -53,7 +52,6 @@ function HealthMonitor() {
     const vitalSignsService = new WebSocketService(VITAL_SIGNS_CANAL, userId, fetchVitalSigns);
 
     vitalSignsService.connect((data) => {
-      console.log("Received WebSocket data:", data);
       if (data.heartRate !== undefined) {
         setVitalSignsData(data);
       }

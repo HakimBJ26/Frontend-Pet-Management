@@ -13,7 +13,6 @@ const Location = () => {
 
 
   useEffect(() => {
-    console.log("Attempting to open WebSocket connections...");
 
 
     const locationService = new WebSocketService(LOCATION_CANAL, userId);
