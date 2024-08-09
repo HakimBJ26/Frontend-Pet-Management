@@ -5,8 +5,11 @@ import Overview from '../../components/Overview';
 import { useEffect, useState } from 'react';
 import petDataService from '../../service/PetDataService';
 import AlertsService from '../../service/AlertsService';
+import WebSocketService from '../../service/WebSocketService';
+import { VITAL_SIGNS_CANAL } from '../../common/configuration/constants/webSocketSub';
 
 function HealthMonitor() {
+  const userId = localStorage.getItem('id')
 
   const [vitalSignsData,setVitalSignsData]=useState({
   }
@@ -18,25 +21,50 @@ function HealthMonitor() {
   )
 
   const [overview,setOverview]=useState({
-    recentActivity: ['morning walk','Vet visit'],
-    nextCheckUp: "26th Aug",
-    healthStatus: "Poor"
   }
   )
 
-  useEffect( ()=>{
-    const fetchVitalSigns = async()=>{
-     try{
-      const res = await petDataService.getVitalSigns('1')
-      setVitalSignsData(res)
-     }catch(err){
-      console.log(err)
-     }
+  useEffect(()=>{
+    const fetchVitalSigns = async () => {
+      try {
+        const res = await petDataService.getVitalSigns('1');
+        setVitalSignsData(res);
+        console.log(res)
+      } catch (err) {
+        console.log("Error fetching vital signs data:", err);
+      }
+    };
 
-    }
-  fetchVitalSigns()
-
+    fetchVitalSigns()
   },[])
+
+  useEffect(() => {
+    console.log("Attempting to open WebSocket connections...");
+
+    const fetchVitalSigns = async () => {
+      try {
+        const res = await petDataService.getVitalSigns('1');
+        setVitalSignsData(res);
+      } catch (err) {
+        console.log("Error fetching vital signs data:", err);
+      }
+    };
+
+    const vitalSignsService = new WebSocketService(VITAL_SIGNS_CANAL, userId, fetchVitalSigns);
+
+    vitalSignsService.connect((data) => {
+      console.log("Received WebSocket data:", data);
+      if (data.heartRate !== undefined) {
+        setVitalSignsData(data);
+      }
+    });
+
+    return () => {
+      vitalSignsService.close();
+    };
+  }, [userId]);
+
+
 
   useEffect( ()=>{
     const fetchHealthAlert = async()=>{

@@ -81,7 +81,7 @@ export default function PetProfile() {
 
   useEffect(() => {
     // Filter pets based on search term
-    const filteredPets = petData.filter((pet) => {
+    const filteredPets = petData?.filter((pet) => {
       return (
         pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         pet.breed.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -227,7 +227,7 @@ export default function PetProfile() {
         </Card>
       </Box>
 
-      {filteredPetData.map((p) => (
+      {filteredPetData?.map((p) => (
         <Card key={p.id} sx={{ maxWidth: 345, mx: "auto", mt: 10 }}>
           <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
             <label htmlFor={`upload-photo-${p.id}`}>

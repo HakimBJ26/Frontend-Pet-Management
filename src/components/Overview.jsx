@@ -8,8 +8,8 @@ const Overview = ({overviewData}) => {
     <Typography variant="h4" fontWeight='bold' gutterBottom>Recent Activities:</Typography>
     
     <Box sx={{display:'flex',gap:1}}>
-    {overviewData.recentActivity.map((activity,index)=>{
-        return <Typography key={index}>{activity}{index !== overviewData.recentActivity.length - 1 ? "," : ""}
+    {overviewData?.recentActivity?.map((activity,index)=>{
+        return <Typography key={index}>{activity}{index !== overviewData?.recentActivity?.length - 1 ? "," : ""}
         </Typography>
     })}
     </Box>
