@@ -1,13 +1,22 @@
+
 .map-container {
-  width: 50vw;
-  height: 50vw;
-  max-width: 300px;
-  max-height: 300px;
-  margin: 110px auto 0;
-  position: relative;
-  transform: translateX(+2%);
-  border-radius: 10px;
+  width: 50vw; /* Taille basée sur le viewport */
+  height: 50vw; /* Taille basée sur le viewport */
+  max-width: 350px; /* Largeur maximale */
+  max-height: 300px; /* Hauteur maximale */
+  margin: 110px auto 0; /* Marges pour centrer le conteneur */
+  position: relative; /* Nécessaire pour le positionnement absolu de la carte */
+  transform: translateX(2%); /* Décalage horizontal */
+  border-radius: 10px; /* Coins arrondis */
+  overflow: hidden; /* Masque le débordement de la carte */
 }
+
+.leaflet-container {
+  width: 100%; /* Occupe toute la largeur du conteneur */
+  height: 100%; /* Occupe toute la hauteur du conteneur */
+}
+
+
 
 .add-safe-zone-button {
   position: absolute;
@@ -40,6 +49,10 @@
   .map-container {
     width: 90vw;
     height: 90vw;
+  }
+
+  .zoom-controls button {
+    margin-bottom: 50px; /* Espacement entre les boutons */
   }
 
 

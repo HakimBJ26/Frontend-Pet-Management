@@ -21,7 +21,11 @@ export const PET_SHOP='/api/accessories'
 export const SEARCH_IN_PET_SHOP_BY_NAME='/api/accessories/search'
 export const SEARCH_VET_BY_NAME_API='/api/auth/search-veterinarians'
 
-
-
-
-
+export const ADD_SAFE_ZONE_API = (petId) => `/api/pets/map/set-safe-zones/${petId}`;
+export const UPDATE_SAFE_ZONE_API = (petId, safeZoneId) => `/api/pets/map/${petId}/update-safe-zones/${safeZoneId}`;
+export const GET_SAFE_ZONES_API = (petId) => `/api/pets/map/${petId}/get-safe-zones`;
+export const DELETE_SAFE_ZONE_API = (petId, safeZoneId) => `/api/pets/map/${petId}/delete-safe-zones/${safeZoneId}`;
+export const GET_SAFE_ZONE_BY_TYPE = (petId, type) => `/api/pets/map/${petId}/${type}`;
+export const GET_SAFE_ZONE_BY_HOME = (petId) => `/api/pets/map/${petId}/home`;
+export const GET_SAFE_ZONE_BY_VET = (petId) => `/api/pets/map/${petId}/vet`;
+export const GET_SAFE_ZONE_BY_PARK = (petId) => `/api/pets/map/${petId}/park`;

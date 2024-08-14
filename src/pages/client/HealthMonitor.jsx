@@ -8,5 +8,4 @@ function HealthMonitor() {
     </div>
   );
 }
-
 export default HealthMonitor;

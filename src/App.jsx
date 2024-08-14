@@ -84,6 +84,7 @@ function App() {
     <AuthContextProvider>
      <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
+     
           <CssBaseline />
          
             {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}

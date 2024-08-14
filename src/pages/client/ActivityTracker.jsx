@@ -10,3 +10,4 @@ function ActivityTracker() {
 }
 
 export default ActivityTracker;
+
