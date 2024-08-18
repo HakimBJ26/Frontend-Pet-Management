@@ -6,7 +6,13 @@ import {
 import { Card, Container, Typography } from "@mui/material";
 import React from "react";
 
-export default function PetActivityCards({ petActivityData }) {
+export default function PetActivityCards({ petActivityData, trackingPaused }) {
+  const trackingStatus =
+    trackingPaused === true
+      ? "paused ⏸"
+      : petActivityData.activityLevel === "pending"
+      ? "pending 🟠"
+      : "ongoing 🟢";
   return (
     <Container
       sx={{
@@ -23,10 +29,7 @@ export default function PetActivityCards({ petActivityData }) {
           textAlign: "center",
         }}
       >
-        Your pet's activity tracking is{" "}
-        {petActivityData.activityLevel === "pending"
-          ? "pending 🟠"
-          : "ongoing 🟢"}
+        Your pet's activity tracking is {trackingStatus}
       </Typography>
 
       <Card sx={{ width: "80%", marginTop: 2, backgroundColor: "lightgrey" }}>

@@ -10,18 +10,20 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import PetActivityCards from "../../components/PetActivityCards";
-import ActivityIntensity from "../../components/ActivityIntensity";
 import WebSocketService from "../../service/WebSocketService";
 import { VITAL_SIGNS_CANAL } from "../../common/configuration/constants/webSocketSub";
 import petDataService from "../../service/PetDataService";
 import { useSearchParams } from "react-router-dom";
 import PetService from "../../service/PetService";
+import StepsChart from "../../components/StepsChart";
 
 function ActivityTracker() {
   const [userId] = useState(localStorage.getItem("id"));
   const [searchParams, setSearchParams] = useSearchParams();
   const [petsData, setPetsData] = useState([]);
+  const [trackingPaused, setTrackingPaused] = useState(false);
   const petId = searchParams.get("petId");
+  const [vitalSignsService, setVitalSignsService] = useState(null);
 
   const [petActivityData, setPetActivityData] = useState({
     petId: petId,
@@ -29,8 +31,6 @@ function ActivityTracker() {
     temperature: "pending",
     activityLevel: "pending",
   });
-
-  const [activityIntensityData, setActivityIntensityData] = useState(null);
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -44,6 +44,24 @@ function ActivityTracker() {
     fetchPets();
   }, []);
 
+  const handlePauseTracking = () => {
+    if (!vitalSignsService) {
+      console.warn("Vital signs service is not initialized.");
+      return;
+    }
+
+    setTrackingPaused(!trackingPaused);
+    if (trackingPaused) {
+      vitalSignsService.connect((data) => {
+        if (data.petId.toString() === petId) {
+          setPetActivityData(data);
+        }
+      });
+    } else {
+      vitalSignsService.close();
+    }
+  };
+
   useEffect(() => {
     const fetchVitalSigns = async () => {
       try {
@@ -54,16 +72,24 @@ function ActivityTracker() {
       }
     };
 
-    const vitalSignsService = new WebSocketService(
+    const service = new WebSocketService(
       VITAL_SIGNS_CANAL,
       userId,
       fetchVitalSigns
     );
 
-    vitalSignsService.connect((data) => {
-      data.petId.toString() === petId && setPetActivityData(data);
+    setVitalSignsService(service);
+
+    service.connect((data) => {
+      if (data.petId.toString() === petId) {
+        setPetActivityData(data);
+      }
     });
-  }, [userId]);
+
+    return () => {
+      service.close(); // Clean up on component unmount
+    };
+  }, [userId, petId]);
 
   return (
     <>
@@ -141,15 +167,16 @@ function ActivityTracker() {
               <Typography variant="h4" fontWeight="bold" gutterBottom>
                 Calories Expenditure
               </Typography>
-              <PetActivityCards petActivityData={petActivityData} />
+              <PetActivityCards
+                petActivityData={petActivityData}
+                trackingPaused={trackingPaused}
+              />
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h4" fontWeight="bold" gutterBottom>
                 Activity Intensity
               </Typography>
-              <ActivityIntensity
-                activityIntensityData={activityIntensityData}
-              />
+              <StepsChart petActivityData={petActivityData} />
             </Grid>
             <Grid item xs={12}>
               <Container
@@ -164,8 +191,9 @@ function ActivityTracker() {
                   sx={{
                     marginBottom: 1,
                   }}
+                  onClick={handlePauseTracking}
                 >
-                  Pause tracking
+                  {trackingPaused ? "Resume" : "Pause"} tracking
                 </Button>
                 <Button variant="outlined" color="primary">
                   End tracking
