@@ -23,6 +23,8 @@ import PetService from "../../service/PetService";
 import { toast } from "sonner";
 import '../../styles/HealthAlerts.css'
 import AddIcon from "@mui/icons-material/Add";
+import { CLIENT_DASH_PATH, DETAILED_HEALTH_PET } from "../../common/configuration/constants/Paths";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -69,6 +71,7 @@ export default function PetProfile() {
     breed: "",
     age: "",
   });
+  const navigate = useNavigate()
   const [isOtherBreed, setIsOtherBreed] = useState(false);
   const [otherBreed, setOtherBreed] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -243,9 +246,12 @@ export default function PetProfile() {
           </Card>
         </Box>
 
-        {filteredPetData.map((p) => (
+        {filteredPetData?.map((p) => (
           <Card key={p.id} sx={{ mt: 1, minWidth: "300px", overflowX: "auto" }}>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }} onClick={()=>{
+              console.log(p)
+        navigate(`${CLIENT_DASH_PATH}${DETAILED_HEALTH_PET}`,{state: { petData: p }});
+      }}>
               <label htmlFor={`upload-photo-${p.id}`}>
                 <input
                   type="file"

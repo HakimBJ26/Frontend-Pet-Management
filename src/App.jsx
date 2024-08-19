@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
+import {  useEffect, useState } from 'react'
 import './App.css'
 import { ColorModeContext, useMode } from './theme'
 import { CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material'
-import AuthContextProvider from './context/AuthContext'
 import ProtectedRoutes from './router/ProtectedRoutes'
 import { getAuthInfo, shouldShowSideBar, shouldShowTopBar } from './utils/authCred'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -27,10 +26,19 @@ import {
   SUBMIT_VETO_REQUEST,
   RESET_PASS_REQUEST,
   ASK_TO_RESET_PASS,
-  SEARCH_VETO_PRODUCTS
+  SEARCH_VETO_PRODUCTS,
+  DETAILED_HEALTH_PET
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
-import Location from './components/Location'
+import "react-toastify/dist/ReactToastify.css";
+import { messaging, requestPermissionAndGetToken } from './firebase'
+import { onMessage } from 'firebase/messaging'
+import useAuth from './hooks/useAuth'
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
+import { PetProvider } from './context/PetContext'
+
+
 
 function App() {
   const [colorMode, theme] = useMode()
@@ -38,6 +46,37 @@ function App() {
   const location = useLocation()
   const isMobile = useMediaQuery('(max-width: 600px)')
   const [showSidebar, setShowSidebar] = useState(!isMobile)
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+   
+    if (currentUser?.role) {
+      requestPermissionAndGetToken();
+  
+      const unsubscribe = onMessage(messaging, (payload) => {       
+        toast(payload.notification.body, {
+          position: "bottom-right",
+          className: 'custom-toast',
+          icon: payload.notification.icon || '/default-icon.png',
+          autoClose: 5000,
+          style: {
+            borderRadius: '8px',
+            padding: '10px',
+          }
+        });
+      });
+  
+      return () => {
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      };
+    }
+  }, [currentUser]);
+  
+  
+
+
   useEffect(() => {
     const {role } = getAuthInfo()
     if (location.pathname === SIGN_UP_PATH || location.pathname === SUBMIT_VETO_REQUEST || location.pathname === RESET_PASS_REQUEST || location.pathname === ASK_TO_RESET_PASS) {
@@ -60,7 +99,7 @@ function App() {
             GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
             COMMUNITY_PATH, USER_PROFILE, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
-            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE , SEARCH_VETO_PRODUCTS
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE , SEARCH_VETO_PRODUCTS, DETAILED_HEALTH_PET
           ]
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return
@@ -92,24 +131,26 @@ function App() {
   }, [isMobile]);
 
   return (
-    <AuthContextProvider>
+  
 
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
+          <PetProvider>
           <CssBaseline />
-    
+      
             {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
             {shouldShowTopBar(location.pathname) && <TopBar />}
               <ProtectedRoutes />
               <Toaster expand visibleToasts={9} />
-           
+              <ToastContainer /> 
+
             {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
-         
+            </PetProvider>
         </ThemeProvider>
 
       </ColorModeContext.Provider>
 
-    </AuthContextProvider>
+  
   );
 }
 

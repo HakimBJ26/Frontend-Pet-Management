@@ -1,46 +1,39 @@
-import { Container, Grid,  Typography } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import VitalSigns from '../../components/VitalSigns';
 import HealthAlerts from '../../components/HealthAlerts';
 import Overview from '../../components/Overview';
-import { useEffect, useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import petDataService from '../../service/PetDataService';
 import AlertsService from '../../service/AlertsService';
 import WebSocketService from '../../service/WebSocketService';
 import { VITAL_SIGNS_CANAL } from '../../common/configuration/constants/webSocketSub';
+import { PetContext } from '../../context/PetContext';  
 
 function HealthMonitor() {
-  const userId = localStorage.getItem('id')
+  const userId = localStorage.getItem('id');
+  const { selectedPetId } = useContext(PetContext);  
 
-  const [vitalSignsData,setVitalSignsData]=useState({
-  }
-  )
+  const [vitalSignsData, setVitalSignsData] = useState({});
+  const [healthAlerts, setHealthAlerts] = useState([]);
+  const [overview, setOverview] = useState({});
 
-  const [healthAlerts,setHealthAlerts]=useState([
-  ]
-  
-  )
-
-  const [overview,setOverview]=useState({
-  }
-  )
-
-  useEffect(()=>{
+  useEffect(() => {
     const fetchVitalSigns = async () => {
       try {
-        const res = await petDataService.getVitalSigns('1');
+        const res = await petDataService.getVitalSigns(selectedPetId);
         setVitalSignsData(res);
       } catch (err) {
         console.log("Error fetching vital signs data:", err);
       }
     };
 
-    fetchVitalSigns()
-  },[])
+    fetchVitalSigns();
+  }, [selectedPetId]);
 
   useEffect(() => {
     const fetchVitalSigns = async () => {
       try {
-        const res = await petDataService.getVitalSigns('1');
+        const res = await petDataService.getVitalSigns(selectedPetId);
         setVitalSignsData(res);
       } catch (err) {
         console.log("Error fetching vital signs data:", err);
@@ -50,7 +43,7 @@ function HealthMonitor() {
     const vitalSignsService = new WebSocketService(VITAL_SIGNS_CANAL, userId, fetchVitalSigns);
 
     vitalSignsService.connect((data) => {
-      if (data.heartRate !== undefined) {
+      if (data.heartRate !== undefined && data.petId === selectedPetId) {
         setVitalSignsData(data);
       }
     });
@@ -58,53 +51,46 @@ function HealthMonitor() {
     return () => {
       vitalSignsService.close();
     };
-  }, [userId]);
+  }, [userId, selectedPetId]);
 
+  useEffect(() => {
+    const fetchHealthAlert = async () => {
+      try {
+        const res = await AlertsService.getHealthAlerts(selectedPetId);
+        setHealthAlerts(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchHealthAlert();
+  }, [selectedPetId]);
 
-
-  useEffect( ()=>{
-    const fetchHealthAlert = async()=>{
-     try{
-      const res = await AlertsService.getHealthAlerts('1')
-      setHealthAlerts(res)
-     }catch(err){
-      console.log(err)
-     }
-
-    }
-    fetchHealthAlert()
-
-  },[])
-
-
-  useEffect( ()=>{
-    const fetchHOverview = async()=>{
-     try{
-      const res = await petDataService.getOverview('1')
-      setOverview(res)
-     }catch(err){
-      console.log(err)
-     }
-
-    }
-    fetchHOverview()
-
-  },[])
+  useEffect(() => {
+    const fetchOverview = async () => {
+      try {
+        const res = await petDataService.getOverview(selectedPetId);
+        setOverview(res);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchOverview();
+  }, [selectedPetId]);
 
   return (
-    <Container sx={{marginTop:10}}>
+    <Container sx={{ marginTop: 10 }}>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-        <Typography variant="h4" fontWeight='bold' gutterBottom>Vital Signs</Typography>
-          <VitalSigns vitalSignsData={vitalSignsData}/>
+          <Typography variant="h4" fontWeight='bold' gutterBottom>Vital Signs</Typography>
+          <VitalSigns vitalSignsData={vitalSignsData} />
         </Grid>
         <Grid item xs={12}>
-        <Typography variant="h4" fontWeight='bold' gutterBottom>Health Alerts</Typography>
-          <HealthAlerts  healthAlertsData={healthAlerts}/>
+          <Typography variant="h4" fontWeight='bold' gutterBottom>Health Alerts</Typography>
+          <HealthAlerts healthAlertsData={healthAlerts} />
         </Grid>
         <Grid item xs={12}>
-        <Typography variant="h4" fontWeight='bold' gutterBottom>Overview</Typography>
-          <Overview  overviewData={overview}/>
+          <Typography variant="h4" fontWeight='bold' gutterBottom>Overview</Typography>
+          <Overview overviewData={overview} />
         </Grid>
       </Grid>
     </Container>
