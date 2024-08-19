@@ -27,7 +27,10 @@ export const VET_APPOINTEMENT_API='/api/vet-appointments'
 export const PET_GOAL_API='/api/petgoals'
 export const PET_HEALTH_STATS='/api/health-stats'
 export const SAVE_MESSAGING_TOKEN='/api/auth/messaging-token'
-
+export const VACCINE_RECORD_API = '/api/vaccine_records'
+export const SURGERY_RECORD_API = '/api/surgery_records'
+export const MEDICAL_RECORD_API = '/api/medical_records'
+export const VISIT_RECORD_API = '/api/visit_records'
 
 
 

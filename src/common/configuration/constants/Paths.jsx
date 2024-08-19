@@ -26,3 +26,15 @@ export const RESET_PASS_REQUEST = '/resetPassword';
 export const ASK_TO_RESET_PASS = '/ask_to_reset_pass';
 export const SEARCH_VETO_PRODUCTS = '/consult_veto';
 export const DETAILED_HEALTH_PET = '/detailed_health_pet';
+
+export const TASK_DIALOG_PATH = '/task_dialog';
+export const VACCINE_RECORD_PATH = '/vaccine_records';
+export const HEALTH_SCORE_PATH = '/health_score';
+export const VISIT_RECORD_PATH = '/visit_records';
+export const SURGERY_RECORD_PATH = '/surgery_records';
+export const MEDICAL_RECORD_PATH = '/medical_records';
+
+export const HEADER_CREDENTIALS =  {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true
+}

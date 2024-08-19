@@ -28,6 +28,12 @@ import {
   ASK_TO_RESET_PASS,
   SEARCH_VETO_PRODUCTS,
   DETAILED_HEALTH_PET
+  ,VACCINE_RECORD_PATH,
+  HEALTH_SCORE_PATH,
+  VISIT_RECORD_PATH,
+  SURGERY_RECORD_PATH,
+  Medical_RECORD_PATH,
+  MEDICAL_RECORD_PATH
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
 import "react-toastify/dist/ReactToastify.css";
@@ -97,10 +103,11 @@ function App() {
         case ROLE_CLIENT: {
           const clientPaths = [
             GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
-            COMMUNITY_PATH, USER_PROFILE, DEFINE_SAFE_ZONE_PATH,
+            COMMUNITY_PATH, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
-            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE , SEARCH_VETO_PRODUCTS, DETAILED_HEALTH_PET
-          ]
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE , SEARCH_VETO_PRODUCTS, DETAILED_HEALTH_PET, VACCINE_RECORD_PATH, VISIT_RECORD_PATH, SURGERY_RECORD_PATH,
+            MEDICAL_RECORD_PATH
+          ];
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return
           }
