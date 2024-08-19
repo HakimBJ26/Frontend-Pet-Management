@@ -14,10 +14,12 @@ import { SIGN_UP_FIELDS } from '../common/configuration/constants/SignUpFieldsNa
 import { SUCCESS_REQUEST_JOIN_TOAST, ERROR_REQUEST_JOIN_TOAST } from '../common/configuration/constants/ToastConfig';
 import useToast from '../hooks/useToast';
 import { ROLE_VETO } from '../common/configuration/constants/UserRole';
+import Loader from '../Loading/Loader';
 
 export default function RequestJoinAsVeterinarian() {
   const { showToast } = useToast();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -56,6 +58,7 @@ export default function RequestJoinAsVeterinarian() {
     event.preventDefault();
     const validated = validate();
     if (validated) {
+      setIsLoading(true);
       const fullPhoneNumber = `${formData.countryCode}${formData.phone}`;
       const { countryCode, ...submissionData } = formData;
       submissionData.phone = fullPhoneNumber; 
@@ -68,6 +71,8 @@ export default function RequestJoinAsVeterinarian() {
       } catch (error) {
         showToast(ERROR_REQUEST_JOIN_TOAST);
         console.error('Error requesting to join as veterinarian:', error);
+      }finally{
+        setIsLoading(false);
       }
     }
   };
@@ -111,7 +116,7 @@ export default function RequestJoinAsVeterinarian() {
             ))}
           </Grid>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Submit Request
+            {isLoading ? <Loader size={24} color="#ffffff" /> : <span> Submit Request </span>}
           </Button>
         </Box>
       </StyledBox>

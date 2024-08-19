@@ -27,10 +27,15 @@ import {
   SUBMIT_VETO_REQUEST,
   RESET_PASS_REQUEST,
   ASK_TO_RESET_PASS,
-  SEARCH_VETO_PRODUCTS,
-  HEALTH_SCORE_PATH
+  SEARCH_VETO_PRODUCTS,VACCINE_RECORD_PATH,
+  HEALTH_SCORE_PATH,
+  VISIT_RECORD_PATH,
+  SURGERY_RECORD_PATH,
+  Medical_RECORD_PATH,
+  MEDICAL_RECORD_PATH
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
+import Location from './components/Location'
 
 function App() {
   const [colorMode, theme] = useMode()
@@ -60,8 +65,9 @@ function App() {
             GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
             COMMUNITY_PATH, USER_PROFILE, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
-            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, PET_PROFILE, SEARCH_VETO_PRODUCTS, HEALTH_SCORE_PATH
-          ]
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, VACCINE_RECORD_PATH, VISIT_RECORD_PATH, SURGERY_RECORD_PATH,
+            MEDICAL_RECORD_PATH,SEARCH_VETO_PRODUCTS
+          ];
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return
           }
@@ -97,15 +103,16 @@ function App() {
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-
-          {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
-          {shouldShowTopBar(location.pathname) && <TopBar />}
-          <ProtectedRoutes />
-          <Toaster expand visibleToasts={9} />
-
-          {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
-
+    
+            {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
+            {shouldShowTopBar(location.pathname) && <TopBar />}
+              <ProtectedRoutes />
+              <Toaster expand visibleToasts={9} />
+           
+            {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
+         
         </ThemeProvider>
+
       </ColorModeContext.Provider>
 
     </AuthContextProvider>
