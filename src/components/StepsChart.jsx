@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
-export default function StepsChart({ petActivityData }) {
+export default function StepsChart({ petActivityData, trackingEnded }) {
   const [dataset, setDataset] = useState([]);
 
   useEffect(() => {
@@ -33,6 +33,12 @@ export default function StepsChart({ petActivityData }) {
       });
     }
   }, [petActivityData]);
+
+  useEffect(() => {
+    if (trackingEnded) {
+      setDataset([]);
+    }
+  }, [trackingEnded]);
 
   const BarWithBorderRadius = (props) => {
     const { fill, x, y, width, height } = props;

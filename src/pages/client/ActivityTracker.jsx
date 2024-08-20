@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import PetActivityCards from "../../components/PetActivityCards";
 import WebSocketService from "../../service/WebSocketService";
-import { VITAL_SIGNS_CANAL } from "../../common/configuration/constants/webSocketSub";
+import { ACTIVITY_CANAL } from "../../common/configuration/constants/webSocketSub";
 import petDataService from "../../service/PetDataService";
 import { useSearchParams } from "react-router-dom";
 import PetService from "../../service/PetService";
@@ -22,14 +22,16 @@ function ActivityTracker() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [petsData, setPetsData] = useState([]);
   const [trackingPaused, setTrackingPaused] = useState(false);
+  const [trackingEnded, setTrackingEnded] = useState(false);
   const petId = searchParams.get("petId");
-  const [vitalSignsService, setVitalSignsService] = useState(null);
+  const [activityService, setActivityService] = useState(null);
 
   const [petActivityData, setPetActivityData] = useState({
     petId: petId,
     heartRate: "pending",
-    temperature: "pending",
-    activityLevel: "pending",
+    timeSpentInActivity: "pending",
+    averageBurn: "pending",
+    healthScore: "pending",
   });
 
   useEffect(() => {
@@ -45,25 +47,42 @@ function ActivityTracker() {
   }, []);
 
   const handlePauseTracking = () => {
-    if (!vitalSignsService) {
+    if (!activityService) {
       console.warn("Vital signs service is not initialized.");
       return;
     }
 
     setTrackingPaused(!trackingPaused);
     if (trackingPaused) {
-      vitalSignsService.connect((data) => {
+      activityService.connect((data) => {
         if (data.petId.toString() === petId) {
           setPetActivityData(data);
         }
       });
     } else {
-      vitalSignsService.close();
+      activityService.close();
     }
   };
 
+  const handleEndTracking = () => {
+    if (!activityService) {
+      console.warn("Vital signs service is not initialized.");
+      return;
+    }
+
+    setTrackingEnded(true);
+    activityService.close();
+    setPetActivityData({
+      petId: petId,
+      heartRate: "pending",
+      timeSpentInActivity: "pending",
+      averageBurn: "pending",
+      healthScore: "pending",
+    });
+  };
+
   useEffect(() => {
-    const fetchVitalSigns = async () => {
+    const fetchActivityData = async () => {
       try {
         const res = await petDataService.getVitalSigns(petId);
         setPetActivityData(res);
@@ -73,12 +92,12 @@ function ActivityTracker() {
     };
 
     const service = new WebSocketService(
-      VITAL_SIGNS_CANAL,
+      ACTIVITY_CANAL,
       userId,
-      fetchVitalSigns
+      fetchActivityData
     );
 
-    setVitalSignsService(service);
+    setActivityService(service);
 
     service.connect((data) => {
       if (data.petId.toString() === petId) {
@@ -170,13 +189,17 @@ function ActivityTracker() {
               <PetActivityCards
                 petActivityData={petActivityData}
                 trackingPaused={trackingPaused}
+                trackingEnded={trackingEnded}
               />
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h4" fontWeight="bold" gutterBottom>
                 Activity Intensity
               </Typography>
-              <StepsChart petActivityData={petActivityData} />
+              <StepsChart
+                petActivityData={petActivityData}
+                trackingEnded={trackingEnded}
+              />
             </Grid>
             <Grid item xs={12}>
               <Container
@@ -192,10 +215,16 @@ function ActivityTracker() {
                     marginBottom: 1,
                   }}
                   onClick={handlePauseTracking}
+                  disabled={trackingEnded}
                 >
                   {trackingPaused ? "Resume" : "Pause"} tracking
                 </Button>
-                <Button variant="outlined" color="primary">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleEndTracking}
+                  disabled={trackingEnded}
+                >
                   End tracking
                 </Button>
               </Container>

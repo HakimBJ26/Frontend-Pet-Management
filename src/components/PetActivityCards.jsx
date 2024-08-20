@@ -1,91 +1,212 @@
 import {
-  BoltOutlined,
-  MonitorHeartOutlined,
-  ThermostatOutlined,
+  HealthAndSafety,
+  MonitorHeart,
+  Pets,
+  ShowChart,
 } from "@mui/icons-material";
 import { Card, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 
-export default function PetActivityCards({ petActivityData, trackingPaused }) {
-  const trackingStatus =
-    trackingPaused === true
-      ? "paused ⏸"
-      : petActivityData.activityLevel === "pending"
-      ? "pending 🟠"
-      : "ongoing 🟢";
+export default function PetActivityCards({
+  petActivityData,
+  trackingPaused,
+  trackingEnded,
+}) {
+  const [trackingStatus, setTrackingStatus] = React.useState("pending 🟠");
+
+  useEffect(() => {
+    if (trackingPaused && !trackingEnded) {
+      setTrackingStatus("paused ⏸");
+    } else if (trackingEnded && !trackingPaused) {
+      setTrackingStatus("ended ⏹");
+    } else if (petActivityData.heartRate === "pending") {
+      setTrackingStatus("pending 🟠");
+    } else {
+      setTrackingStatus("ongoing 🟢");
+    }
+  }, [trackingPaused, trackingEnded, petActivityData]);
   return (
     <Container
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography
         variant="h6"
         sx={{
-          width: "80%",
+          width: "100%",
           textAlign: "center",
         }}
       >
         Your pet's activity tracking is {trackingStatus}
       </Typography>
-
-      <Card sx={{ width: "80%", marginTop: 2, backgroundColor: "lightgrey" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
+      <Container
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 2,
+          width: "100%",
+        }}
+      >
+        <Card
+          sx={{
+            width: "100%",
+            marginTop: 2,
+            backgroundColor: "lightgray",
+            padding: 0.5,
           }}
         >
-          <MonitorHeartOutlined />
-          <div>
-            <Typography variant="h6">Heart Rate</Typography>
-            <Typography variant="h4" fontWeight="bold">
-              {petActivityData.heartRate}
-            </Typography>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Container
+              sx={{
+                backgroundColor: "white",
+                width: 45,
+                height: 40,
+                borderRadius: 3,
+                border: "1px solid",
+                borderColor: "black",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <MonitorHeart />
+            </Container>
+            <div>
+              <Typography variant="h6">Heart Rate</Typography>
+              <Typography variant="h4" fontWeight="bold">
+                {petActivityData.heartRate}
+              </Typography>
+            </div>
           </div>
-        </div>
-      </Card>
-      <Card sx={{ width: "80%", marginTop: 2, backgroundColor: "lightgrey" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
+        </Card>
+        <Card
+          sx={{
+            width: "100%",
+            marginTop: 2,
+            backgroundColor: "lightgray",
+            padding: 0.5,
           }}
         >
-          <ThermostatOutlined />
-          <div>
-            <Typography variant="h6">Temperature</Typography>
-            <Typography variant="h4" fontWeight="bold">
-              {petActivityData.temperature}
-            </Typography>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Container
+              sx={{
+                backgroundColor: "white",
+                width: 45,
+                height: 40,
+                borderRadius: 3,
+                border: "1px solid",
+                borderColor: "black",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <HealthAndSafety />
+            </Container>
+            <div>
+              <Typography variant="h6">Health Score</Typography>
+              <Typography variant="h4" fontWeight="bold">
+                {
+                  // round to 2 decimal places
+                  petActivityData.healthScore &&
+                    Math.round(petActivityData.healthScore * 100) / 100
+                }
+              </Typography>
+            </div>
           </div>
-        </div>
-      </Card>
-      <Card sx={{ width: "80%", marginTop: 2, backgroundColor: "lightgrey" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
+        </Card>
+        <Card
+          sx={{
+            width: "100%",
+            marginTop: 2,
+            backgroundColor: "lightgray",
+            padding: 0.5,
           }}
         >
-          <BoltOutlined />
-          <div>
-            <Typography variant="h6">Activity Level</Typography>
-            <Typography variant="h4" fontWeight="bold">
-              {petActivityData.activityLevel}
-            </Typography>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Container
+              sx={{
+                backgroundColor: "white",
+                width: 45,
+                height: 40,
+                borderRadius: 3,
+                border: "1px solid",
+                borderColor: "black",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ShowChart />
+            </Container>
+            <div>
+              <Typography variant="h6">Time Spent</Typography>
+              <Typography variant="h4" fontWeight="bold">
+                {petActivityData.timeSpentInActivity}
+              </Typography>
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+        <Card
+          sx={{
+            width: "100%",
+            marginTop: 2,
+            backgroundColor: "lightgray",
+            padding: 0.5,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Container
+              sx={{
+                backgroundColor: "white",
+                width: 45,
+                height: 40,
+                borderRadius: 3,
+                border: "1px solid",
+                borderColor: "black",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Pets />
+            </Container>
+            <div>
+              <Typography variant="h6">Avg. Burn</Typography>
+              <Typography variant="h4" fontWeight="bold">
+                {petActivityData.averageBurn}
+              </Typography>
+            </div>
+          </div>
+        </Card>
+      </Container>
     </Container>
   );
 }
