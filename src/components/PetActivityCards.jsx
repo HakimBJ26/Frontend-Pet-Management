@@ -121,7 +121,7 @@ export default function PetActivityCards({
               <Typography variant="h6">Health Score</Typography>
               <Typography variant="h4" fontWeight="bold">
                 {
-                  // round to 2 decimal places
+                  
                   petActivityData.healthScore &&
                     Math.round(petActivityData.healthScore * 100) / 100
                 }

@@ -21,10 +21,10 @@ export default function StepsChart({ petActivityData, trackingEnded }) {
       };
 
       setDataset((prevDataset) => {
-        // Add the new entry
+        
         const updatedDataset = [...prevDataset, newEntry];
 
-        // Trim the dataset to the last 10 entries
+        
         if (updatedDataset.length > 10) {
           return updatedDataset.slice(-10);
         }

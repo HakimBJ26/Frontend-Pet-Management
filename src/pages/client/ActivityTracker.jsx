@@ -106,7 +106,7 @@ function ActivityTracker() {
     });
 
     return () => {
-      service.close(); // Clean up on component unmount
+      service.close(); 
     };
   }, [userId, petId]);
 
