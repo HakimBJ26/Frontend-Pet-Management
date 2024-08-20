@@ -185,6 +185,17 @@ min-width: 100%;
 }
 
 
+.boxMainAdminDash {
+  flex-grow: 1;
+  background-color: var(--background-default);
+  padding: 16px;
+  margin-top: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 .bottom-navigation-action .MuiBottomNavigationAction-label {
   font-size: 0.5rem;
 }

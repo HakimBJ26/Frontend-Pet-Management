@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography, Button, CardMedia, LinearProgress } from '@mui/material';
 import '../styles/SearchResults.css';
 import { VETO_CATEGORIES } from '../common/configuration/constants/CategoriesToSearch';
+import ShowVetoContact from './model/ShowVetoContact';
 
 const SearchResults = ({ results, selectedCategory }) => {
   const [loading, setLoading] = useState(true);
+  const [modelIsOpen,setModelOpen]=useState(false)
+  const [selectedVeto,setSelectedVeto]=useState()
 
   useEffect(() => {
     setLoading(true)
@@ -19,11 +22,15 @@ const SearchResults = ({ results, selectedCategory }) => {
     return null;
   }
 
+  function handleOnClose(){
+    setModelOpen(false)
+  }
+
   return (
     <Box className="boxScrollClassSearchResult">
       {loading && <LinearProgress />}
       <Box sx={{ display: 'inline-flex', flexDirection: 'row' }}>
-        {results?.length === 0 ? (
+        {results?.length === 0 && !loading ? (
           <Typography variant="body1">No results found.</Typography>
         ) : (
           results?.map((result) => (
@@ -46,14 +53,20 @@ const SearchResults = ({ results, selectedCategory }) => {
                 <Typography variant="body2" paragraph>
                   City: {result.city}
                 </Typography>
-                <Button variant="contained" color="success" fullWidth>
+                <Button variant="contained" color="success" onClick={()=>{
+                  setModelOpen(true)
+                  setSelectedVeto(result)
+                }} fullWidth>
                   Contact
                 </Button>
               </CardContent>
+            
             </Card>
           ))
+         
         )}
       </Box>
+      <ShowVetoContact open={modelIsOpen} vetoContact={selectedVeto} onClose={handleOnClose}/>
     </Box>
   );
 };

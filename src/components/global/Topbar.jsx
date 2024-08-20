@@ -27,9 +27,9 @@ function TopBar() {
           {theme.palette.mode === 'dark' ? <LightModeOutlined /> : <DarkModeOutlined />}
         </IconButton>
 
-        <IconButton color="inherit" onClick={() => {
+        <IconButton color="inherit" onClick={async() => {
         try{
-          UserService.logout();
+         await UserService.logout();
           setCurrentUser(null)
           navigate(`${SIGN_IN_PATH}`)
         }catch(err){
