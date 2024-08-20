@@ -51,6 +51,11 @@ export const tokens = (mode) => ({
       },
       safeZoneColor : 'rgba(64,224,208)',
        DangerZoneColor : 'rgba(255, 0, 0, 0.2)',
+      healthStatsChart: {
+        100: "#00a65a",  
+        200: "#1abf70", 
+        300: "#33d17a"   
+      },
       customShadowColor: 'rgba(0, 0, 0, 0.1)',
     }
     : {
@@ -100,6 +105,13 @@ export const tokens = (mode) => ({
       },
       safeZoneColor : 'rgba(64,224,208)',
       DangerZoneColor : 'rgba(255, 0, 0, 0.2)',
+      healthStatsChart: {
+        100: "#008000", 
+        200: "#009f6b", 
+        300: "#4cbb17"  
+      }
+           
+      ,
       customShadowColor: 'rgba(0, 0, 0, 0.1)',
     }),
 });
@@ -127,6 +139,11 @@ export const themeSettings = (mode) => {
             default: colors.primary[900],
             paper: colors.primary[800],
           },
+          healthStatsChart: {
+            protien: colors.healthStatsChart[100],
+            carb: colors.healthStatsChart[200],
+            fat: colors.healthStatsChart[300],
+          },
         }
         : {
           primary: {
@@ -143,6 +160,11 @@ export const themeSettings = (mode) => {
           background: {
             default: colors.primary[50],
             paper: colors.primary[100],
+          },
+          healthStatsChart: {
+            protien: colors.healthStatsChart[100],
+            carb: colors.healthStatsChart[200],
+            fat: colors.healthStatsChart[300],
           },
         }),
         custom: {

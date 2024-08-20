@@ -18,8 +18,7 @@ export default function AddPetForm() {
     e.preventDefault();
     try {
       const response = await PetService.addPet(petData);
-      console.log("Pet added:", response);
-      setPetData({ name: "", breed: "", age: "" }); // Clear form after submission
+      setPetData({ name: "", breed: "", age: "" }); 
     } catch (error) {
       console.error("Error adding pet:", error);
     }

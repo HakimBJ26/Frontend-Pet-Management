@@ -8,6 +8,7 @@ import {
   LOG_OUT_API,
   REGISTER_API,
   RESET_PASS,
+  SAVE_MESSAGING_TOKEN,
   SEARCH_VET_BY_NAME_API,
   SEND_RESET_PASS_MAIL,
   UPDATE_PROFILE_API,
@@ -132,7 +133,28 @@ class UserService {
   }
 
 
+  static async saveMessagingToken(userID,token) {
+    try {
+      const response = await axiosPrivate.post(`${SAVE_MESSAGING_TOKEN}/${userID}`, token,{withCredentials:true});
+      return response.data;
+    } catch (err) {
+      console.error( err);
+      throw err;
+    }
+  }
 
+  static async deleteMessagingToken(userId) {
+    try {
+      const response = await axiosPrivate.delete(
+        `${SAVE_MESSAGING_TOKEN}/${userId}`,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (err) {
+      console.log(err)
+      throw err;
+    }
+  }
 
 
   static logout= async()=>{
@@ -144,8 +166,6 @@ class UserService {
         localStorage.removeItem("role");
     localStorage.removeItem("id");
     }
-
-
   }
 
   static async getVetoAcoountToApproved(){
