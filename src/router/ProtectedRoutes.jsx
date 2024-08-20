@@ -12,11 +12,11 @@ import DefineSafeZone from '../pages/client/DefineSafeZone';
 import HealthMonitor from '../pages/client/HealthMonitor';
 import HealthPassport from '../pages/client/HealthPassport/HealthPassport';
 import SetActivityGoals from '../pages/client/SetActivityGoals';
-import { ACTIVITY_TRACKER_PATH, ASK_TO_RESET_PASS, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,  DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MANAGE_VETO_REQUEST, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, RESET_PASS_REQUEST, SEARCH_VETO_PRODUCTS, SET_ACTIVITY_GOALS_PATH, SUBMIT_VETO_REQUEST, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH,  VACCINE_RECORD_PATH,
+import { ACTIVITY_TRACKER_PATH, ASK_TO_RESET_PASS, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,  DEFINE_SAFE_ZONE_PATH, DETAILED_HEALTH_PET, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MANAGE_VETO_REQUEST, MARKET_PLACE_PATH, PET_SHOP_MANAGEMENT, RESET_PASS_REQUEST, SEARCH_VETO_PRODUCTS, SET_ACTIVITY_GOALS_PATH, SUBMIT_VETO_REQUEST, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH, VACCINE_RECORD_PATH,
   VISIT_RECORD_PATH,
   SURGERY_RECORD_PATH,
   MEDICAL_RECORD_PATH, 
-  HEALTH_SCORE_PATH} from '../common/configuration/constants/Paths';
+  HEALTH_SCORE_PATH } from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 import UserManagement from '../pages/admin/UserManagement';
@@ -42,6 +42,7 @@ import RequestJoinAsVeterinarian from '../pages/RequestJoinAsVeterinarian';
 import ResetPassword from '../pages/ResetPassword';
 import AskToResetPassword from '../pages/AskToResetPassword';
 import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
+import PetHealthDetailed from '../pages/client/PetHealthDetailed';
 
 
 const ProtectedRoutes = () => (
@@ -84,6 +85,7 @@ const ProtectedRoutes = () => (
             <Route path={SURGERY_RECORD_PATH} element={<SurgeryRecord />} />
             <Route path={MEDICAL_RECORD_PATH} element={<MedicalRecord />} />
             <Route path={SEARCH_VETO_PRODUCTS} element={<SearchForVetoAndProds/> } />
+            <Route path={DETAILED_HEALTH_PET} element={<PetHealthDetailed/> } />
 
 
           </Routes>
