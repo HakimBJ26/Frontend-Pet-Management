@@ -16,10 +16,10 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage(function(message) {
 
   let notificationOptions = {
-    body: message.data.body,
-    icon: message.data.icon,
-    badge: message.data.badge,
-    data: message.data
+    body: message?.data?.body,
+    icon: message?.data?.icon,
+    badge: message?.data?.badge,
+    data: message?.data
   };
   if(notificationOptions.body!=undefined)
   return self.registration.showNotification(

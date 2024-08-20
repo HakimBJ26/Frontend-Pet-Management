@@ -179,6 +179,10 @@ export default function PetProfile() {
     }
   };
 
+  const handleCartClick=(pet)=>{
+      navigate(`${CLIENT_DASH_PATH}${DETAILED_HEALTH_PET}`,{state: { petData: pet }});
+  }
+
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file && editPetId) {
@@ -248,10 +252,7 @@ export default function PetProfile() {
 
         {filteredPetData?.map((p) => (
           <Card key={p.id} sx={{ mt: 1, minWidth: "300px", overflowX: "auto" }}>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }} onClick={()=>{
-              console.log(p)
-        navigate(`${CLIENT_DASH_PATH}${DETAILED_HEALTH_PET}`,{state: { petData: p }});
-      }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }} onClick={()=>handleCartClick(p)}>
               <label htmlFor={`upload-photo-${p.id}`}>
                 <input
                   type="file"

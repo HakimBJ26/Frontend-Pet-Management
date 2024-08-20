@@ -104,7 +104,7 @@ function TopBar() {
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
           >
-            {pets.map((pet) => (
+            {pets?.map((pet) => (
               <MenuItem
                 key={pet.id}
                 selected={pet.id === selectedPetId}
