@@ -25,6 +25,7 @@ export const SUBMIT_VETO_REQUEST = '/submit_veto_request';
 export const RESET_PASS_REQUEST = '/resetPassword';
 export const ASK_TO_RESET_PASS = '/ask_to_reset_pass';
 export const SEARCH_VETO_PRODUCTS = '/consult_veto';
+export const DETAILED_HEALTH_PET = '/detailed_health_pet';
 
 export const TASK_DIALOG_PATH = '/task_dialog';
 export const VACCINE_RECORD_PATH = '/vaccine_records';

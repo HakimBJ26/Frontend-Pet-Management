@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from 'firebase/storage';
+import { getMessaging, getToken } from "firebase/messaging";
+import { getStorage } from "firebase/storage";
+import UserService from "./service/UserService";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -11,6 +13,34 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+
+
+const requestPermissionAndGetToken = async () => {
+  const userId= localStorage.getItem('id')
+  try {
+    await Notification.requestPermission();
+    const token = await getToken(messaging, {
+      vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY
+    });
+
+    if (token) {
+      try {
+        const res =await UserService.saveMessagingToken(userId, token);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log('No registration token available. Request permission to generate one.');
+    }
+  } catch (error) {
+    console.error('An error occurred while retrieving token. ', error);
+  }
+};
+
+
+
 const storage = getStorage(app);
 
-export { storage };
+export { requestPermissionAndGetToken, storage, messaging };

@@ -17,7 +17,7 @@ import {
   ASK_TO_RESET_PASS,
   BREED_AUTHENTICITY_PATH,
   COMMUNITY_PATH,
-  DEFINE_SAFE_ZONE_PATH,
+  DEFINE_SAFE_ZONE_PATH, DETAILED_HEALTH_PET,
   GPS_LOCATOR_PATH,
   HEALTH_MONITOR_PATH,
   HEALTH_PASSPORT_PATH,
@@ -31,11 +31,11 @@ import {
   VETO_NOTIFICATIONS_PATH,
   VETO_UPDATE_NOTES_PATH,
   VETO_UPDATE_TREATMENT_PATH,
-  VACCINE_RECORD_PATH,
+ VACCINE_RECORD_PATH,
   VISIT_RECORD_PATH,
   SURGERY_RECORD_PATH,
   MEDICAL_RECORD_PATH,
-  HEALTH_SCORE_PATH,
+  HEALTH_SCORE_PATH ,
 } from "../common/configuration/constants/Paths";
 import GpsLocator from "../pages/client/GpsLocator";
 import MarketPlace from "../pages/client/MarketPlace";
@@ -67,11 +67,13 @@ import VisitRecord from "../pages/client/HealthPassport/VisitRecord";
 import SurgeryRecord from "../pages/client/HealthPassport/SurgeryRecord";
 import MedicalRecord from "../pages/client/HealthPassport/MedicalRecord";
 
-import ManageVetoRequest from "../pages/admin/ManageVetoRequest";
-import RequestJoinAsVeterinarian from "../pages/RequestJoinAsVeterinarian";
-import ResetPassword from "../pages/ResetPassword";
-import AskToResetPassword from "../pages/AskToResetPassword";
-import SearchForVetoAndProds from "../pages/client/SearchForVetoAndProds";
+import ManageVetoRequest from '../pages/admin/ManageVetoRequest';
+import RequestJoinAsVeterinarian from '../pages/RequestJoinAsVeterinarian';
+import ResetPassword from '../pages/ResetPassword';
+import AskToResetPassword from '../pages/AskToResetPassword';
+import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
+import PetHealthDetailed from '../pages/client/PetHealthDetailed';
+
 
 const ProtectedRoutes = () => (
   <Routes>
@@ -120,6 +122,7 @@ const ProtectedRoutes = () => (
               path={SEARCH_VETO_PRODUCTS}
               element={<SearchForVetoAndProds />}
             />
+            <Route path={DETAILED_HEALTH_PET} element={<PetHealthDetailed/> } />
           </Routes>
         </ProtectedRoute>
       }
