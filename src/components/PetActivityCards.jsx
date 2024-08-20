@@ -34,6 +34,7 @@ export default function PetActivityCards({
         sx={{
           width: "100%",
           textAlign: "center",
+          marginTop: 2,
         }}
       >
         Your pet's activity tracking is {trackingStatus}
@@ -50,7 +51,7 @@ export default function PetActivityCards({
           sx={{
             width: "100%",
             marginTop: 2,
-            backgroundColor: "lightgray",
+            backgroundColor: "#f5f5f5",
             padding: 0.5,
           }}
         >
@@ -89,7 +90,7 @@ export default function PetActivityCards({
           sx={{
             width: "100%",
             marginTop: 2,
-            backgroundColor: "lightgray",
+            backgroundColor: "#f5f5f5",
             padding: 0.5,
           }}
         >
@@ -132,7 +133,7 @@ export default function PetActivityCards({
           sx={{
             width: "100%",
             marginTop: 2,
-            backgroundColor: "lightgray",
+            backgroundColor: "#f5f5f5",
             padding: 0.5,
           }}
         >
@@ -171,7 +172,7 @@ export default function PetActivityCards({
           sx={{
             width: "100%",
             marginTop: 2,
-            backgroundColor: "lightgray",
+            backgroundColor: "#f5f5f5",
             padding: 0.5,
           }}
         >
