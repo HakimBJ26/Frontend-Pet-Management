@@ -62,14 +62,14 @@ function ActivityTracker() {
         }
       });
       toast.info("Tracking resumed.", {
-        position: "bottom-right", // Use string for position
-        autoClose: 5000, // Auto-close after 5 seconds
+        position: "bottom-right",
+        autoClose: 3000, 
       });
     } else {
       activityService.close();
       toast.info("Tracking paused.", {
-        position: "bottom-right", // Use string for position
-        autoClose: 5000, // Auto-close after 5 seconds
+        position: "bottom-right", 
+        autoClose: 3000, 
       });
     }
   };
@@ -90,8 +90,8 @@ function ActivityTracker() {
       healthScore: "pending",
     });
     toast.error("Tracking ended.", {
-      position: "bottom-left", // Use string for position
-      autoClose: 3000, // Auto-close after 3 seconds
+      position: "bottom-left", 
+      autoClose: 3000, 
     });
   };
 
