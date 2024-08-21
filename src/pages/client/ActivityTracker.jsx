@@ -87,7 +87,6 @@ function ActivityTracker() {
         const res = await petDataService.getVitalSigns(petId);
         setPetActivityData(res);
       } catch (err) {
-        console.log("Error fetching vital signs data:", err);
       }
     };
 
@@ -106,7 +105,7 @@ function ActivityTracker() {
     });
 
     return () => {
-      service.close(); 
+      service.close();
     };
   }, [userId, petId]);
 
@@ -213,6 +212,11 @@ function ActivityTracker() {
                   color="primary"
                   sx={{
                     marginBottom: 1,
+                    borderColor: "black",
+                    borderRadius: "12px",
+                    "&:hover": {
+                      borderColor: "black", 
+                    },
                   }}
                   onClick={handlePauseTracking}
                   disabled={trackingEnded}
@@ -222,6 +226,13 @@ function ActivityTracker() {
                 <Button
                   variant="outlined"
                   color="primary"
+                  sx={{
+                    borderColor: "black",
+                    borderRadius: "12px",
+                    "&:hover": {
+                      borderColor: "black",
+                    },
+                  }}
                   onClick={handleEndTracking}
                   disabled={trackingEnded}
                 >
