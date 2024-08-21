@@ -16,6 +16,8 @@ import petDataService from "../../service/PetDataService";
 import { useSearchParams } from "react-router-dom";
 import PetService from "../../service/PetService";
 import StepsChart from "../../components/StepsChart";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ActivityTracker() {
   const [userId] = useState(localStorage.getItem("id"));
@@ -59,8 +61,16 @@ function ActivityTracker() {
           setPetActivityData(data);
         }
       });
+      toast.info("Tracking resumed.", {
+        position: "bottom-right", // Use string for position
+        autoClose: 5000, // Auto-close after 5 seconds
+      });
     } else {
       activityService.close();
+      toast.info("Tracking paused.", {
+        position: "bottom-right", // Use string for position
+        autoClose: 5000, // Auto-close after 5 seconds
+      });
     }
   };
 
@@ -79,6 +89,10 @@ function ActivityTracker() {
       averageBurn: "pending",
       healthScore: "pending",
     });
+    toast.error("Tracking ended.", {
+      position: "bottom-left", // Use string for position
+      autoClose: 3000, // Auto-close after 3 seconds
+    });
   };
 
   useEffect(() => {
@@ -87,6 +101,7 @@ function ActivityTracker() {
         const res = await petDataService.getVitalSigns(petId);
         setPetActivityData(res);
       } catch (err) {
+        console.error("Error fetching activity data:", err);
       }
     };
 
@@ -111,6 +126,7 @@ function ActivityTracker() {
 
   return (
     <>
+      <ToastContainer />
       {petId === null ? (
         <div
           style={{
@@ -215,7 +231,7 @@ function ActivityTracker() {
                     borderColor: "black",
                     borderRadius: "12px",
                     "&:hover": {
-                      borderColor: "black", 
+                      borderColor: "black",
                     },
                   }}
                   onClick={handlePauseTracking}
