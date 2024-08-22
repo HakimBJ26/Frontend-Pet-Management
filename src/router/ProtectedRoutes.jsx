@@ -16,7 +16,9 @@ import { ACTIVITY_TRACKER_PATH, ASK_TO_RESET_PASS, BREED_AUTHENTICITY_PATH, COMM
   VISIT_RECORD_PATH,
   SURGERY_RECORD_PATH,
   MEDICAL_RECORD_PATH, 
-  HEALTH_SCORE_PATH } from '../common/configuration/constants/Paths';
+  HEALTH_SCORE_PATH, 
+  PET_LIFE_OVERVIEW,
+  ADD_ACTIVITY_PROPOSITIONS} from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 import UserManagement from '../pages/admin/UserManagement';
@@ -43,6 +45,8 @@ import ResetPassword from '../pages/ResetPassword';
 import AskToResetPassword from '../pages/AskToResetPassword';
 import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
 import PetHealthDetailed from '../pages/client/PetHealthDetailed';
+import PetLifeOverview from '../pages/client/PetLifeOverview';
+import AddActivityProposition from '../pages/admin/AddActivityProposition';
 
 
 const ProtectedRoutes = () => (
@@ -58,6 +62,7 @@ const ProtectedRoutes = () => (
             <Route path={USER_MANAGEMENT_PATH} element={<UserManagement />} />
             <Route path={PET_SHOP_MANAGEMENT} element={<PetShopManagement />} />
             <Route path={MANAGE_VETO_REQUEST} element={<ManageVetoRequest />} />
+            <Route path={ADD_ACTIVITY_PROPOSITIONS} element={<AddActivityProposition />} />
           </Routes>
         </ProtectedRoute>
       }
@@ -86,7 +91,7 @@ const ProtectedRoutes = () => (
             <Route path={MEDICAL_RECORD_PATH} element={<MedicalRecord />} />
             <Route path={SEARCH_VETO_PRODUCTS} element={<SearchForVetoAndProds/> } />
             <Route path={DETAILED_HEALTH_PET} element={<PetHealthDetailed/> } />
-
+            <Route path={PET_LIFE_OVERVIEW} element={<PetLifeOverview/> } />
 
           </Routes>
         </ProtectedRoute>

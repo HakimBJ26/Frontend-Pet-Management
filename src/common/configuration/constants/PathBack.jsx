@@ -5,6 +5,7 @@ export const UPDATE_PROFILE_API = "/api/auth/updateProfile";
 export const GET_USERS_API = "/api/auth/GetAllUsers";
 export const LOG_OUT_API = "/api/auth/logout";
 export const UPDATE_USER_PROFILE_BY_ADMIN = "/api/auth/updateUserByAdmin";
+export const USER_IMAGE_URL = "/api/auth/image-url";
 export const REFRESH_TOKEN_API = "/api/auth/refreshToken";
 export const ADD_PET_API = "/api/pets";
 export const GET_ALL_PETS_API = "/api/pets";
@@ -31,6 +32,8 @@ export const VACCINE_RECORD_API = '/api/vaccine_records'
 export const SURGERY_RECORD_API = '/api/surgery_records'
 export const MEDICAL_RECORD_API = '/api/medical_records'
 export const VISIT_RECORD_API = '/api/visit_records'
+export const SLEEP_PATTERN_API = '/api/sleep-patterns/pet'
+export const ACTIVITY_PROPOSITION_API = '/api/activity-propositions'
 
 
 

@@ -16,6 +16,7 @@ import PetsOutlinedIcon from '@mui/icons-material/PetsOutlined';
 import MedicalServicesOutlinedIcon from '@mui/icons-material/MedicalServicesOutlined';
 import SideBarItem from './SideBarItem';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link } from 'react-router-dom';
 import {
   CLIENT_DASH_PATH,
@@ -37,7 +38,8 @@ import {
   ADMIN_DASH_PATH,
   PET_SHOP_MANAGEMENT,
   USER_MANAGEMENT_PATH,
-  MANAGE_VETO_REQUEST
+  MANAGE_VETO_REQUEST,
+  ADD_ACTIVITY_PROPOSITIONS
 } from '../../common/configuration/constants/Paths';
 import { getAuthInfo } from '../../utils/authCred';
 import { ROLE_ADMIN, ROLE_CLIENT, ROLE_VETO } from '../../common/configuration/constants/UserRole';
@@ -144,6 +146,9 @@ function SideBar() {
                       </Link>
                       <Link to={`${ADMIN_DASH_PATH}${MANAGE_VETO_REQUEST}`} style={{ textDecoration: 'none' }}>
                         <SideBarItem title="VETO Request Management" icon={<ManageAccountsIcon />} selected={selected} setSelected={setSelected} />
+                      </Link>
+                      <Link to={`${ADMIN_DASH_PATH}${ADD_ACTIVITY_PROPOSITIONS}`} style={{ textDecoration: 'none' }}>
+                        <SideBarItem title="Activity propositions" icon={<AddCircleOutlineIcon />} selected={selected} setSelected={setSelected} />
                       </Link>
                     </>
                   )}

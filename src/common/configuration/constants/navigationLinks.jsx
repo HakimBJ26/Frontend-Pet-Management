@@ -11,12 +11,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import AssistantIcon from '@mui/icons-material/Assistant';
 import {
     CLIENT_DASH_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,
     DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH,
     MARKET_PLACE_PATH, SET_ACTIVITY_GOALS_PATH, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH,
     VETO_UPDATE_TREATMENT_PATH, VETO_DASH_PATH, PET_PROFILE, USER_PROFILE, ADMIN_DASH_PATH,
-    PET_SHOP_MANAGEMENT, USER_MANAGEMENT_PATH, SEARCH_VETO_PRODUCTS
+    PET_SHOP_MANAGEMENT, USER_MANAGEMENT_PATH, SEARCH_VETO_PRODUCTS, PET_LIFE_OVERVIEW
 } from '../constants/Paths'
 
 export const clientLinks = [
@@ -33,6 +34,8 @@ export const clientLinks = [
     { to: `${CLIENT_DASH_PATH}${COMMUNITY_PATH}`, icon: <GroupOutlinedIcon  />},
     { to: `${CLIENT_DASH_PATH}${BREED_AUTHENTICITY_PATH}`, icon: <PetsOutlinedIcon  /> },
     { to: `${CLIENT_DASH_PATH}${SEARCH_VETO_PRODUCTS}`, icon: <PersonSearchIcon  />},
+    { to: `${CLIENT_DASH_PATH}${PET_LIFE_OVERVIEW}`, icon: <AssistantIcon />},
+
 
 ]
 

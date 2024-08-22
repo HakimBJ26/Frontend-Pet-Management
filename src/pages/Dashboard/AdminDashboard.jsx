@@ -42,7 +42,7 @@ function Dashboard() {
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: 'none' } }}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" >
             Admin Dashboard
           </Typography>
         </Toolbar>
@@ -60,7 +60,7 @@ function Dashboard() {
         className='boxMainAdminDash'
       >
         <Container maxWidth="md">
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom  fontWeight='bold'>
             Dashboard
           </Typography>
           <Typography variant="body1" paragraph>

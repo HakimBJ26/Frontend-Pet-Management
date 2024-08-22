@@ -5,6 +5,7 @@ export const USER_MANAGEMENT_PATH = "/users_management";
 export const CLIENT_DASH_PATH = "/dashboard_client";
 export const VETO_DASH_PATH = "/dashboard_veterinarian";
 export const MANAGE_VETO_REQUEST = '/manage_veto_request';
+export const ADD_ACTIVITY_PROPOSITIONS = '/add_activity_propositions';
 export const GPS_LOCATOR_PATH = "/gps_locator";
 export const COMMUNITY_PATH = "/community";
 export const ACTIVITY_TRACKER_PATH = "/activity_tracker";
@@ -20,7 +21,7 @@ export const VETO_UPDATE_TREATMENT_PATH = "/veto/update_treatment";
 export const PET_PROFILE = "/pet-profile/";
 export const USER_PROFILE = "/profile";
 export const PET_SHOP_MANAGEMENT = "/pet_shop_management";
-
+export const PET_LIFE_OVERVIEW = "/pet_life_overview";
 export const SUBMIT_VETO_REQUEST = '/submit_veto_request';
 export const RESET_PASS_REQUEST = '/resetPassword';
 export const ASK_TO_RESET_PASS = '/ask_to_reset_pass';

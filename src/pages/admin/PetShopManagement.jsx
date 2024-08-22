@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -11,31 +11,26 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from '@mui/material';
-import { Visibility } from '@mui/icons-material';
-import SearchBar from "../../components/SearchBar";
+  TextField,
+} from "@mui/material";
+import { Visibility } from "@mui/icons-material";
 import { products } from "../../common/configuration/constants/Products";
 import AddProductModal from "../../components/model/AddProductModal";
 import AddButtonCard from "../../components/AddButtonCard";
 import DetailModal from "../../components/model/DetailModel";
-import PetShopService from '../../service/PetShopService';
-import useToast from '../../hooks/useToast';
-import { 
+import PetShopService from "../../service/PetShopService";
+import useToast from "../../hooks/useToast";
+import {
   SUCCESS_ADD_TOAST,
   ERROR_ADD_TOAST,
   SUCCESS_UPDATE_PRODUCT_TOAST,
   ERROR_UPDATE_PRODUCT_TOAST,
   SUCCESS_DELETE_TOAST,
   ERROR_DELETE_TOAST,
-} from '../../common/configuration/constants/ToastConfig';
-
-
-
-
-
+} from "../../common/configuration/constants/ToastConfig";
 
 function PetShopManagement() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isDetailModalOpen, setDetailModalOpen] = useState(false);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
@@ -48,7 +43,7 @@ function PetShopManagement() {
         const res = await PetShopService.getAllProducts();
         setProductList(res);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error("Error fetching products:", error);
       }
     }
     fetchData();
@@ -61,10 +56,10 @@ function PetShopManagement() {
   const handleDelete = async (id) => {
     try {
       await PetShopService.deleteProduct(id);
-      setProductList(productList.filter(product => product.id !== id));
+      setProductList(productList.filter((product) => product.id !== id));
       showToast(SUCCESS_DELETE_TOAST);
     } catch (error) {
-      console.error('Error deleting product:', error);
+      console.error("Error deleting product:", error);
       showToast(ERROR_DELETE_TOAST);
     }
   };
@@ -76,7 +71,7 @@ function PetShopManagement() {
       setProductList(updatedProducts);
       showToast(SUCCESS_UPDATE_PRODUCT_TOAST);
     } catch (error) {
-      console.error('Error updating product:', error);
+      console.error("Error updating product:", error);
       showToast(ERROR_UPDATE_PRODUCT_TOAST);
     }
   };
@@ -89,7 +84,7 @@ function PetShopManagement() {
       setAddModalOpen(false);
       showToast(SUCCESS_ADD_TOAST);
     } catch (error) {
-      console.error('Error adding product:', error);
+      console.error("Error adding product:", error);
       showToast(ERROR_ADD_TOAST);
     }
   };
@@ -99,25 +94,30 @@ function PetShopManagement() {
     setDetailModalOpen(true);
   };
 
-  const filteredAccessories = productList.filter(prod =>
+  const filteredAccessories = productList.filter((prod) =>
     prod.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <Container sx={{  marginTop: '40px',
-      width: '60%'}}>
-      <Box className='header-box-pet-management'>
-        <Typography variant="h4" component="h1" gutterBottom>
+    <Container sx={{ marginTop: "70px", width: "60%" }}>
+      <Box>
+        <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
           Pet Shop Management
         </Typography>
-        <Typography variant="subtitle1" color="textSecondary">
+        <Typography variant="subtitle1" color="textSecondary" marginBottom={2}>
           Manage Accessory Information
         </Typography>
-        <SearchBar placeholder="Search Accessories By Name" value={searchQuery} onChange={handleSearchChange} />
+        <TextField
+          label="Search by Product's Name ..."
+          variant="outlined"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          sx={{ mb: 3, width: "50%" }}
+        />{" "}
       </Box>
-      <Box sx={{  display: 'flex',
-  justifyContent: 'center',
-  marginBottom: '16px'}}>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}
+      >
         <AddButtonCard onAdd={() => setAddModalOpen(true)} />
       </Box>
       <TableContainer component={Paper}>
@@ -130,7 +130,12 @@ function PetShopManagement() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredAccessories.map((product) => (
+          {filteredAccessories?.length === 0 && (
+              <TableRow><Typography variant="h4" padding={2} textAlign='center'>
+                 no products to show ..
+                </Typography></TableRow>
+            )}
+            {filteredAccessories?.map((product) => (
               <TableRow key={product.id}>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>${product.price}</TableCell>

@@ -5,7 +5,6 @@ import {
   UPDATE_PET_API,
   GET_CURRENT_USER_PETS_API,
 } from "../common/configuration/constants/PathBack";
-
 class PetService {
   static async addPet(petData) {
     try {
@@ -16,7 +15,6 @@ class PetService {
       throw err;
     }
   }
-
   static async getPets() {
     try {
       const res = await axiosPrivate.get(GET_ALL_PETS_API, {
@@ -27,7 +25,6 @@ class PetService {
       console.log(err);
     }
   }
-
   static async getCurrentUserPets() {
     try {
       const res = await axiosPrivate.get(GET_CURRENT_USER_PETS_API, {
@@ -38,7 +35,6 @@ class PetService {
       console.log(err);
     }
   }
-
   static async updatePet(petId, petData) {
     try {
       const response = await axiosPrivate.put(
@@ -51,21 +47,33 @@ class PetService {
       throw error;
     }
   }
-
+  static async updatePetImage(petId, imageUrl) {
+    try {
+      const response = await axiosPrivate.put(
+        `/api/pets/${petId}/image-url`,
+        null, 
+        {
+          params: { imageUrl }, 
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating pet:", error);
+      throw error;
+    }
+  }
   static async getPetProfile(petId) {
     try {
-      const response = await axiosPrivate.get(`/pets/${petId}`);
+      const response = await axiosPrivate.get(`api/pets/${petId}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching pet profile:", error);
       throw error;
     }
   }
-
   static async uploadPetPhoto(petId, file) {
     const formData = new FormData();
     formData.append("photo", file);
-
     const response = await axiosPrivate.post(
       `/api/pets/${petId}/image`,
       formData,
@@ -77,9 +85,5 @@ class PetService {
     );
     return response.data;
   }
-
-  
-
 }
-
 export default PetService;

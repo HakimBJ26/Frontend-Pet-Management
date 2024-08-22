@@ -15,3 +15,8 @@ export function formatDateTime(dateString) {
   
     return `${year}-${month}-${day} ${strTime}`;
   }
+
+  export const convertSleepToHours = (duration) => {
+    const [hours, minutes] = duration.split(/[h|m]/).filter(Boolean);
+    return parseInt(hours) + (parseInt(minutes) / 60);
+  };

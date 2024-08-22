@@ -13,9 +13,12 @@ import {
 } from "@mui/material";
 import UserService from "../../service/UserService";
 import UpdateProfileForm from "../../components/forms/UpdateProfileForm";
+import UpdateImageModal from "../../components/model/UpdatePetImageModal";
+
 
 export default function UserProfile() {
   const [profileData, setProfileData] = useState({
+    id:"",
     name: "",
     email: "",
     city: "",
@@ -23,18 +26,33 @@ export default function UserProfile() {
     role: "",
   });
   const [open, setOpen] = useState(false);
+  const [addPhotoModalOpen,setAddPhotoModalOpen]=useState(false)
+  const [userImageUrl,setImageUrl]=useState('')
+  const userId=localStorage.getItem('id')
+
+  console.log(userImageUrl)
+  const fetchUserImg= async()=>{
+    try{
+     const res = await UserService.getUserImage(userId)  
+     setImageUrl(res) 
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await UserService.getUserProfile();
         setProfileData({
+          id:response.id,
           name: response.name,
           email: response.email,
           city: response.city,
           phone: response.phone,
           role: response.role,
         });
+        fetchUserImg()
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -45,8 +63,14 @@ export default function UserProfile() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleCloseAddPhotoModal = ()=>setAddPhotoModalOpen(false)
+
+  const addPhoto=()=>{
+    setAddPhotoModalOpen(true)
+  }
+
   return (
-    <Box sx={{ mt: 6}}>
+    <Box sx={{ mt: 10}}>
       <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
         <Typography variant="h5" gutterBottom>
           User Profile
@@ -54,15 +78,15 @@ export default function UserProfile() {
       </Box>
       <Card sx={{ maxWidth: 345, mx: "auto", mt: 2 }}>
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-          <Avatar
-            src="/placeholder-user.jpg"
-            sx={{
-              width: 80,
-              height: 80,
-              border: "4px solid",
-              borderColor: "background.default",
-            }}
-          >
+        <Avatar
+                src={userImageUrl}
+                sx={{
+                  width: 80,
+                  height: 80,
+                  border: "4px solid",
+                  borderColor: "background.default",
+                }}
+              >
             {profileData.name ? profileData.name.charAt(0) : "U"}
           </Avatar>
         </Box>
@@ -102,6 +126,15 @@ export default function UserProfile() {
               <Button variant="outlined" onClick={handleOpen}>
                 Edit
               </Button>
+              <Button variant="contained" onClick={addPhoto}>
+                add photo
+              </Button>
+              <UpdateImageModal
+          open={addPhotoModalOpen}
+          onClose={handleCloseAddPhotoModal}
+          id={userId}
+          folder='user'
+        />
             </Box>
           </Box>
         </CardContent>
