@@ -16,6 +16,8 @@ import petDataService from "../../service/PetDataService";
 import { useSearchParams } from "react-router-dom";
 import PetService from "../../service/PetService";
 import StepsChart from "../../components/StepsChart";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ActivityTracker() {
   const [userId] = useState(localStorage.getItem("id"));
@@ -59,8 +61,16 @@ function ActivityTracker() {
           setPetActivityData(data);
         }
       });
+      toast.info("Tracking resumed.", {
+        position: "bottom-right",
+        autoClose: 3000, 
+      });
     } else {
       activityService.close();
+      toast.info("Tracking paused.", {
+        position: "bottom-right", 
+        autoClose: 3000, 
+      });
     }
   };
 
@@ -79,6 +89,10 @@ function ActivityTracker() {
       averageBurn: "pending",
       healthScore: "pending",
     });
+    toast.error("Tracking ended.", {
+      position: "bottom-left", 
+      autoClose: 3000, 
+    });
   };
 
   useEffect(() => {
@@ -87,7 +101,7 @@ function ActivityTracker() {
         const res = await petDataService.getVitalSigns(petId);
         setPetActivityData(res);
       } catch (err) {
-        console.log("Error fetching vital signs data:", err);
+        console.error("Error fetching activity data:", err);
       }
     };
 
@@ -106,12 +120,13 @@ function ActivityTracker() {
     });
 
     return () => {
-      service.close(); 
+      service.close();
     };
   }, [userId, petId]);
 
   return (
     <>
+      <ToastContainer />
       {petId === null ? (
         <div
           style={{
@@ -213,6 +228,11 @@ function ActivityTracker() {
                   color="primary"
                   sx={{
                     marginBottom: 1,
+                    borderColor: "black",
+                    borderRadius: "12px",
+                    "&:hover": {
+                      borderColor: "black",
+                    },
                   }}
                   onClick={handlePauseTracking}
                   disabled={trackingEnded}
@@ -222,6 +242,13 @@ function ActivityTracker() {
                 <Button
                   variant="outlined"
                   color="primary"
+                  sx={{
+                    borderColor: "black",
+                    borderRadius: "12px",
+                    "&:hover": {
+                      borderColor: "black",
+                    },
+                  }}
                   onClick={handleEndTracking}
                   disabled={trackingEnded}
                 >
