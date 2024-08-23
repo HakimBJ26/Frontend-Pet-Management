@@ -40,3 +40,4 @@ export const GET_SAFE_ZONE_BY_HOME = (petId) => `/api/pets/map/${petId}/home`;
 export const GET_SAFE_ZONE_BY_VET = (petId) => `/api/pets/map/${petId}/vet`;
 export const GET_SAFE_ZONE_BY_PARK = (petId) => `/api/pets/map/${petId}/park`;
 export const GET_DANGER_ZONE = (petId) => `/api/pets/map/${petId}/get-danger-zones`;
+export const CHECK_Pet_IN_SAFE_ZONE= (petId) => `/api/pet/check-pet-in-safe-zone/${petId}`;

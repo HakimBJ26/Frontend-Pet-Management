@@ -9,7 +9,8 @@ import {
   UPDATE_SAFE_ZONE_API,
   ADD_SAFE_ZONE_API,
   GET_DANGER_ZONE,
-  GET_SAFE_ZONE_BY_HOME, GET_SAFE_ZONE_BY_VET, GET_SAFE_ZONE_BY_PARK 
+  GET_SAFE_ZONE_BY_HOME, GET_SAFE_ZONE_BY_VET, GET_SAFE_ZONE_BY_PARK,
+  CHECK_Pet_IN_SAFE_ZONE,
 } from "../common/configuration/constants/PathBack";
 
 
@@ -188,6 +189,21 @@ static async getDangerZonesByPet(petId) {
   } catch (error) {
     console.error("Error fetching park positions:", error);
     throw error;}}
+
+
+
+static async checkPetInSafeZone (petId) {
+  try {
+    const response = await axiosPrivate.get(CHECK_Pet_IN_SAFE_ZONE(petId), {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error checking pet in safe zone:', error);
+    return false;
+  }}
+
+
 
 
 };

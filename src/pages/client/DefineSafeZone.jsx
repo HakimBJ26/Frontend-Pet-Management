@@ -3,6 +3,9 @@ import PetService from "../../service/PetService";
 import { MapContainer, TileLayer, useMapEvents, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../../maps.css";
+import { MAP_ATTRIBUTION, MAP_URL } from '../../common/configuration/constants/MapsConstant';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast
+import 'react-toastify/dist/ReactToastify.css'; 
 const DefineSafeZone = () => {
   const [selectedPosition, setSelectedPosition] = useState(null);
   const [safeZoneType, setSafeZoneType] = useState("HOME");
@@ -21,17 +24,15 @@ const DefineSafeZone = () => {
   function LocationMarker() {
     useMapEvents({   click(e) {  setSelectedPosition(e.latlng); }, });
     return selectedPosition ? (<Circle center={selectedPosition} radius={100} />) : null; }
-
   const handleSaveZone = async () => {
     if (!selectedPosition || !safeZoneType || !petId) {
       alert("Veuillez sélectionner une position, un type de zone de sécurité et vérifier que petId est défini.");
       return;  }
-
     const safeZoneRequest = { type: safeZoneType, positionDto: {  lat: selectedPosition.lat, lng: selectedPosition.lng}  };
     try {
       const response = await PetService.addSinglePositionToSafeZone(petId, safeZoneRequest);
-      console.log("Zone de sécurité enregistrée :", response);
-    } catch (error) {
+      toast.success("Safe zone added successfully!");
+        } catch (error) {
       console.error("Erreur lors de l'enregistrement de la zone de sécurité :", error);
     }
   };
@@ -61,9 +62,9 @@ const DefineSafeZone = () => {
               center={[51.505, -0.09]}
               zoom={13}
               className="map-container-style-safe">
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
+           <TileLayer
+          attribution={MAP_ATTRIBUTION}
+          url={MAP_URL} />
               <LocationMarker />
             </MapContainer>
           </div>
