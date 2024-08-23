@@ -217,3 +217,45 @@ export const SUCCESS_SIGN_UP_TOAST = {
     },
   };
   
+
+  export const SUCCESS_UPDATE_HEALTH_GOAL_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Health goal updated successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_UPDATE_HEALTH_GOAL_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to update health goal.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+
+
+  export const SUCCESS_CREATE_HEALTH_GOAL_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Health goal created successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_CREATE_HEALTH_GOAL_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to create health goal.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  

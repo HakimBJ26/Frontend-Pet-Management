@@ -91,7 +91,31 @@ class petDataService {
 
   static async getPetGoal(id) {
     try {
-      const response = await axiosPrivate.get(`${PET_GOAL_API}/${id}`, {
+      const response = await axiosPrivate.get(`${PET_GOAL_API}/pet/${id}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      });
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  static async setPetGoal(healthGoal) {
+    try {
+      const response = await axiosPrivate.post(`${PET_GOAL_API}`,healthGoal, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      });
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  static async UpdatePetGoal(goalId,healthGoal) {
+    try {
+      const response = await axiosPrivate.put(`${PET_GOAL_API}/${goalId}`,healthGoal, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });

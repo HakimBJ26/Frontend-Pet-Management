@@ -36,7 +36,6 @@ const UpdateImageModal = ({ open, onClose, id ,folder }) => {
           }else{
             await PetService.updatePetImage(id, downloadURL);
           }
-          console.log(downloadURL)
           setLoading(false);
           onClose(); 
         } catch (error) {

@@ -29,8 +29,6 @@ export default function UserProfile() {
   const [addPhotoModalOpen,setAddPhotoModalOpen]=useState(false)
   const [userImageUrl,setImageUrl]=useState('')
   const userId=localStorage.getItem('id')
-
-  console.log(userImageUrl)
   const fetchUserImg= async()=>{
     try{
      const res = await UserService.getUserImage(userId)  
@@ -84,7 +82,6 @@ export default function UserProfile() {
                   width: 80,
                   height: 80,
                   border: "4px solid",
-                  borderColor: "background.default",
                 }}
               >
             {profileData.name ? profileData.name.charAt(0) : "U"}

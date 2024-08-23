@@ -7,15 +7,18 @@ import { getCartFromLocalStorage, saveCartToLocalStorage } from '../../utils/car
 import CartModal from '../../components/model/CartModel';
 import SearchBar from '../../components/SearchBar';
 import FloatingCartIcon from '../../components/styledComponents/FloatingCartIcon';
+import SkeletonMarketplace from '../../components/skeleton/SkeletonMarketplace';
 
 function MarketPlace() {
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
   const [cartCount, setCartCount] = useState(0); 
   const [isCartOpen, setIsCartOpen] = useState(false); 
+  const [loading, setLoading]=useState(true)
   const userId = localStorage.getItem('id'); 
 
   useEffect(() => {
+    setLoading(true)
     async function fetchData() {
       try {
         const res = await PetShopService.getAllProducts();
@@ -23,6 +26,10 @@ function MarketPlace() {
       } catch (error) {
         console.error('Error fetching products:', error);
       }
+      setTimeout(()=>{
+         setLoading(false)
+      },1000)
+     
     }
     fetchData();
   }, []);
@@ -53,6 +60,8 @@ function MarketPlace() {
     saveCartToLocalStorage(userId, cart);
     setCartCount(cart.reduce((total, item) => total + item.nb, 0));
   };
+
+  if(loading) return <SkeletonMarketplace/>
 
   return (
     <Box sx={{ marginTop: '50px', padding: '10px' }}>

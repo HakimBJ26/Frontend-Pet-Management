@@ -5,6 +5,7 @@ import PetService from "../service/PetService";
 import petDataService from "../service/PetDataService";
 import { convertSleepToHours } from "../utils/formatDate";
 import catCalculateGif from "../images/cat_calculate.gif"; 
+import { COOL_DOWN_SESSION, GENTEL_WALK, INTERACTIVE_PLAY, REST_AND_RECOVERY, REST_TIME } from "../common/configuration/constants/PersonilizedActivities";
 
 const PersonalizedSuggestions = ({ sleepPatterns, petId }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -47,48 +48,28 @@ const PersonalizedSuggestions = ({ sleepPatterns, petId }) => {
       let newSuggestions = [];
 
       if (activityLevel === "High") {
-        newSuggestions.push({
-          name: "Cool Down Session",
-          duration: 20,
-          benefits: "Helps reduce stress and energy levels",
-        });
+        newSuggestions.push(COOL_DOWN_SESSION);
       }
 
       if (avgSleepDuration < 7 && activityLevel === "Low") {
-        newSuggestions.push({
-          name: "Interactive Play",
-          duration: 30,
-          benefits: "Boosts physical activity and mental stimulation",
-        });
+        newSuggestions.push(INTERACTIVE_PLAY);
       }
 
       if (heartRate > 100 || temperature > 39) {
-        newSuggestions.push({
-          name: "Rest & Recovery",
-          duration: 15,
-          benefits: "Helps regulate heart rate and cool down body temperature",
-        });
+        newSuggestions.push(REST_AND_RECOVERY);
       }
 
       if (pet.age > 10 && activityLevel === "Medium") {
-        newSuggestions.push({
-          name: "Gentle Walk",
-          duration: 15,
-          benefits: "Improves mobility and relaxation for older pets",
-        });
+        newSuggestions.push(GENTEL_WALK);
       }
 
       if (newSuggestions.length === 0) {
-        newSuggestions.push({
-          name: "Rest Time",
-          duration: 30,
-          benefits: "Encourages recovery and sleep",
-        });
+        newSuggestions.push(REST_TIME);
       }
 
       setSuggestions(newSuggestions.slice(0, 2));
-      setLoading(false); // Stop loading animation
-    }, 2000); // Simulate a delay for the "calculation"
+      setLoading(false);
+    }, 2000); 
   };
 
   return (
