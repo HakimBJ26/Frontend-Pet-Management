@@ -6,7 +6,6 @@ export const GET_USERS_API = "/api/auth/GetAllUsers";
 export const LOG_OUT_API = "/api/auth/logout";
 export const UPDATE_USER_PROFILE_BY_ADMIN = "/api/auth/updateUserByAdmin";
 export const REFRESH_TOKEN_API = "/api/auth/refreshToken";
-
 export const ADD_PET_API = "/api/pets";
 export const GET_ALL_PETS_API = "/api/pets";
 export const GET_PET_BY_ID_API = "/api/pets";
@@ -24,13 +23,15 @@ export const PET_VITAL_SIGNS = '/api/vital-signs/pet'
 export const HEALTH_ALERTS_API = '/api/health-alerts/pet'
 export const DISMISS_HEALTH_ALERTS_API = '/api/health-alerts'
 export const OVERVIEW_API = '/api/overview/pet'
+export const VET_APPOINTEMENT_API = '/api/vet-appointments'
+export const PET_GOAL_API = '/api/petgoals'
+export const PET_HEALTH_STATS = '/api/health-stats'
+export const SAVE_MESSAGING_TOKEN = '/api/auth/messaging-token'
 export const VACCINE_RECORD_API = '/api/vaccine_records'
 export const SURGERY_RECORD_API = '/api/surgery_records'
 export const MEDICAL_RECORD_API = '/api/medical_records'
 export const VISIT_RECORD_API = '/api/visit_records'
-
-
-
+export const PET_HEALTH_SCORE = '/api/health-score/pet'
 
 
 

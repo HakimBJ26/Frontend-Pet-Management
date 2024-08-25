@@ -46,7 +46,7 @@ const HealthAlerts = ({ healthAlertsData }) => {
               {healthAlert.severity}
             </Typography>
           </Box>
-          <Typography textAlign="center">
+          <Typography textAlign="center" minHeight={40}>
             Action: {healthAlert.action}.
           </Typography>
           <Button
