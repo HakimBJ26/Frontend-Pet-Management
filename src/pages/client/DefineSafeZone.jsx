@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, useMapEvents, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../../maps.css";
 import { MAP_ATTRIBUTION, MAP_URL } from '../../common/configuration/constants/MapsConstant';
-import { ToastContainer, toast } from 'react-toastify'; // Import toast
+import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 const DefineSafeZone = () => {
   const [selectedPosition, setSelectedPosition] = useState(null);
@@ -19,7 +19,6 @@ const DefineSafeZone = () => {
     } else {
       console.error("Pet ID not found in localStorage"); }
   }, []);
-
 
   function LocationMarker() {
     useMapEvents({   click(e) {  setSelectedPosition(e.latlng); }, });

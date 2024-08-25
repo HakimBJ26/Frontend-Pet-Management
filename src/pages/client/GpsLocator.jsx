@@ -24,7 +24,7 @@ const petMarkerIcon = new L.Icon({
   iconUrl: markerIcon,
   iconRetinaUrl: markerIcon2x,
   shadowUrl: markerShadow,
-  iconSize: [3000, 3000], // Ajustez la taille du marqueur
+  iconSize: [3000, 3000], 
   iconAnchor: [15, 30],
   popupAnchor: [0, -30],
   shadowSize: [30, 30],

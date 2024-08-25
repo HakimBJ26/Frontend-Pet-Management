@@ -48,7 +48,7 @@ export default function StepsChart({ petActivityData, trackingEnded }) {
   };
 
   return (
-    <BarChart width={500} height={300} data={dataset}>
+    <BarChart width={380} height={300} data={dataset}>
       <CartesianGrid stroke="none" />
       <XAxis dataKey="time" axisLine={false} tickLine={false} />
       <YAxis axisLine={false} tickLine={false} />
