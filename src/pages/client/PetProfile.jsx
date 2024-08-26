@@ -90,7 +90,6 @@ export default function PetProfile() {
     const fetchPetProfile = async () => {
       try {
         const response = await PetService.getCurrentUserPets();
-        console.log(response)
         setPetData(response);
         setFilteredPetData(response);
       } catch (error) {
