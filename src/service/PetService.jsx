@@ -4,6 +4,8 @@ import {
   GET_ALL_PETS_API,
   UPDATE_PET_API,
   GET_CURRENT_USER_PETS_API,
+  BREED_CERTIF_API,
+  VERIFY_CERTIF_CERTIF_API,
 } from "../common/configuration/constants/PathBack";
 class PetService {
   static async addPet(petData) {
@@ -47,6 +49,8 @@ class PetService {
       throw error;
     }
   }
+
+  
   static async updatePetImage(petId, imageUrl) {
     try {
       const response = await axiosPrivate.put(
@@ -84,6 +88,26 @@ class PetService {
       }
     );
     return response.data;
+  }
+
+  static async requestBreedCertif(petId,birthDate) {
+    try {
+      const response = await axiosPrivate.post(`${BREED_CERTIF_API}/${petId}?birthDate=${birthDate}`);
+      return response.data;
+    } catch (err) {
+      console.error("Error requesting breed certif:", err);
+      throw err;
+    }
+  }
+
+  static async verifyCertif(petId) {
+    try {
+      const response = await axiosPrivate.get(`${VERIFY_CERTIF_CERTIF_API}?uniqueId=${petId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching pet profile:", error);
+      throw error;
+    }
   }
 }
 export default PetService;

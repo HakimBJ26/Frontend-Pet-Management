@@ -46,7 +46,7 @@ const PetLifeOverview = () => {
 
     return (
         <div className="countainer">
-          {loading===true? 
+          {loading? 
            <>
             <SleepPatternsSkeleton />
             <ActivityPropositionsSkeleton /></>
