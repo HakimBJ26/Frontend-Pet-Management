@@ -19,12 +19,8 @@ const DefineSafeZone = () => {
     ) : null; }
 
   const handleSaveZone = async () => {
-    console.log("Selected Position:", selectedPosition);
-    console.log("Safe Zone Type:", safeZoneType);
-    console.log("Pet ID:", selectedPetId);
-
     if (!selectedPosition || !safeZoneType || !selectedPetId) {
-      alert("Veuillez sélectionner une position, un type de zone de sécurité et vérifier que petId est défini.");
+      toast.error("Veuillez sélectionner une position, un type de zone de sécurité et vérifier que petId est défini.");
       return; }
 
     const safeZoneRequest = {
