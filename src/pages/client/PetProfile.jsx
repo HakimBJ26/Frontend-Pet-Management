@@ -90,6 +90,7 @@ export default function PetProfile() {
     const fetchPetProfile = async () => {
       try {
         const response = await PetService.getCurrentUserPets();
+        console.log(response)
         setPetData(response);
         setFilteredPetData(response);
       } catch (error) {
@@ -200,7 +201,7 @@ export default function PetProfile() {
           fullWidth
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          size="medium" // This makes the TextField smaller
+          size="medium" 
           sx={{ width: 400 }}
           InputProps={{
             startAdornment: (
@@ -212,7 +213,6 @@ export default function PetProfile() {
         />
       </Box>
       <Box className="health-alerts-container">
-        {/* Add Pet Card */}
         <Box sx={{ display: "flex", mt: 1, justifyContent: "center" }}>
           <Card sx={{ mx: "auto" }}>
             <CardContent sx={{ p: 3 }}>
@@ -227,11 +227,11 @@ export default function PetProfile() {
                   variant="contained"
                   color="primary"
                   onClick={() => handleOpen()}
-                  sx={{ mb: 13 }} // Margin below the button
+                  sx={{ mb: 13 }}
                 >
                   Add Pet
                 </Button>
-                <AddIcon sx={{ fontSize: 70 }} /> {/* Plus icon */}
+                <AddIcon sx={{ fontSize: 70 }} />
               </Box>
             </CardContent>
           </Card>
