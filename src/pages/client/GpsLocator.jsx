@@ -71,15 +71,15 @@ const GpsLocator = () => {
     socket.onopen = () => {
       console.log('WebSocket connection established');
     };
-
+  
     socket.onmessage = async (event) => {
       const data = JSON.parse(event.data);
       if (data.latitude !== undefined && data.longitude !== undefined) {
         const petPosition = [data.latitude, data.longitude];
         setRealTimePosition(petPosition);
         setCenter(petPosition);
-
-        if (selectedPetId) {
+  
+        if (selectedPetId && zones.length > 0) { 
           const isInsideAnyZone = await PetService.checkPetInSafeZone(selectedPetId);
           if (!isInsideAnyZone) {
             const positionKey = `${petPosition[0]},${petPosition[1]}`;
@@ -93,17 +93,18 @@ const GpsLocator = () => {
         console.warn('Latitude or Longitude is undefined');
       }
     };
-
+  
     socket.onerror = (error) => {
       console.error('WebSocket error:', error);
     };
-
+  
     socket.onclose = (event) => {
       console.log('WebSocket connection closed', event);
     };
-
+  
     return () => socket.close();
-  }, [userId, selectedPetId, notifiedPositions]);
+  }, [userId, selectedPetId, notifiedPositions, zones]); 
+  
 
   const handleSafeZoneClick = async (zoneName) => {
     if (!selectedPetId) {
