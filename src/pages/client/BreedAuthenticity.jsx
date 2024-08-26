@@ -4,7 +4,7 @@ import PetService from "../../service/PetService";
 import { PetContext } from "../../context/PetContext";
 import useToast from "../../hooks/useToast";
 import { ERROR_REQUEST_CERTIF_TOAST, SUCCESS_REQUEST_CERTIF_TOAST } from "../../common/configuration/constants/ToastConfig";
-import QRCode from 'qrcode.react'; // Import QRCode component
+import QRCode from 'qrcode.react';
 
 function BreedAuthenticity() {
   const { selectedPetId } = useContext(PetContext);
@@ -94,7 +94,7 @@ function BreedAuthenticity() {
               <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleVerifyCert}>
                 Verify Certificate
               </Button>
-              {certifData &&  (<Typography marginTop={1}>Certificate verified ✅</Typography>)}
+              {certifData &&  (<Typography marginTop={1}>Certificate verified! ✅</Typography>)}
              </>
             ) : (
               pet.requestCertif ? (

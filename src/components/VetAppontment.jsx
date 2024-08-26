@@ -1,4 +1,4 @@
-import { Box, Skeleton, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import '../styles/VetAppointments.css';
 
 function VetAppointments({ appointmentsData }) {

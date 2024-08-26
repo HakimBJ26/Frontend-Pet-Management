@@ -1,4 +1,4 @@
-import { Card, Skeleton, Typography } from "@mui/material";
+import {  Skeleton } from "@mui/material";
 import "../../styles/PetLifeOverview.css";
 
 const SleepPatternsSkeleton = () => {

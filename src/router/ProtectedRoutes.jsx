@@ -35,7 +35,6 @@ import {
   VISIT_RECORD_PATH,
   SURGERY_RECORD_PATH,
   MEDICAL_RECORD_PATH, 
-  HEALTH_SCORE_PATH, 
   PET_LIFE_OVERVIEW,
   ADD_ACTIVITY_PROPOSITIONS} from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';

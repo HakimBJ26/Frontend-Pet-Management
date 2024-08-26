@@ -75,9 +75,7 @@ export default function PetProfile() {
   const navigate = useNavigate();
   const [isOtherBreed, setIsOtherBreed] = useState(false);
   const [otherBreed, setOtherBreed] = useState("");
-
   const [modalOpen, setModalOpen] = useState(false);
-
   const handleOpenModal = (id) => {
     setEditPetId(id);
     setModalOpen(true);

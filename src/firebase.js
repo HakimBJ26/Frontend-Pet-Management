@@ -27,7 +27,7 @@ const requestPermissionAndGetToken = async () => {
 
     if (token) {
       try {
-        const res =await UserService.saveMessagingToken(userId, token);
+        await UserService.saveMessagingToken(userId, token);
       } catch (err) {
         console.log(err);
       }
