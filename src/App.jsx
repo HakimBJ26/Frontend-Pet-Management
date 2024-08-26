@@ -85,8 +85,10 @@ function App() {
 
   useEffect(() => {
     const { role } = getAuthInfo()
-    if (location.pathname === SIGN_UP_PATH || location.pathname === SUBMIT_VETO_REQUEST || location.pathname === RESET_PASS_REQUEST || location.pathname === ASK_TO_RESET_PASS) {
-      return
+    const pathsToIgnore = [SIGN_UP_PATH, SUBMIT_VETO_REQUEST, RESET_PASS_REQUEST, ASK_TO_RESET_PASS];
+
+    if (pathsToIgnore.includes(location.pathname)) {
+      return;
     }
     if (role) {
       switch (role) {

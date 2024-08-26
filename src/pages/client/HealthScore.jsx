@@ -1,24 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box, Typography, Button, Card, CardContent, IconButton } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import PetsIcon from '@mui/icons-material/Pets';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import PetsIcon from '@mui/icons-material/Pets';
 import petDataService from '../../service/PetDataService';
 import WebSocketService from '../../service/WebSocketService';
 import { HEALTH_SCORE_CANAL } from '../../common/configuration/constants/webSocketSub';
 import { PetContext } from '../../context/PetContext';
+import '../../styles/HealthScore.css'
 
 const HealthScore = () => {
-    const theme = useTheme();
     const primaryColor = "#00A43C";
     const secondaryColor = "#027CFF";
     const backgroundColor = "#F5F5F5";
     const iconBackgroundColor = "#EDF8F1";
-    const cardBackgroundColor = "#F0F0F0";
     const textColor = "#000000";
 
     const userId = localStorage.getItem("id");
@@ -44,7 +42,7 @@ const HealthScore = () => {
 
             const healthScoreService = new WebSocketService(HEALTH_SCORE_CANAL, userId, fetchHealthScore);
             healthScoreService.connect((data) => {
-                if (data.heartRate !== undefined && data.petId === selectedPetId) {
+                if (!data.heartRate && data.petId === selectedPetId) {
                     setHealthScoreData(data);
                 }
             });
@@ -60,130 +58,69 @@ const HealthScore = () => {
         setSessionEnded(true); 
     };
 
-    
     const speed = healthScoreData.speed ? parseFloat(healthScoreData.speed.replace(' km/h', '')) : 0;
 
     return (
-        <Box
-            sx={{
-                maxWidth: 450,
-                margin: '0 auto',
-                padding: 3,
-                backgroundColor: backgroundColor,
-                borderRadius: 3,
-                boxShadow: 4,
-                marginTop: '64px',
-            }}
-        >
-            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 3 }}>
-                <Box
-                    sx={{
-                        width: 60,
-                        height: 60,
-                        backgroundColor: secondaryColor,
-                        borderRadius: '50%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
+        <Box className="myCustomClass">
+            <Box className="flexContainer">
+                <Box className="myCustomClass1">
                     <PetsIcon fontSize="large" sx={{ color: '#fff', fontSize: 40 }} />
                 </Box>
-                <Typography variant="h4" sx={{ marginLeft: 2, color: textColor, fontWeight: 'bold' }}>
+                <Typography variant="h4" className="title">
                     Health Score
                 </Typography>
             </Box>
 
             <>
-                <Card sx={{ marginBottom: 3, backgroundColor: cardBackgroundColor }}>
+                <Card className="card">
                     <CardContent>
-                        <Typography variant="h6" sx={{ color: textColor, fontWeight: 'bold' }}>View wellness metrics</Typography>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: 2 }}>
-                            <Box sx={{ textAlign: 'center' }}>
-                                <Box
-                                    sx={{
-                                        width: 60,
-                                        height: 60,
-                                        backgroundColor: iconBackgroundColor,
-                                        borderRadius: '50%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                >
+                        <Typography variant="h6" className="title">View wellness metrics</Typography>
+                        <Box className="flexContainer" style={{ justifyContent: 'space-around', marginTop: 16 }}>
+                            <Box className="metricBox">
+                                <Box className="iconBox">
                                     <MonitorHeartIcon fontSize="large" sx={{ color: secondaryColor, fontSize: 35 }} />
                                 </Box>
-                                <Typography variant="body1" sx={{ color: textColor, fontWeight: 'bold' }}>Avg. Health</Typography>
-                                <Typography variant="h6" sx={{ color: textColor }}>{healthScoreData.avgHealth}</Typography>
+                                <Typography variant="body1" className="title">Avg. Health</Typography>
+                                <Typography variant="h6" className="title">{healthScoreData.avgHealth}</Typography>
                             </Box>
-                            <Box sx={{ textAlign: 'center' }}>
-                                <Box
-                                    sx={{
-                                        width: 60,
-                                        height: 60,
-                                        backgroundColor: iconBackgroundColor,
-                                        borderRadius: '50%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                >
+                            <Box className="metricBox">
+                                <Box className="iconBox">
                                     <AccessTimeIcon fontSize="large" sx={{ color: secondaryColor, fontSize: 35 }} />
                                 </Box>
-                                <Typography variant="body1" sx={{ color: textColor, fontWeight: 'bold' }}>Activity Time</Typography>
-                                <Typography variant="h6" sx={{ color: textColor }}>{healthScoreData.activityTime}</Typography>
+                                <Typography variant="body1" className="title">Activity Time</Typography>
+                                <Typography variant="h6" className="title">{healthScoreData.activityTime}</Typography>
                             </Box>
-                            <Box sx={{ textAlign: 'center' }}>
-                                <Box
-                                    sx={{
-                                        width: 60,
-                                        height: 60,
-                                        backgroundColor: iconBackgroundColor,
-                                        borderRadius: '50%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                >
+                            <Box className="metricBox">
+                                <Box className="iconBox">
                                     <LocalFireDepartmentIcon fontSize="large" sx={{ color: secondaryColor, fontSize: 35 }} />
                                 </Box>
-                                <Typography variant="body1" sx={{ color: textColor, fontWeight: 'bold' }}>Calories</Typography>
-                                <Typography variant="h6" sx={{ color: textColor }}>{healthScoreData.calories}</Typography>
+                                <Typography variant="body1" className="title">Calories</Typography>
+                                <Typography variant="h6" className="title">{healthScoreData.calories}</Typography>
                             </Box>
-                            <Box sx={{ textAlign: 'center' }}>
-                                <Box
-                                    sx={{
-                                        width: 60,
-                                        height: 60,
-                                        backgroundColor: iconBackgroundColor,
-                                        borderRadius: '50%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                >
+                            <Box className="metricBox">
+                                <Box className="iconBox">
                                     <FavoriteIcon fontSize="large" sx={{ color: secondaryColor, fontSize: 35 }} />
                                 </Box>
-                                <Typography variant="body1" sx={{ color: textColor, fontWeight: 'bold' }}>Heart Rate</Typography>
-                                <Typography variant="h6" sx={{ color: textColor }}>{healthScoreData.heartRate}</Typography>
+                                <Typography variant="body1" className="title">Heart Rate</Typography>
+                                <Typography variant="h6" className="title">{healthScoreData.heartRate}</Typography>
                             </Box>
                         </Box>
                     </CardContent>
                 </Card>
 
-                <Card sx={{ marginBottom: 1, backgroundColor: cardBackgroundColor, position: 'relative' }}>
+                <Card className="card" style={{ position: 'relative' }}>
                     <CardContent>
-                        <Typography variant="h6" sx={{ color: textColor, fontWeight: 'bold' }}>Speed now</Typography>
-                        <Typography variant="h6" sx={{ color: textColor }}>{healthScoreData.speed}</Typography>
+                        <Typography variant="h6" className="title">Speed now</Typography>
+                        <Typography variant="h6" className="title">{healthScoreData.speed}</Typography>
 
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
+                        <Box className="flexContainer" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Box style={{ position: 'absolute', top: 8, right: 8 }}>
                                 <IconButton>
                                     <MoreVertIcon sx={{ color: textColor, fontSize: 30 }} />
                                 </IconButton>
                             </Box>
                         </Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: 5 }}>
+                        <Box className="flexContainer" style={{ justifyContent: 'space-around', marginTop: 40 }}>
                             {[{ label: 'Repos', speed: 0 }, { label: '5 km/h', speed: 5 }, { label: '10 km/h', speed: 10 }, { label: '15 km/h', speed: 15 }, { label: '20 km/h', speed: 20 }, { label: '25 km/h', speed: 25 }].map((item, index, array) => {
                                 let barColor = 'white';
                                 if (
@@ -194,17 +131,9 @@ const HealthScore = () => {
                                 }
 
                                 return (
-                                    <Box key={item.speed} sx={{ textAlign: 'center' }}>
-                                        <Box sx={{
-                                            width: 20,
-                                            height: 150,
-                                            borderRadius: '10px',
-                                            backgroundColor: barColor,
-                                            border: '2px solid black',
-                                            marginBottom: 2,
-                                            mx: 'auto'
-                                        }} />
-                                        <Typography variant="body2" sx={{ color: textColor }}>
+                                    <Box key={item.speed} className="metricBox">
+                                        <Box className="speedBar" style={{ backgroundColor: barColor }} />
+                                        <Typography variant="body2" className="title">
                                             {item.label}
                                         </Typography>
                                     </Box>
@@ -214,22 +143,14 @@ const HealthScore = () => {
                     </CardContent>
                 </Card>
 
-                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 3 }}>
-                <Button 
-                variant="contained" 
-                sx={{ 
-                    backgroundColor: 'green', 
-                    height: '50px', 
-                    width: '400px', 
-                    fontSize: '18px', 
-                    '&:hover': {
-                        backgroundColor: 'darkgreen'
-                    }
-                }} 
-                onClick={handleEndSession}
-            >
-                End session
-            </Button>
+                <Box className="flexContainer" style={{ justifyContent: 'center', marginTop: 24 }}>
+                    <Button 
+                        variant="contained" 
+                        className="endSessionButton"
+                        onClick={handleEndSession}
+                    >
+                        End Session
+                    </Button>
                 </Box>
             </>
         </Box>
