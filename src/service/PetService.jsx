@@ -93,11 +93,8 @@ class PetService {
       if (!petId) {
         throw new Error("Pet ID is required");
       }
-
       const url = ADD_SAFE_ZONE_API(petId);
-      const response = await axiosPrivate.post(
-        url,
-        safeZoneRequest,
+      const response = await axiosPrivate.post( url, safeZoneRequest,
         { withCredentials: true }
       );
       return response.data;

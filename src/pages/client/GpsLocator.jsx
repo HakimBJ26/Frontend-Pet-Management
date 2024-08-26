@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { MapContainer, TileLayer, Circle, Marker, Polygon } from 'react-leaflet';
 import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -19,6 +19,7 @@ import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PetContext } from '../../context/PetContext';
 
 const petMarkerIcon = new L.Icon({
   iconUrl: markerIcon,
@@ -34,34 +35,18 @@ const GpsLocator = () => {
   const theme = useTheme();
   const [zones, setZones] = useState([]);
   const [selectedSafeZone, setSelectedSafeZone] = useState(null);
-  const [currentPetId, setCurrentPetId] = useState(null);
   const [center, setCenter] = useState(defaultPosition);
   const [realTimePosition, setRealTimePosition] = useState([]);
-  const userId = localStorage.getItem('id');
   const [dangerZones, setDangerZones] = useState([]);
   const [notifiedPositions, setNotifiedPositions] = useState(new Set());
+  const { selectedPetId } = useContext(PetContext);
+  const userId = localStorage.getItem('id');
 
   useEffect(() => {
-    const fetchPetProfile = async () => {
-      try {
-        const response = await PetService.getCurrentUserPets();
-        if (response.length > 0) {
-          const petId = response[0].id;
-          localStorage.setItem('petId', petId);
-          setCurrentPetId(petId);
-        }
-      } catch (error) {
-        console.error("Error fetching pet profile:", error);
-      }
-    };
-    fetchPetProfile();
-  }, []);
-
-  useEffect(() => {
-    if (currentPetId) {
+    if (selectedPetId) {
       const fetchSafeZones = async () => {
         try {
-          const safeZones = await PetService.getSafeZones(currentPetId);
+          const safeZones = await PetService.getSafeZones(selectedPetId);
           setZones(safeZones);
           setSelectedSafeZone(null);
         } catch (error) {
@@ -71,17 +56,15 @@ const GpsLocator = () => {
 
       const fetchDangerZones = async () => {
         try {
-          const zones = await PetService.getDangerZonesByPet(currentPetId);
+          const zones = await PetService.getDangerZonesByPet(selectedPetId);
           setDangerZones(zones);
         } catch (error) {
           console.error("Failed to fetch danger zones:", error);
         }
       };
-
       fetchSafeZones();
-      fetchDangerZones();
-    }
-  }, [currentPetId]);
+      fetchDangerZones();  }
+  }, [selectedPetId]);
 
   useEffect(() => {
     const socket = new WebSocket(`${process.env.REACT_APP_WEBSOCKET_URL}/location?userId=${userId}`);
@@ -96,8 +79,8 @@ const GpsLocator = () => {
         setRealTimePosition(petPosition);
         setCenter(petPosition);
 
-        if (currentPetId) {
-          const isInsideAnyZone = await PetService.checkPetInSafeZone(currentPetId);
+        if (selectedPetId) {
+          const isInsideAnyZone = await PetService.checkPetInSafeZone(selectedPetId);
           if (!isInsideAnyZone) {
             const positionKey = `${petPosition[0]},${petPosition[1]}`;
             if (!notifiedPositions.has(positionKey)) {
@@ -120,10 +103,10 @@ const GpsLocator = () => {
     };
 
     return () => socket.close();
-  }, [userId, currentPetId, notifiedPositions]);
+  }, [userId, selectedPetId, notifiedPositions]);
 
   const handleSafeZoneClick = async (zoneName) => {
-    if (!currentPetId) {
+    if (!selectedPetId) {
       console.error('Pet ID is not defined');
       return;
     }
@@ -141,11 +124,11 @@ const GpsLocator = () => {
       }
       let response;
       if (zoneType === 'HOME') {
-        response = await PetService.getHomePositions(currentPetId);
+        response = await PetService.getHomePositions(selectedPetId);
       } else if (zoneType === 'VET') {
-        response = await PetService.getVetPositions(currentPetId);
+        response = await PetService.getVetPositions(selectedPetId);
       } else if (zoneType === 'PARK') {
-        response = await PetService.getParkPositions(currentPetId);
+        response = await PetService.getParkPositions(selectedPetId);
       }
       if (response && response.length > 0) {
         setCenter([response[0].lat, response[0].lng]);
@@ -156,13 +139,11 @@ const GpsLocator = () => {
       console.error('Error fetching positions:', error);
     }
   };
-
   const safeZones = [
     { name: 'Home', description: 'Your cozy place', icon: <HomeIcon sx={{ color: 'black' }} />, type: 'HOME' },
     { name: 'Park', description: 'A fun outdoor space', icon: <ParkIcon sx={{ color: 'black' }} />, type: 'PARK' },
     { name: 'Vet', description: 'For health checkups', icon: <LocalHospitalIcon sx={{ color: 'black' }} />, type: 'VET' },
   ];
-
   return (
     <div style={{ position: 'relative', height: '100vh', paddingBottom: '60px' }}>
       <div className="map-container">
@@ -217,5 +198,4 @@ const GpsLocator = () => {
     </div>
   );
 };
-
 export default GpsLocator;
