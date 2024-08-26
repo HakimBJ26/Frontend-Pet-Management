@@ -279,3 +279,24 @@ export const SUCCESS_SIGN_UP_TOAST = {
       color: '#ffffff',
     },
   };
+
+
+  export const SUCCESS_DECLINE_CERTIF_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'breed certif declined successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_DECLINE_CERTIF_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to decline breed certif.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };

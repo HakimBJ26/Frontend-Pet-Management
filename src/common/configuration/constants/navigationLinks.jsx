@@ -12,12 +12,13 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import {
     CLIENT_DASH_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,
     DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH,
     MARKET_PLACE_PATH, SET_ACTIVITY_GOALS_PATH, VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH,
     VETO_UPDATE_TREATMENT_PATH, VETO_DASH_PATH, PET_PROFILE, USER_PROFILE, ADMIN_DASH_PATH,
-    PET_SHOP_MANAGEMENT, USER_MANAGEMENT_PATH, SEARCH_VETO_PRODUCTS, PET_LIFE_OVERVIEW
+    PET_SHOP_MANAGEMENT, USER_MANAGEMENT_PATH, SEARCH_VETO_PRODUCTS, PET_LIFE_OVERVIEW, APPROVE_CERTIF_REQUEST
 } from '../constants/Paths'
 
 export const clientLinks = [
@@ -44,6 +45,7 @@ export const vetoLinks = [
     { to: `${VETO_DASH_PATH}${VETO_NOTIFICATIONS_PATH}`, icon: <NotificationsOutlinedIcon  /> },
     { to: `${VETO_DASH_PATH}${VETO_UPDATE_NOTES_PATH}`, icon: <PersonIcon  />},
     { to: `${VETO_DASH_PATH}${VETO_UPDATE_TREATMENT_PATH}`, icon: <PetsIcon  />},
+    { to: `${VETO_DASH_PATH}${APPROVE_CERTIF_REQUEST}`, icon: <WorkspacePremiumIcon  />}
 ]
 
 export const adminLinks = [

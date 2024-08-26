@@ -34,6 +34,7 @@ export const HEALTH_SCORE_PATH = '/health_score';
 export const VISIT_RECORD_PATH = '/visit_records';
 export const SURGERY_RECORD_PATH = '/surgery_records';
 export const MEDICAL_RECORD_PATH = '/medical_records';
+export const APPROVE_CERTIF_REQUEST = '/approve_certif_request';
 
 export const HEADER_CREDENTIALS =  {
     headers: { 'Content-Type': 'application/json' },

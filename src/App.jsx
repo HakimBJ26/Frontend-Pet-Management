@@ -34,7 +34,8 @@ import {
   Medical_RECORD_PATH,
   MEDICAL_RECORD_PATH,
   PET_LIFE_OVERVIEW,
-  ADD_ACTIVITY_PROPOSITIONS
+  ADD_ACTIVITY_PROPOSITIONS,
+  APPROVE_CERTIF_REQUEST
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
 import "react-toastify/dist/ReactToastify.css";
@@ -115,7 +116,7 @@ function App() {
         }
         case ROLE_VETO: {
           const vetoPaths = [
-            VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH
+            VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH , APPROVE_CERTIF_REQUEST
           ];
           if (vetoPaths.some(path => location.pathname === `${VETO_DASH_PATH}${path}`)) {
             return;

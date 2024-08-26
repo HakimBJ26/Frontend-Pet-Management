@@ -36,7 +36,8 @@ import {
   SURGERY_RECORD_PATH,
   MEDICAL_RECORD_PATH, 
   PET_LIFE_OVERVIEW,
-  ADD_ACTIVITY_PROPOSITIONS} from '../common/configuration/constants/Paths';
+  ADD_ACTIVITY_PROPOSITIONS,
+  APPROVE_CERTIF_REQUEST} from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 import UserManagement from '../pages/admin/UserManagement';
@@ -75,6 +76,7 @@ import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
 import PetHealthDetailed from '../pages/client/PetHealthDetailed';
 import PetLifeOverview from '../pages/client/PetLifeOverview';
 import AddActivityProposition from '../pages/admin/AddActivityProposition';
+import ApproveCertif from "../pages/veto/ApproveCertif";
 
 
 const ProtectedRoutes = () => (
@@ -146,6 +148,10 @@ const ProtectedRoutes = () => (
             <Route
               path={VETO_UPDATE_TREATMENT_PATH}
               element={<UpdateTreatmentPlans />}
+            />
+             <Route
+              path={APPROVE_CERTIF_REQUEST}
+              element={<ApproveCertif/>}
             />
           </Routes>
         </ProtectedRoute>

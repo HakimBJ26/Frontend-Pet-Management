@@ -6,6 +6,10 @@ import {
   GET_CURRENT_USER_PETS_API,
   BREED_CERTIF_API,
   VERIFY_CERTIF_CERTIF_API,
+  PET_API,
+  CERTIF_REQUESTS_API,
+  ISSUE_CERTIF_API,
+  DECLINE_CERTIF_API,
 } from "../common/configuration/constants/PathBack";
 class PetService {
   static async addPet(petData) {
@@ -68,7 +72,7 @@ class PetService {
   }
   static async getPetProfile(petId) {
     try {
-      const response = await axiosPrivate.get(`api/pets/${petId}`);
+      const response = await axiosPrivate.get(`${PET_API}/${petId}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching pet profile:", error);
@@ -105,9 +109,43 @@ class PetService {
       const response = await axiosPrivate.get(`${VERIFY_CERTIF_CERTIF_API}?uniqueId=${petId}`);
       return response.data;
     } catch (error) {
-      console.error("Error fetching pet profile:", error);
+      console.error("Error verifying the certif", error);
       throw error;
     }
   }
+  
+  static async getCertifRequests() {
+    try {
+      const response = await axiosPrivate.get(CERTIF_REQUESTS_API);
+      return response.data;
+    } catch (error) {
+      console.error("Error getting certif requests", error);
+      throw error;
+    }
+  }
+
+  static async issueCertif(certifData) {
+    try {
+      const response = await axiosPrivate.post(`${ISSUE_CERTIF_API}?uniqueId=${certifData.uniqueId}&petName=${certifData.petName}&breed=${certifData.breed}&birthDate=${certifData.birthDate}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error getting certif requests", error);
+      throw error;
+    }
+  }
+
+  declineCertif
+
+  static async declineCertif(petId) {
+    try {
+      const response = await axiosPrivate.post(`${DECLINE_CERTIF_API}?uniqueId=${petId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error decling certif requests", error);
+      throw error;
+    }
+  }
+
+  
 }
 export default PetService;

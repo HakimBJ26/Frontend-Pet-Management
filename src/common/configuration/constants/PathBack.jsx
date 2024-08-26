@@ -36,6 +36,10 @@ export const MEDICAL_RECORD_API = '/api/medical_records'
 export const VISIT_RECORD_API = '/api/visit_records'
 export const SLEEP_PATTERN_API = '/api/sleep-patterns/pet'
 export const ACTIVITY_PROPOSITION_API = '/api/activity-propositions'
+export const PET_API ='api/pets'
+export const  CERTIF_REQUESTS_API='/api/pets/certif-requests'
+export const  ISSUE_CERTIF_API='/api/certificates/issue'
+export const DECLINE_CERTIF_API = '/api/certificates/decline'
 
 
 

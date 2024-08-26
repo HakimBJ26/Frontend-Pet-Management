@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Card, CardContent, Typography, Button, Modal, TextField, Box, Avatar } from "@mui/material";
+import { Card, CardContent, Typography, Button, Modal, TextField, Box, Avatar, useTheme } from "@mui/material";
 import PetService from "../../service/PetService";
 import { PetContext } from "../../context/PetContext";
 import useToast from "../../hooks/useToast";
 import { ERROR_REQUEST_CERTIF_TOAST, SUCCESS_REQUEST_CERTIF_TOAST } from "../../common/configuration/constants/ToastConfig";
 import QRCode from 'qrcode.react';
+import '../../styles/BreedAuthenticity.css'
 
 function BreedAuthenticity() {
   const { selectedPetId } = useContext(PetContext);
-
+const theme= useTheme()
   const [pet, setPet] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [birthDate, setBirthDate] = useState("");
@@ -20,7 +21,6 @@ function BreedAuthenticity() {
       try {
         const res = await PetService.getPetProfile(selectedPetId);
         setPet(res);
-        setBirthDate(res.birthDate);
         setCertifData(null)
       } catch (err) {
         console.log(err);
@@ -53,12 +53,14 @@ function BreedAuthenticity() {
 
   const handleSubmitRequest = async () => {
     try {
+    if(birthDate){
       const response = await PetService.requestBreedCertif(selectedPetId, birthDate);
       if (response) {
         showToast(SUCCESS_REQUEST_CERTIF_TOAST);
         setOpenModal(false);
         setPet((prevPet) => ({ ...prevPet, requestCertif: true }));
       }
+    }
     } catch (err) {
       showToast(ERROR_REQUEST_CERTIF_TOAST);
     }
@@ -68,7 +70,7 @@ function BreedAuthenticity() {
     <div style={{ textAlign: "center" }}>
       <h2>Breed Authenticity</h2>
       {certifData && (
-        <Box sx={{ mb: 4, p: 2, borderRadius: 2 }}>
+        <Box sx={{ mb:-4, p: 2, borderRadius: 2 }}>
           <Typography variant="h6">Certificate Details</Typography>
           <Typography variant="body1"><strong>Pet Name:</strong> {certifData.petName}</Typography>
           <Typography variant="body1"><strong>Breed:</strong> {certifData.breed}</Typography>
@@ -113,22 +115,45 @@ function BreedAuthenticity() {
         </Card>
       )}
 
-      <Modal open={openModal} onClose={handleModalClose}>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, p: 4, backgroundColor: "white", borderRadius: 2, maxWidth: 400, margin: "auto", mt: 4 }}>
-          <Typography variant="h6">Request Breed Certificate</Typography>
-          <TextField 
-            label="Birth Date" 
-            type="date" 
-            value={birthDate} 
-            onChange={(e) => setBirthDate(e.target.value)} 
-            InputLabelProps={{ shrink: true }} 
-            required 
-          />
-          <Button variant="contained" color="primary" onClick={handleSubmitRequest}>
-            Submit Request
-          </Button>
-        </Box>
-      </Modal>
+<Modal open={openModal} onClose={handleModalClose}>
+  <Box
+  className="submitRequestModel"
+    sx={{
+      backgroundColor: `${theme.palette.grey[500]}`
+    }}
+  >
+    <Typography variant="h6">Request Breed Certificate</Typography>
+    <Typography variant="h6" fontWeight='bold'>if you are not sure about those informations you can modify it from the pet profile screen and resubmit</Typography>
+    <TextField
+      label="Pet Name"
+      value={pet?.name}
+      InputProps={{
+        readOnly: true,
+      }}
+      variant="filled"
+    />
+    <TextField
+      label="Breed"
+      value={pet?.breed} 
+      InputProps={{
+        readOnly: true,
+      }}
+      variant="filled"
+    />
+    <TextField
+      label="Birth Date"
+      type="date"
+      value={birthDate ? birthDate : ""}
+      onChange={(e) => setBirthDate(e.target.value)}
+      InputLabelProps={{ shrink: true }}
+      required
+    />
+    <Button variant="contained" color="primary" onClick={handleSubmitRequest}>
+      Submit Request
+    </Button>
+  </Box>
+</Modal>
+
     </div>
   );
 }
