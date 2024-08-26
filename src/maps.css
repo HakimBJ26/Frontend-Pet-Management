@@ -93,4 +93,55 @@
 
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 57.5%;
+  transform: translateX(-50%);
+  width: 87%;
+  display: flex;
+  justify-content: space-around;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.2);
+}
 
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  border-bottom: 1px solid #ccc;
+  background-color: #fff;
+  position: fixed;
+  width: 85%;
+  bottom: 790px;
+  left: 250px;
+  height: 40px;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.radioLabel {
+  margin: 5px;
+}

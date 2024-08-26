@@ -36,13 +36,16 @@ const DefineSafeZone = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100vh", padding: "20px" }}>
-      <h2 style={{ textAlign: "center" }}>Define your safe zone for your pet</h2>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "20px" }}>
-        <label style={{ margin: "5px" }}>
-          <input type="radio" value="HOME"
+    <div className="container">
+      <h2 className="title">Define your safe zone for your pet</h2>
+      <div className="radioGroup">
+        <label className="radioLabel">
+          <input
+            type="radio"
+            value="HOME"
             checked={safeZoneType === "HOME"}
-            onChange={(e) => setSafeZoneType(e.target.value)} />
+            onChange={(e) => setSafeZoneType(e.target.value)}
+          />
           Home
         </label>
         <label>
