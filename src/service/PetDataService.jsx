@@ -64,6 +64,19 @@ class petDataService {
   }
 
 
+  static async getHealthScore(id) {
+    try {
+      const response = await axiosPrivate.get(`${PET_HEALTH_SCORE}/${id}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      });
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+
   static async getOverview(id) {
     try {
       const response = await axiosPrivate.get(`${OVERVIEW_API}/${id}`, {

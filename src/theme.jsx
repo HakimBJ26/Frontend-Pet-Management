@@ -49,6 +49,8 @@ export const tokens = (mode) => ({
         800: "#292929",
         900: "#141414",
       },
+      safeZoneColor : 'rgba(64,224,208)',
+       DangerZoneColor : 'rgba(255, 0, 0, 0.2)',
       healthStatsChart: {
         100: "#00a65a",  
         200: "#1abf70", 
@@ -101,6 +103,8 @@ export const tokens = (mode) => ({
         800: "#808080",
         900: "#666666",
       },
+      safeZoneColor : 'rgba(64,224,208)',
+      DangerZoneColor : 'rgba(255, 0, 0, 0.2)',
       healthStatsChart: {
         100: "#008000", 
         200: "#009f6b", 
@@ -164,6 +168,9 @@ export const themeSettings = (mode) => {
           },
         }),
         custom: {
+         circleMapSafe : colors.safeZoneColor,
+          DangerMap:colors.DangerZoneColor,
+
           shadowColor: colors.customShadowColor,
         },
     },

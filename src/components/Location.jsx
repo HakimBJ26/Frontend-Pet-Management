@@ -1,34 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { LOCATION_CANAL} from '../common/configuration/constants/webSocketSub';
 import WebSocketService from '../service/WebSocketService';
-
-const Location = () => {
+import { LOCATION_CANAL } from '../common/configuration/constants/webSocketSub';
+  const Location = () => {
   const userId = localStorage.getItem('id');
-
-  const [locationData, setLocationData] = useState({ 
-    latitude: null, 
-    longitude: null
-  });
-
-
-
+  const [locationData, setLocationData] = useState({ latitude: null, longitude: null });
   useEffect(() => {
-
-
-    const locationService = new WebSocketService(LOCATION_CANAL, userId);
-
-    locationService.connect((data) => {
-      if (data.latitude !== undefined) {
-        setLocationData(data);
-      }
+    if (!userId) {
+      console.error("User ID is not defined.");
+      return; }
+    const locationService = new WebSocketService(LOCATION_CANAL, userId, () => {
+      console.warn("WebSocket fallback function triggered.");
     });
-
-    return () => {
-      locationService.close();
-    };
-  }, [userId]);
-
-
+    locationService.connect((data) => {
+            setLocationData(data); });
+    return () => { locationService.close(); };}, [userId]);
   return (
     <div>
       <h1>Location Data</h1>
@@ -37,5 +22,4 @@ const Location = () => {
     </div>
   );
 };
-
 export default Location;

@@ -37,7 +37,8 @@ import {
   MEDICAL_RECORD_PATH, 
   PET_LIFE_OVERVIEW,
   ADD_ACTIVITY_PROPOSITIONS,
-  APPROVE_CERTIF_REQUEST} from '../common/configuration/constants/Paths';
+  APPROVE_CERTIF_REQUEST,
+  HEALTH_SCORE_PATH} from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 import UserManagement from '../pages/admin/UserManagement';
@@ -77,6 +78,7 @@ import PetHealthDetailed from '../pages/client/PetHealthDetailed';
 import PetLifeOverview from '../pages/client/PetLifeOverview';
 import AddActivityProposition from '../pages/admin/AddActivityProposition';
 import ApproveCertif from "../pages/veto/ApproveCertif";
+import HealthScore from "../pages/client/HealthScore";
 
 
 const ProtectedRoutes = () => (
@@ -129,6 +131,8 @@ const ProtectedRoutes = () => (
             />
             <Route path={DETAILED_HEALTH_PET} element={<PetHealthDetailed/> } />
             <Route path={PET_LIFE_OVERVIEW} element={<PetLifeOverview/> } />
+            <Route path={SEARCH_VETO_PRODUCTS} element={<SearchForVetoAndProds/> } />
+            <Route path={HEALTH_SCORE_PATH} element={<HealthScore/> } />
 
           </Routes>
         </ProtectedRoute>
