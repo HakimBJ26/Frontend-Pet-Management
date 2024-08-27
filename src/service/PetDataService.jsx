@@ -1,11 +1,24 @@
-import { OVERVIEW_API, PET_GOAL_API, PET_HEALTH_STATS, PET_VITAL_SIGNS, VET_APPOINTEMENT_API } from "../common/configuration/constants/PathBack";
-import {  axiosPrivate } from '../common/configuration/ApiAuth'; 
+import { OVERVIEW_API, PET_GOAL_API, PET_HEALTH_SCORE, PET_HEALTH_STATS, PET_VITAL_SIGNS, VET_APPOINTEMENT_API } from "../common/configuration/constants/PathBack";
+import { axiosPrivate } from '../common/configuration/ApiAuth';
 
 class petDataService {
 
   static async getVitalSigns(id) {
     try {
       const response = await axiosPrivate.get(`${PET_VITAL_SIGNS}/${id}`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      });
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+
+  static async getHealthScore(id) {
+    try {
+      const response = await axiosPrivate.get(`${PET_HEALTH_SCORE}/${id}`, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });
