@@ -1,4 +1,4 @@
-import { Box, Skeleton, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import '../styles/VetAppointments.css';
 
 function VetAppointments({ appointmentsData }) {
@@ -7,7 +7,7 @@ function VetAppointments({ appointmentsData }) {
     const { lastAppointment, weightComparison, bodyComparison, tailComparison, chestComparison } = appointmentsData;
 
     return (
-        <Box className='countainer' >
+        <Box className='countainer-pet-health-details' >
             <Typography variant="h4" component="h2" fontWeight="bold" sx={{ mb: 2 }}>
                 Vet Appointments
             </Typography>

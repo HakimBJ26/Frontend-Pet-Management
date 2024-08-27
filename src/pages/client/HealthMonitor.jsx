@@ -8,6 +8,9 @@ import AlertsService from '../../service/AlertsService';
 import WebSocketService from '../../service/WebSocketService';
 import { VITAL_SIGNS_CANAL } from '../../common/configuration/constants/webSocketSub';
 import { PetContext } from '../../context/PetContext';  
+import VitalSignsSkeleton from '../../components/skeleton/VitalSignsSkeleton';
+import OverviewSkeleton from '../../components/skeleton/OverviewSkeleton';
+import HealthAlertsSkeleton from '../../components/skeleton/HealthAlertsSkeleton';
 
 function HealthMonitor() {
   const userId = localStorage.getItem('id');
@@ -16,8 +19,10 @@ function HealthMonitor() {
   const [vitalSignsData, setVitalSignsData] = useState({});
   const [healthAlerts, setHealthAlerts] = useState([]);
   const [overview, setOverview] = useState({});
+  const [isLoading,setLoading]=useState(false)
 
   useEffect(() => {
+    setLoading(true)
     const fetchVitalSigns = async () => {
       try {
         const res = await petDataService.getVitalSigns(selectedPetId);
@@ -73,6 +78,9 @@ function HealthMonitor() {
       } catch (err) {
         console.log(err);
       }
+      setTimeout(()=>{
+        setLoading(false)
+      },1000)
     };
     fetchOverview();
   }, [selectedPetId]);
@@ -82,15 +90,15 @@ function HealthMonitor() {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Typography variant="h4" fontWeight='bold' gutterBottom>Vital Signs</Typography>
-          <VitalSigns vitalSignsData={vitalSignsData} />
+         {isLoading ? <VitalSignsSkeleton/> :  <VitalSigns vitalSignsData={vitalSignsData} />}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4" fontWeight='bold' gutterBottom>Health Alerts</Typography>
-          <HealthAlerts healthAlertsData={healthAlerts} />
+         {isLoading? <HealthAlertsSkeleton/> :  <HealthAlerts healthAlertsData={healthAlerts} />}
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4" fontWeight='bold' gutterBottom>Overview</Typography>
-          <Overview overviewData={overview} />
+          {isLoading? <OverviewSkeleton/> : <Overview overviewData={overview} />}
         </Grid>
       </Grid>
     </Container>

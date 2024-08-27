@@ -217,3 +217,86 @@ export const SUCCESS_SIGN_UP_TOAST = {
     },
   };
   
+
+  export const SUCCESS_UPDATE_HEALTH_GOAL_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Health goal updated successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_UPDATE_HEALTH_GOAL_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to update health goal.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+
+
+  export const SUCCESS_CREATE_HEALTH_GOAL_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'Health goal created successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_CREATE_HEALTH_GOAL_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to create health goal.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+  
+
+  export const SUCCESS_REQUEST_CERTIF_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'breed certif requested successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_REQUEST_CERTIF_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to request breed certif.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+
+
+  export const SUCCESS_DECLINE_CERTIF_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'breed certif declined successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_DECLINE_CERTIF_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to decline breed certif.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };

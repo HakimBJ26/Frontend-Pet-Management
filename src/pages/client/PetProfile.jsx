@@ -16,20 +16,19 @@ import {
   FormControl,
   InputLabel,
   InputAdornment,
-  Container
+  Container,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search"; 
+import SearchIcon from "@mui/icons-material/Search";
 import PetService from "../../service/PetService";
 import { toast } from "sonner";
-import '../../styles/HealthAlerts.css'
+import "../../styles/HealthAlerts.css";
 import AddIcon from "@mui/icons-material/Add";
-import { CLIENT_DASH_PATH, DETAILED_HEALTH_PET } from "../../common/configuration/constants/Paths";
+import {
+  CLIENT_DASH_PATH,
+  DETAILED_HEALTH_PET,
+} from "../../common/configuration/constants/Paths";
 import { useNavigate } from "react-router-dom";
-
-
-
-
-
+import UpdateImageModal from "../../components/model/UpdatePetImageModal";
 const breedOptions = [
   "Labrador Retriever",
   "German Shepherd",
@@ -58,6 +57,7 @@ const breedOptions = [
   "Other",
 ];
 
+
 export default function PetProfile() {
   const [petData, setPetData] = useState([]);
   const [filteredPetData, setFilteredPetData] = useState([]);
@@ -71,26 +71,32 @@ export default function PetProfile() {
     breed: "",
     age: "",
   });
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
   const [isOtherBreed, setIsOtherBreed] = useState(false);
   const [otherBreed, setOtherBreed] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleOpenModal = (id) => {
+    setEditPetId(id);
+    setModalOpen(true);
+  };
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
   useEffect(() => {
     const fetchPetProfile = async () => {
       try {
         const response = await PetService.getCurrentUserPets();
         setPetData(response);
-        setFilteredPetData(response); 
+        setFilteredPetData(response);
       } catch (error) {
         console.error("Error fetching pet profile:", error);
       }
     };
     fetchPetProfile();
-  }, []);
-
+  }, [open]);
   useEffect(() => {
-    // Filter pets based on search term
     const filteredPets = petData?.filter((pet) => {
       return (
         pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -100,6 +106,11 @@ export default function PetProfile() {
     });
     setFilteredPetData(filteredPets);
   }, [searchTerm, petData]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewPetData({ ...newPetData, [name]: value });
+  };
 
   const handleOpen = (pet = null) => {
     if (pet) {
@@ -122,25 +133,17 @@ export default function PetProfile() {
     setNewPetData({ name: "", breed: "", age: "" });
     setIsOtherBreed(false);
     setOtherBreed("");
-    setSelectedFile(null);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewPetData({ ...newPetData, [name]: value });
   };
 
   const handleAgeChange = (e) => {
     const value = e.target.value;
     setNewPetData({ ...newPetData, age: value });
   };
-
   const handleBreedChange = (e) => {
     const value = e.target.value;
     setNewPetData({ ...newPetData, breed: value });
     setIsOtherBreed(value === "Other");
   };
-
   const handleOtherBreedChange = (e) => {
     const value = e.target.value;
     setOtherBreed(value);
@@ -149,12 +152,10 @@ export default function PetProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!newPetData.name || !newPetData.breed || !newPetData.age) {
       toast.error("Please fill in all fields.");
       return;
     }
-
     try {
       if (isEditMode) {
         await PetService.updatePet(editPetId, newPetData);
@@ -172,29 +173,15 @@ export default function PetProfile() {
           pageEndRef.current.scrollIntoView({ behavior: "smooth" });
         });
       }
-
       handleClose();
     } catch (error) {
       console.error("Error adding/updating pet:", error);
     }
   };
-
-  const handleCartClick=(pet)=>{
-      navigate(`${CLIENT_DASH_PATH}${DETAILED_HEALTH_PET}`,{state: { petData: pet }});
-  }
-
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    if (file && editPetId) {
-      try {
-        await PetService.uploadPetPhoto(editPetId, file);
-        setSelectedFile(URL.createObjectURL(file));
-        toast.success("Photo uploaded successfully.");
-      } catch (error) {
-        console.error("Error uploading photo:", error);
-        toast.error("Error uploading photo.");
-      }
-    }
+  const handleCartClick = (pet) => {
+    navigate(`${CLIENT_DASH_PATH}${DETAILED_HEALTH_PET}`, {
+      state: { petData: pet },
+    });
   };
 
   return (
@@ -204,7 +191,6 @@ export default function PetProfile() {
           Pet Profile
         </Typography>
       </Box>
-
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <TextField
           label="Find your Pet"
@@ -212,7 +198,7 @@ export default function PetProfile() {
           fullWidth
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          size="medium" // This makes the TextField smaller
+          size="medium" 
           sx={{ width: 400 }}
           InputProps={{
             startAdornment: (
@@ -223,9 +209,7 @@ export default function PetProfile() {
           }}
         />
       </Box>
-
       <Box className="health-alerts-container">
-        {/* Add Pet Card */}
         <Box sx={{ display: "flex", mt: 1, justifyContent: "center" }}>
           <Card sx={{ mx: "auto" }}>
             <CardContent sx={{ p: 3 }}>
@@ -240,47 +224,32 @@ export default function PetProfile() {
                   variant="contained"
                   color="primary"
                   onClick={() => handleOpen()}
-                  sx={{ mb: 13}} // Margin below the button
+                  sx={{ mb: 13 }}
                 >
                   Add Pet
                 </Button>
-                <AddIcon sx={{ fontSize: 70 }} /> {/* Plus icon */}
+                <AddIcon sx={{ fontSize: 70 }} />
               </Box>
             </CardContent>
           </Card>
         </Box>
-
         {filteredPetData?.map((p) => (
           <Card key={p.id} sx={{ mt: 1, minWidth: "300px", overflowX: "auto" }}>
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }} onClick={()=>handleCartClick(p)}>
-              <label htmlFor={`upload-photo-${p.id}`}>
-                <input
-                  type="file"
-                  accept="image/*"
-                  id={`upload-photo-${p.id}`}
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
-                />
-                <Avatar
-                  src={
-                    p.image
-                      ? `data:image/jpeg;base64,${p.image}`
-                      : "/placeholder-pet.jpg"
-                  }
-                  sx={{
-                    width: 80,
-                    height: 80,
-                    border: "4px solid",
-                    borderColor: "background.default",
-                  }}
-                  onClick={() => {
-                    setEditPetId(p.id);
-                    document.getElementById(`upload-photo-${p.id}`).click();
-                  }}
-                >
-                  {p.name ? p.name[0] : "?"}
-                </Avatar>
-              </label>
+            <Box
+              sx={{ display: "flex", justifyContent: "center", mt: 3 }}
+              onClick={() => handleCartClick(p)}
+            >
+              <Avatar
+                src={p.imageUrl}
+                sx={{
+                  width: 80,
+                  height: 80,
+                  border: "4px solid",
+                  borderColor: "background.default",
+                }}
+              >
+                {p.name ? p.name[0] : "?"}
+              </Avatar>
             </Box>
             <CardContent sx={{ p: 3 }}>
               <Box display="flex" justifyContent="space-between" mb={2}>
@@ -305,15 +274,29 @@ export default function PetProfile() {
                 <Button variant="outlined" onClick={() => handleOpen(p)}>
                   Edit
                 </Button>
-                <Button variant="outlined">Add Photo</Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    handleOpenModal(p.id);
+                  }}
+                >
+                  Update Pet Image
+                </Button>
+
                 <Button variant="outlined">Health Passport</Button>
               </Box>
             </CardContent>
           </Card>
         ))}
+        <UpdateImageModal
+          open={modalOpen}
+          onClose={handleCloseModal}
+          id={editPetId}
+          folder='pet'
+        />
       </Box>
       <div ref={pageEndRef} />
-
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{isEditMode ? "Edit Pet" : "Add New Pet"}</DialogTitle>
         <DialogContent>

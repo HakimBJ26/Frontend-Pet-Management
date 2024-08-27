@@ -1,7 +1,6 @@
 import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { tokens } from '../../../theme';
-import { VACCINE_RECORD_PATH } from '../../../common/configuration/constants/Paths';
 
 function HealthPassport() {
   const theme = useTheme();

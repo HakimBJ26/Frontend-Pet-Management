@@ -34,12 +34,14 @@ import {
  VACCINE_RECORD_PATH,
   VISIT_RECORD_PATH,
   SURGERY_RECORD_PATH,
-  MEDICAL_RECORD_PATH,
-  HEALTH_SCORE_PATH ,
-} from "../common/configuration/constants/Paths";
-import GpsLocator from "../pages/client/GpsLocator";
-import MarketPlace from "../pages/client/MarketPlace";
-import UserManagement from "../pages/admin/UserManagement";
+  MEDICAL_RECORD_PATH, 
+  PET_LIFE_OVERVIEW,
+  ADD_ACTIVITY_PROPOSITIONS,
+  APPROVE_CERTIF_REQUEST,
+  HEALTH_SCORE_PATH} from '../common/configuration/constants/Paths';
+import GpsLocator from '../pages/client/GpsLocator';
+import MarketPlace from '../pages/client/MarketPlace';
+import UserManagement from '../pages/admin/UserManagement';
 import PetProfile from "../pages/client/PetProfile";
 import UserProfile from "../pages/client/UserProfile";
 import UpdateMedicalNotes from "../pages/veto/UpdateMedicalNotes";
@@ -72,6 +74,10 @@ import RequestJoinAsVeterinarian from '../pages/RequestJoinAsVeterinarian';
 import ResetPassword from '../pages/ResetPassword';
 import AskToResetPassword from '../pages/AskToResetPassword';
 import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
+import PetHealthDetailed from '../pages/client/PetHealthDetailed';
+import PetLifeOverview from '../pages/client/PetLifeOverview';
+import AddActivityProposition from '../pages/admin/AddActivityProposition';
+import ApproveCertif from "../pages/veto/ApproveCertif";
 import HealthScore from "../pages/client/HealthScore";
 
 
@@ -87,6 +93,7 @@ const ProtectedRoutes = () => (
             <Route path={USER_MANAGEMENT_PATH} element={<UserManagement />} />
             <Route path={PET_SHOP_MANAGEMENT} element={<PetShopManagement />} />
             <Route path={MANAGE_VETO_REQUEST} element={<ManageVetoRequest />} />
+            <Route path={ADD_ACTIVITY_PROPOSITIONS} element={<AddActivityProposition />} />
           </Routes>
         </ProtectedRoute>
       }
@@ -118,6 +125,12 @@ const ProtectedRoutes = () => (
             <Route path={VISIT_RECORD_PATH} element={<VisitRecord />} />
             <Route path={SURGERY_RECORD_PATH} element={<SurgeryRecord />} />
             <Route path={MEDICAL_RECORD_PATH} element={<MedicalRecord />} />
+            <Route
+              path={SEARCH_VETO_PRODUCTS}
+              element={<SearchForVetoAndProds />}
+            />
+            <Route path={DETAILED_HEALTH_PET} element={<PetHealthDetailed/> } />
+            <Route path={PET_LIFE_OVERVIEW} element={<PetLifeOverview/> } />
             <Route path={SEARCH_VETO_PRODUCTS} element={<SearchForVetoAndProds/> } />
             <Route path={HEALTH_SCORE_PATH} element={<HealthScore/> } />
 
@@ -139,6 +152,10 @@ const ProtectedRoutes = () => (
             <Route
               path={VETO_UPDATE_TREATMENT_PATH}
               element={<UpdateTreatmentPlans />}
+            />
+             <Route
+              path={APPROVE_CERTIF_REQUEST}
+              element={<ApproveCertif/>}
             />
           </Routes>
         </ProtectedRoute>

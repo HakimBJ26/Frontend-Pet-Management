@@ -6,3 +6,5 @@ export const categories = [
     { label: VETO_CATEGORIES, icon: <AccountCircleIcon /> },
     { label: ACCESSORIES_CATEGORIES, icon: <StorefrontIcon /> },
   ];
+
+  export const VITAL_PET_FIELD= ['Heart Rate', 'Temperature', 'Activity Level']

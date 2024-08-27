@@ -5,8 +5,11 @@ export const UPDATE_PROFILE_API = "/api/auth/updateProfile";
 export const GET_USERS_API = "/api/auth/GetAllUsers";
 export const LOG_OUT_API = "/api/auth/logout";
 export const UPDATE_USER_PROFILE_BY_ADMIN = "/api/auth/updateUserByAdmin";
+export const USER_IMAGE_URL = "/api/auth/image-url";
 export const REFRESH_TOKEN_API = "/api/auth/refreshToken";
 export const ADD_PET_API = "/api/pets";
+export const BREED_CERTIF_API = "/api/pets/request-certif";
+export const VERIFY_CERTIF_CERTIF_API = "/api/certificates/verify";
 export const GET_ALL_PETS_API = "/api/pets";
 export const GET_PET_BY_ID_API = "/api/pets";
 export const UPDATE_PET_API = "/api/pets";
@@ -31,6 +34,12 @@ export const VACCINE_RECORD_API = '/api/vaccine_records'
 export const SURGERY_RECORD_API = '/api/surgery_records'
 export const MEDICAL_RECORD_API = '/api/medical_records'
 export const VISIT_RECORD_API = '/api/visit_records'
+export const SLEEP_PATTERN_API = '/api/sleep-patterns/pet'
+export const ACTIVITY_PROPOSITION_API = '/api/activity-propositions'
+export const PET_API ='api/pets'
+export const  CERTIF_REQUESTS_API='/api/pets/certif-requests'
+export const  ISSUE_CERTIF_API='/api/certificates/issue'
+export const DECLINE_CERTIF_API = '/api/certificates/decline'
 export const ADD_SAFE_ZONE_API = (petId) => `/api/pets/map/set-single-position/${petId}`;
 export const UPDATE_SAFE_ZONE_API = (petId, safeZoneId) => `/api/pets/map/${petId}/update-safe-zones/${safeZoneId}`;
 export const GET_SAFE_ZONES_API = (petId) => `/api/pets/map/${petId}/get-safe-zones`;

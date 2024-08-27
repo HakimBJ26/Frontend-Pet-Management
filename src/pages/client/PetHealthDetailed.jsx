@@ -45,7 +45,7 @@ function PetHealthDetailed() {
 
   return (
     <Box sx={{ paddingX: 1, marginTop: 10 }}>
-      <Box className="countainer">
+      <Box className="countainer-pet-health-details">
         <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
           <CardMedia
             component="img"

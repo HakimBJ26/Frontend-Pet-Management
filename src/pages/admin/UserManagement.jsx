@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import UserService from '../../service/UserService';
-import {  Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField } from '@mui/material';
+import {  Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Container } from '@mui/material';
 import { CenteredContainer, StyledBox } from '../../components/StyledBox';
 import UpdateUserModal from '../../components/model/UpdateUserModel';
 
@@ -56,9 +56,9 @@ function UserManagement() {
   };
 
   return (
-    <CenteredContainer>
-      <StyledBox sx={{ maxWidth: '65vw'}}>
-        <Typography variant="h4" component="h1" gutterBottom>
+    <Container sx={{  marginTop: '70px',
+    width: '60%'}}>
+        <Typography variant="h4" component="h1" gutterBottom  fontWeight='bold'>
           User Management
         </Typography>
         <Typography variant="subtitle1" color="textSecondary" sx={{ mb: 3 }}>
@@ -84,6 +84,11 @@ function UserManagement() {
               </TableRow>
             </TableHead>
             <TableBody>
+            {filteredUsers?.length === 0 && (
+              <TableRow><Typography variant="h4" padding={2} textAlign='center'>
+                 no user to show ..
+                </Typography></TableRow>
+            )}
               {filteredUsers.map(user => (
                 <TableRow key={user.id}>
                   <TableCell>{user.name}</TableCell>
@@ -109,8 +114,7 @@ function UserManagement() {
             onUserUpdate={handleUserUpdate}
           />
         )}
-      </StyledBox>
-    </CenteredContainer>
+      </Container>
   );
 }
 

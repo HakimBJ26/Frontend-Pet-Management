@@ -33,7 +33,10 @@ import {
   VISIT_RECORD_PATH,
   SURGERY_RECORD_PATH,
   Medical_RECORD_PATH,
-  MEDICAL_RECORD_PATH
+  MEDICAL_RECORD_PATH,
+  PET_LIFE_OVERVIEW,
+  ADD_ACTIVITY_PROPOSITIONS,
+  APPROVE_CERTIF_REQUEST
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
 import "react-toastify/dist/ReactToastify.css";
@@ -94,7 +97,7 @@ function App() {
       switch (role) {
         case ROLE_ADMIN: {
           const adminpaths = [
-            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT, MANAGE_VETO_REQUEST
+            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT , MANAGE_VETO_REQUEST ,ADD_ACTIVITY_PROPOSITIONS
           ]
           if (adminpaths.some(path => location.pathname === `${ADMIN_DASH_PATH}${path}`)) {
             return
@@ -108,7 +111,7 @@ function App() {
             COMMUNITY_PATH, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
             SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, SEARCH_VETO_PRODUCTS, DETAILED_HEALTH_PET, VACCINE_RECORD_PATH, VISIT_RECORD_PATH, SURGERY_RECORD_PATH,
-            MEDICAL_RECORD_PATH, HEALTH_SCORE_PATH
+            MEDICAL_RECORD_PATH, HEALTH_SCORE_PATH,PET_LIFE_OVERVIEW
           ];
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return
@@ -116,10 +119,13 @@ function App() {
           navigate(`${CLIENT_DASH_PATH}`)
           break
         }
-        case ROLE_VETO: {const vetoPaths = [
-            VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH ];
-          if (vetoPaths.some(path => location.pathname === `${VETO_DASH_PATH}${path}`)) 
-            { return;}
+        case ROLE_VETO: {
+          const vetoPaths = [
+            VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH , APPROVE_CERTIF_REQUEST
+          ];
+          if (vetoPaths.some(path => location.pathname === `${VETO_DASH_PATH}${path}`)) {
+            return;
+          }
           navigate(`${VETO_DASH_PATH}`);
           break;}
         default:

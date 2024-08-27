@@ -11,6 +11,12 @@ import {
   GET_DANGER_ZONE,
   GET_SAFE_ZONE_BY_HOME, GET_SAFE_ZONE_BY_VET, GET_SAFE_ZONE_BY_PARK,
   CHECK_Pet_IN_SAFE_ZONE,
+  BREED_CERTIF_API,
+  VERIFY_CERTIF_CERTIF_API,
+  PET_API,
+  CERTIF_REQUESTS_API,
+  ISSUE_CERTIF_API,
+  DECLINE_CERTIF_API,
 } from "../common/configuration/constants/PathBack";
 
 
@@ -24,7 +30,6 @@ class PetService {
       throw err;
     }
   }
-
   static async getPets() {
     try {
       const res = await axiosPrivate.get(GET_ALL_PETS_API, {
@@ -35,7 +40,6 @@ class PetService {
       console.log(err);
     }
   }
-
   static async getCurrentUserPets() {
     try {
       const res = await axiosPrivate.get(GET_CURRENT_USER_PETS_API, {
@@ -46,7 +50,6 @@ class PetService {
       console.log(err);
     }
   }
-
   static async updatePet(petId, petData) {
     try {
       const response = await axiosPrivate.put(
@@ -60,20 +63,34 @@ class PetService {
     }
   }
 
+  
+  static async updatePetImage(petId, imageUrl) {
+    try {
+      const response = await axiosPrivate.put(
+        `/api/pets/${petId}/image-url`,
+        null, 
+        {
+          params: { imageUrl }, 
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating pet:", error);
+      throw error;
+    }
+  }
   static async getPetProfile(petId) {
     try {
-      const response = await axiosPrivate.get(`/pets/${petId}`);
+      const response = await axiosPrivate.get(`${PET_API}/${petId}`);
       return response.data;
     } catch (error) {
       console.error("Error fetching pet profile:", error);
       throw error;
     }
   }
-
   static async uploadPetPhoto(petId, file) {
     const formData = new FormData();
     formData.append("photo", file);
-
     const response = await axiosPrivate.post(
       `/api/pets/${petId}/image`,
       formData,
@@ -86,7 +103,44 @@ class PetService {
     return response.data;
   }
 
+  static async requestBreedCertif(petId,birthDate) {
+    try {
+      const response = await axiosPrivate.post(`${BREED_CERTIF_API}/${petId}?birthDate=${birthDate}`);
+      return response.data;
+    } catch (err) {
+      console.error("Error requesting breed certif:", err);
+      throw err;
+    }
+  }
 
+  static async verifyCertif(petId) {
+    try {
+      const response = await axiosPrivate.get(`${VERIFY_CERTIF_CERTIF_API}?uniqueId=${petId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error verifying the certif", error);
+      throw error;
+    }
+  }
+  
+  static async getCertifRequests() {
+    try {
+      const response = await axiosPrivate.get(CERTIF_REQUESTS_API);
+      return response.data;
+    } catch (error) {
+      console.error("Error getting certif requests", error);
+      throw error;
+    }
+  }
+
+  static async issueCertif(certifData) {
+    try {
+      const response = await axiosPrivate.post(`${ISSUE_CERTIF_API}?uniqueId=${certifData.uniqueId}&petName=${certifData.petName}&breed=${certifData.breed}&birthDate=${certifData.birthDate}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error getting certif requests", error);
+    }
+  }
 
   static async addSinglePositionToSafeZone(petId, safeZoneRequest) {
     try {
@@ -104,6 +158,17 @@ class PetService {
     }
   }
 
+
+
+  static async declineCertif(petId) {
+    try {
+      const response = await axiosPrivate.post(`${DECLINE_CERTIF_API}?uniqueId=${petId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error decling certif requests", error);
+
+    }
+  }
   static async getSafeZones(petId) {
     try {
       const response = await axiosPrivate.get(GET_SAFE_ZONES_API(petId), {
@@ -115,6 +180,8 @@ class PetService {
       throw error;
     }
   }
+
+  
 
   static async updateSafeZone(petId, safeZoneId, positionDtos) {
     try {

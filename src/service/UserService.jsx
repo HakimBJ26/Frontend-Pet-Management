@@ -12,6 +12,7 @@ import {
   SEARCH_VET_BY_NAME_API,
   SEND_RESET_PASS_MAIL,
   UPDATE_PROFILE_API,
+  USER_IMAGE_URL,
   UPDATE_USER_PROFILE_BY_ADMIN,
   VERIFY_RESET_PASS_TOKEN,
 } from "../common/configuration/constants/PathBack";
@@ -57,9 +58,24 @@ class UserService {
   }catch(err){
     console.log(err)
   }
-
-
   }
+
+
+  static async updateUserImage(userId, imageUrl) {
+    try {
+      const encodedImageUrl = encodeURIComponent(imageUrl);
+      const response = await axiosPrivate.patch(
+        `${USER_IMAGE_URL}/${userId}?userImageUrl=${encodedImageUrl}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating User:", error);
+      throw error;
+    }
+  }
+  
+  
+  
 
   static async verifyResetPassToken (token){
     try{
@@ -73,6 +89,17 @@ class UserService {
       return err
     }
     }
+
+    static async getUserImage(userId) {
+      try {
+        const response = await axiosPrivate.get(`${USER_IMAGE_URL}/${userId}`);
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching User Image:", error);
+        throw error;
+      }
+    }
+    
   
 
 

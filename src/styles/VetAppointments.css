@@ -7,8 +7,12 @@
     gap: 30px;
 }
 
-
-.countainer {
+.full-page{
+    display: flex;
+    flex-direction: column;
+    gap: 10;
+}
+.countainer-pet-health-details {
     border: 1px solid #bebebe;
     border-radius: 10px;
     padding: 10px;
