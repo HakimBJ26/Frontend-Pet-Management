@@ -81,7 +81,6 @@ const GpsLocator = () => {
       console.log('WebSocket connection established');
     };
     
-
     socket.onmessage = async (event) => {
       const data = JSON.parse(event.data);
       if (data.latitude !== undefined && data.longitude !== undefined) {
@@ -145,7 +144,6 @@ const GpsLocator = () => {
       } else {
         console.warn('No positions found for zone:', zoneName);
       }
-   
     } catch (error) {
       console.error('Error fetching positions:', error);
     }
