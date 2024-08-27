@@ -34,7 +34,6 @@ const DefineSafeZone = () => {
       console.error("Erreur lors de l'enregistrement de la zone de sécurité :", error);
       toast.error("Failed to add safe zone."); }
   };
-
   return (
     <div className="container">
       <h2 className="title">Define your safe zone for your pet</h2>
