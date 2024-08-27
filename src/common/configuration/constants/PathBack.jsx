@@ -31,6 +31,16 @@ export const VACCINE_RECORD_API = '/api/vaccine_records'
 export const SURGERY_RECORD_API = '/api/surgery_records'
 export const MEDICAL_RECORD_API = '/api/medical_records'
 export const VISIT_RECORD_API = '/api/visit_records'
+export const ADD_SAFE_ZONE_API = (petId) => `/api/pets/map/set-single-position/${petId}`;
+export const UPDATE_SAFE_ZONE_API = (petId, safeZoneId) => `/api/pets/map/${petId}/update-safe-zones/${safeZoneId}`;
+export const GET_SAFE_ZONES_API = (petId) => `/api/pets/map/${petId}/get-safe-zones`;
+export const DELETE_SAFE_ZONE_API = (petId, safeZoneId) => `/api/pets/map/${petId}/delete-safe-zones/${safeZoneId}`;
+export const GET_SAFE_ZONE_BY_TYPE = (petId, type) => `/api/pets/map/${petId}/${type}`;
+export const GET_SAFE_ZONE_BY_HOME = (petId) => `/api/pets/map/${petId}/home`;
+export const GET_SAFE_ZONE_BY_VET = (petId) => `/api/pets/map/${petId}/vet`;
+export const GET_SAFE_ZONE_BY_PARK = (petId) => `/api/pets/map/${petId}/park`;
+export const GET_DANGER_ZONE = (petId) => `/api/pets/map/${petId}/get-danger-zones`;
+export const CHECK_Pet_IN_SAFE_ZONE= (petId) => `/api/pet/check-pet-in-safe-zone/${petId}`;
 export const PET_HEALTH_SCORE = '/api/health-score/pet'
 
 

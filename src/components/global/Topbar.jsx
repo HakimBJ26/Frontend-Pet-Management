@@ -68,20 +68,14 @@ function TopBar() {
 
   const handleLogout = async () => {
     try {
-      const token = await getToken(messaging, {
-        vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
-      });
-
-      if (token) {
-        await deleteToken(messaging);
-      }
-
       await UserService.deleteMessagingToken(localStorage.getItem('id'));
       await UserService.logout();
       setCurrentUser(null);
       localStorage.removeItem('id');
       localStorage.removeItem('selectedPetId');
       localStorage.removeItem('selectedPetName');
+      setSelectedPetId('')
+      setSelectedPetName('')
       navigate(`${SIGN_IN_PATH}`);
     } catch (err) {
       console.error('Error during logout process:', err);

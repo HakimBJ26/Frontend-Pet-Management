@@ -116,29 +116,19 @@ function App() {
           navigate(`${CLIENT_DASH_PATH}`)
           break
         }
-        case ROLE_VETO: {
-          const vetoPaths = [
-            VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH
-          ];
-          if (vetoPaths.some(path => location.pathname === `${VETO_DASH_PATH}${path}`)) {
-            return;
-          }
+        case ROLE_VETO: {const vetoPaths = [
+            VETO_NOTIFICATIONS_PATH, VETO_UPDATE_NOTES_PATH, VETO_UPDATE_TREATMENT_PATH ];
+          if (vetoPaths.some(path => location.pathname === `${VETO_DASH_PATH}${path}`)) 
+            { return;}
           navigate(`${VETO_DASH_PATH}`);
-          break;
-        }
+          break;}
         default:
           navigate(SIGN_IN_PATH);
-          break;
-      }
-    } else {
-      navigate(SIGN_IN_PATH);
-    }
-  }, [navigate, location.pathname]);
-
+          break;}} 
+          else { navigate(SIGN_IN_PATH); } }, 
+          [navigate, location.pathname]);
   useEffect(() => {
-    setShowSidebar(!isMobile);
-  }, [isMobile]);
-
+    setShowSidebar(!isMobile);}, [isMobile]);
   return (
 
 

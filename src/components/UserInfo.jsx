@@ -29,25 +29,18 @@ function UserInfo({ user }) {
         }
       }
     else {
-
       try {
         await UserService.updateUser(data.id, {
           name: data.name,
           email: data.email,
-          role: data.role,
-        });
+          role: data.role,});
         showToast(SUCCESS_UPDATE_TOAST)
-
       } catch (error) {
         showToast(ERROR_UPDATE_TOAST)
         console.error('Error Updating user:', error);
       }
     }
-
   };
-
-
-
   return (
     <Paper elevation={3} sx={{ padding: 2, maxWidth: 400, margin: 'auto', mt: 5 }}>
       <Typography variant="h6" gutterBottom>User Information</Typography>
@@ -56,20 +49,16 @@ function UserInfo({ user }) {
           fullWidth
           label="User ID"
           value={data.id}
-          InputProps={{
-            readOnly: true,
-          }}
+          InputProps={{ readOnly: true,}}
           variant="outlined"
-          margin="normal"
-        />
+          margin="normal"/>
         <TextField
           fullWidth
           label="Name"
           value={data.name}
           onChange={(e) => setData({ ...data, name: e.target.value })}
           variant="outlined"
-          margin="normal"
-        />
+          margin="normal" />
         <TextField
           fullWidth
           label="Email"
@@ -79,8 +68,7 @@ function UserInfo({ user }) {
           value={data.email}
           onChange={(e) => setData({ ...data, email: e.target.value })}
           variant="outlined"
-          margin="normal"
-        />
+          margin="normal"/>
         <TextField
           fullWidth
           label="Role"
