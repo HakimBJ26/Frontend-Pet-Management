@@ -1,4 +1,4 @@
-import {  useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { ColorModeContext, useMode } from './theme'
 import { CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material'
@@ -28,7 +28,7 @@ import {
   ASK_TO_RESET_PASS,
   SEARCH_VETO_PRODUCTS,
   DETAILED_HEALTH_PET
-  ,VACCINE_RECORD_PATH,
+  , VACCINE_RECORD_PATH,
   HEALTH_SCORE_PATH,
   VISIT_RECORD_PATH,
   SURGERY_RECORD_PATH,
@@ -40,7 +40,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { messaging, requestPermissionAndGetToken } from './firebase'
 import { onMessage } from 'firebase/messaging'
 import useAuth from './hooks/useAuth'
-import { ToastContainer, toast } from 'react-toastify'; 
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PetProvider } from './context/PetContext'
 
@@ -55,11 +55,11 @@ function App() {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-   
+
     if (currentUser?.role) {
       requestPermissionAndGetToken();
-  
-      const unsubscribe = onMessage(messaging, (payload) => {       
+
+      const unsubscribe = onMessage(messaging, (payload) => {
         toast(payload.notification.body, {
           position: "bottom-right",
           className: 'custom-toast',
@@ -71,7 +71,7 @@ function App() {
           }
         });
       });
-  
+
       return () => {
         if (unsubscribe) {
           unsubscribe();
@@ -79,20 +79,22 @@ function App() {
       };
     }
   }, [currentUser]);
-  
-  
+
+
 
 
   useEffect(() => {
-    const {role } = getAuthInfo()
-    if (location.pathname === SIGN_UP_PATH || location.pathname === SUBMIT_VETO_REQUEST || location.pathname === RESET_PASS_REQUEST || location.pathname === ASK_TO_RESET_PASS) {
-      return
+    const { role } = getAuthInfo()
+    const pathsToIgnore = [SIGN_UP_PATH, SUBMIT_VETO_REQUEST, RESET_PASS_REQUEST, ASK_TO_RESET_PASS];
+
+    if (pathsToIgnore.includes(location.pathname)) {
+      return;
     }
     if (role) {
       switch (role) {
         case ROLE_ADMIN: {
           const adminpaths = [
-            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT , MANAGE_VETO_REQUEST 
+            USER_MANAGEMENT_PATH, PET_SHOP_MANAGEMENT, MANAGE_VETO_REQUEST
           ]
           if (adminpaths.some(path => location.pathname === `${ADMIN_DASH_PATH}${path}`)) {
             return
@@ -105,8 +107,8 @@ function App() {
             GPS_LOCATOR_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH,
             COMMUNITY_PATH, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
-            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE , SEARCH_VETO_PRODUCTS, DETAILED_HEALTH_PET, VACCINE_RECORD_PATH, VISIT_RECORD_PATH, SURGERY_RECORD_PATH,
-            MEDICAL_RECORD_PATH
+            SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, SEARCH_VETO_PRODUCTS, DETAILED_HEALTH_PET, VACCINE_RECORD_PATH, VISIT_RECORD_PATH, SURGERY_RECORD_PATH,
+            MEDICAL_RECORD_PATH, HEALTH_SCORE_PATH
           ];
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return
@@ -128,26 +130,26 @@ function App() {
   useEffect(() => {
     setShowSidebar(!isMobile);}, [isMobile]);
   return (
-  
 
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <PetProvider>
+
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <PetProvider>
           <CssBaseline />
-      
-            {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
-            {shouldShowTopBar(location.pathname) && <TopBar />}
-              <ProtectedRoutes />
-              <Toaster expand visibleToasts={9} />
-              <ToastContainer /> 
 
-            {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
-            </PetProvider>
-        </ThemeProvider>
+          {shouldShowSideBar(location.pathname) && showSidebar && <SideBar />}
+          {shouldShowTopBar(location.pathname) && <TopBar />}
+          <ProtectedRoutes />
+          <Toaster expand visibleToasts={9} />
+          <ToastContainer />
 
-      </ColorModeContext.Provider>
+          {isMobile && shouldShowSideBar(location.pathname) && <BottomBar />}
+        </PetProvider>
+      </ThemeProvider>
 
-  
+    </ColorModeContext.Provider>
+
+
   );
 }
 

@@ -1,0 +1,72 @@
+.myCustomClass {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 16px;
+    background-color: var(--background-color);
+    border-radius: 24px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+}
+
+.myCustomClass1 {
+    width: 60px;
+    height: 60px;
+    background-color: blue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconBox {
+    width: 60px;
+    height: 60px;
+    background-color: #EDF8F1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    margin-bottom: 24px;
+    background-color: #F0F0F0;
+}
+
+.flexContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.title {
+    margin-left: 16px;
+    color: #000000;
+    font-weight: bold;
+}
+
+.metricBox {
+    text-align: center;
+}
+
+.speedBar {
+    width: 20px;
+    height: 150px;
+    border-radius: 10px;
+    background-color: white;
+    border: 2px solid black;
+    margin-bottom: 8px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.endSessionButton {
+    background-color: green;
+    height: 50px;
+    width: 400px;
+    font-size: 18px;
+}
+
+.endSessionButton:hover {
+    background-color: darkgreen;
+}

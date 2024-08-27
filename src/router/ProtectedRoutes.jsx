@@ -72,7 +72,7 @@ import RequestJoinAsVeterinarian from '../pages/RequestJoinAsVeterinarian';
 import ResetPassword from '../pages/ResetPassword';
 import AskToResetPassword from '../pages/AskToResetPassword';
 import SearchForVetoAndProds from '../pages/client/SearchForVetoAndProds';
-import PetHealthDetailed from '../pages/client/PetHealthDetailed';
+import HealthScore from "../pages/client/HealthScore";
 
 
 const ProtectedRoutes = () => (
@@ -118,11 +118,9 @@ const ProtectedRoutes = () => (
             <Route path={VISIT_RECORD_PATH} element={<VisitRecord />} />
             <Route path={SURGERY_RECORD_PATH} element={<SurgeryRecord />} />
             <Route path={MEDICAL_RECORD_PATH} element={<MedicalRecord />} />
-            <Route
-              path={SEARCH_VETO_PRODUCTS}
-              element={<SearchForVetoAndProds />}
-            />
-            <Route path={DETAILED_HEALTH_PET} element={<PetHealthDetailed/> } />
+            <Route path={SEARCH_VETO_PRODUCTS} element={<SearchForVetoAndProds/> } />
+            <Route path={HEALTH_SCORE_PATH} element={<HealthScore/> } />
+
           </Routes>
         </ProtectedRoute>
       }
