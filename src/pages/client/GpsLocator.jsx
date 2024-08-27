@@ -17,6 +17,7 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PetContext } from '../../context/PetContext';
+import { useNavigate } from 'react-router-dom';
 
 const petMarkerIcon = new L.Icon({
   iconUrl: markerIcon,
@@ -30,12 +31,10 @@ const petMarkerIcon = new L.Icon({
 
 const MapCenterUpdater = ({ center }) => {
   const map = useMap();
-  useEffect(() => {
-    if (center) {
-      map.setView(center);
-    }
-  }, [center, map]);
-  return null;
+  useEffect(() => 
+    { if (center) { map.setView(center); 
+   }}, [center, map]);
+    return null;
 };
 
 const GpsLocator = () => {
@@ -48,6 +47,7 @@ const GpsLocator = () => {
   const [notifiedPositions, setNotifiedPositions] = useState(new Set());
   const { selectedPetId } = useContext(PetContext);
   const userId = localStorage.getItem('id');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedPetId) {
@@ -80,6 +80,7 @@ const GpsLocator = () => {
     socket.onopen = () => {
       console.log('WebSocket connection established');
     };
+    
 
     socket.onmessage = async (event) => {
       const data = JSON.parse(event.data);
@@ -144,6 +145,7 @@ const GpsLocator = () => {
       } else {
         console.warn('No positions found for zone:', zoneName);
       }
+   
     } catch (error) {
       console.error('Error fetching positions:', error);
     }
@@ -179,7 +181,7 @@ const GpsLocator = () => {
           )}
         </MapContainer>
       </div>
-      <AddSafeZoneButton className="add-safe-zone-button" onClick={() => handleSafeZoneClick(selectedSafeZone)} />
+      <AddSafeZoneButton className="add-safe-zone-button" onClick={() => navigate('/dashboard_client/define_safe_zone')} />
       <Box className="safe-zones-panel">
         <h2 className="safe-zones-header">Select Safe Zone</h2>
         <List>
