@@ -52,6 +52,9 @@ export const GET_DANGER_ZONE = (petId) => `/api/pets/map/${petId}/get-danger-zon
 export const CHECK_Pet_IN_SAFE_ZONE= (petId) => `/api/pet/check-pet-in-safe-zone/${petId}`;
 export const PET_HEALTH_SCORE = '/api/health-score/pet'
 export const GET_GROUPS_API = "/api/group-chats";
-export const GET_MESSAGES_API = "/api/group-chats/messages";
+export const GET_MESSAGES_API = "/api/messages/group";
 export const SEND_MESSAGE_API = "/api/messages";
 export const GET_GROUPS_BY_USER_API = "/api/group-chats/user";
+export const CREATE_GROUP_CHAT_API = "/api/group-chats";
+export const JOIN_GROUP_CHAT_API = '/api/group-chats/join';
+export const QUIT_GROUP_CHAT_API = '/api/group-chats/quit';

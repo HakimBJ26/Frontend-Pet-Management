@@ -1,0 +1,44 @@
+/* Header Styles */
+.groupChatHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px; /* equivalent to mb: 2 */
+    margin-top: 56px; /* equivalent to marginTop: 7 */
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+    padding: 8px; /* equivalent to padding: 1 */
+  }
+  
+  /* Messages Box Styles */
+  .groupChatMessagesBox {
+    position: fixed;
+    top: 111px;
+    bottom: 111px;
+    left: 0;
+    right: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px; /* equivalent to borderRadius: 1 */
+    overflow-y: scroll;
+    padding: 16px; /* equivalent to padding: 2 */
+    z-index: 1;
+  }
+  
+  /* Input and Send Button Container Styles */
+  .groupChatInputContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 8px; /* equivalent to padding: 1 */
+    border-top: 1px solid #ddd;
+    margin-bottom: 56px; /* equivalent to marginBottom: 7 */
+    z-index: 1000;
+  }
+  

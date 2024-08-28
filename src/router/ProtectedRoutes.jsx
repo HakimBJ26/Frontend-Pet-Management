@@ -38,7 +38,8 @@ import {
   PET_LIFE_OVERVIEW,
   ADD_ACTIVITY_PROPOSITIONS,
   APPROVE_CERTIF_REQUEST,
-  HEALTH_SCORE_PATH} from '../common/configuration/constants/Paths';
+  HEALTH_SCORE_PATH,
+  GROUP_CHAT} from '../common/configuration/constants/Paths';
 import GpsLocator from '../pages/client/GpsLocator';
 import MarketPlace from '../pages/client/MarketPlace';
 import UserManagement from '../pages/admin/UserManagement';
@@ -79,6 +80,7 @@ import PetLifeOverview from '../pages/client/PetLifeOverview';
 import AddActivityProposition from '../pages/admin/AddActivityProposition';
 import ApproveCertif from "../pages/veto/ApproveCertif";
 import HealthScore from "../pages/client/HealthScore";
+import GroupChat from "../pages/client/GroupChat";
 
 
 const ProtectedRoutes = () => (
@@ -133,6 +135,8 @@ const ProtectedRoutes = () => (
             <Route path={PET_LIFE_OVERVIEW} element={<PetLifeOverview/> } />
             <Route path={SEARCH_VETO_PRODUCTS} element={<SearchForVetoAndProds/> } />
             <Route path={HEALTH_SCORE_PATH} element={<HealthScore/> } />
+            <Route path={GROUP_CHAT} element={<GroupChat/> } />
+
 
           </Routes>
         </ProtectedRoute>

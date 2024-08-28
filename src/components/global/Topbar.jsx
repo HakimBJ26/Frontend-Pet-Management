@@ -88,6 +88,7 @@ function TopBar() {
       localStorage.removeItem('id');
       localStorage.removeItem('selectedPetId');
       localStorage.removeItem('selectedPetName');
+      localStorage.removeItem('name');
       setSelectedPetId('')
       setSelectedPetName('')
       navigate(`${SIGN_IN_PATH}`);
