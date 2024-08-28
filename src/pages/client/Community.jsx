@@ -111,7 +111,7 @@ function Community() {
         </IconButton>
       </Box>
 
-      {/* Add Search Bar */}
+     
       {activeTab === 'all' && (
         <Box sx={{ mb: 3 }}>
           <TextField

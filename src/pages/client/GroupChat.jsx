@@ -150,7 +150,6 @@ function GroupChat() {
 
   return (
     <Container sx={{ position: "relative", height: "100vh", maxWidth: "md", padding: 0 }}>
-      {/* Header */}
       <Box
        className="groupChatHeader"
        sx={{backgroundColor: "background.paper"}}
@@ -166,7 +165,6 @@ function GroupChat() {
         </IconButton>
       </Box>
 
-      {/* Messages Box */}
       <Box  className="groupChatMessagesBox"
             sx={{backgroundColor: "background.paper"}}
       >
@@ -213,11 +211,9 @@ function GroupChat() {
             </Box>
           ))
         )}
-        {/* Ref to scroll to */}
         <div ref={messagesEndRef} />
       </Box>
 
-      {/* Input and Send Button */}
       <Box className="groupChatInputContainer"
            sx={{backgroundColor: "background.paper"}}
 
@@ -236,7 +232,6 @@ function GroupChat() {
         </IconButton>
       </Box>
 
-      {/* Quit Confirmation Dialog */}
       <Dialog open={openQuitModal} onClose={handleCloseQuitModal}>
         <DialogTitle>Confirm Quit</DialogTitle>
         <DialogContent>
