@@ -5,7 +5,7 @@ class WebSocketService {
     this.endpoint = `${process.env.REACT_APP_WEBSOCKET_URL}/${endpoint}?userId=${userId}`;
     this.socket = null;
     this.fallbackFunction = fallbackFunction;
-    this.reconnectInterval = 50000; 
+    this.reconnectInterval = 50000;
     this.connect();
   }
   connect(onMessageCallback) {
@@ -35,9 +35,12 @@ class WebSocketService {
     this.socket.onclose = (event) => {
       console.log(`WebSocket connection closed for ${this.endpoint}`, event);
       if (this.fallbackFunction) {
-        this.fallbackFunction();}
-        setTimeout(() => this.connect(onMessageCallback), this.reconnectInterval); }; }
-   close() {
+        this.fallbackFunction();
+      }
+      setTimeout(() => this.connect(onMessageCallback), this.reconnectInterval);
+    };
+  }
+  close() {
     if (this.socket) {
       this.socket.close();
     }
