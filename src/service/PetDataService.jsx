@@ -1,4 +1,4 @@
-import { ACTIVITY_PROPOSITION_API, OVERVIEW_API, PET_GOAL_API, PET_HEALTH_STATS, PET_VITAL_SIGNS, SLEEP_PATTERN_API, VET_APPOINTEMENT_API } from "../common/configuration/constants/PathBack";
+import { ACTIVITY_PROPOSITION_API, OVERVIEW_API, PET_GOAL_API, PET_HEALTH_SCORE, PET_HEALTH_STATS, PET_VITAL_SIGNS, SLEEP_PATTERN_API, VET_APPOINTEMENT_API } from "../common/configuration/constants/PathBack";
 import {  axiosPrivate } from '../common/configuration/ApiAuth'; 
 
 class petDataService {

@@ -55,6 +55,7 @@ export default function SignIn() {
         if (userData) {
           localStorage.setItem('role', userData.role);
           localStorage.setItem('id', userData.id);
+          localStorage.setItem('name', userData.name);
           showToast(SUCCESS_LOGIN_TOAST);
           setTimeout(() => {
             if (userData.role === ROLE_ADMIN) {

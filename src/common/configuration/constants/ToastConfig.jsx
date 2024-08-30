@@ -300,3 +300,65 @@ export const SUCCESS_SIGN_UP_TOAST = {
       color: '#ffffff',
     },
   };
+
+
+  export const SUCCESS_GROUP_CHAT_CREATED_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'group chat created successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_GROUP_CHAT_CREATED_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to create group chat.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+
+  export const SUCCESS_JOIN_GROUP_CHAT_CREATED_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'joined to group chat successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_JOIN_GROUP_CHAT_CREATED_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to join group chat.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };
+
+
+  export const SUCCESS_QUIT_GROUP_CHAT_CREATED_TOAST = {
+    type: 'success',
+    duration: 3000,
+    message: 'quited group chat successfully!',
+    style: {
+      background: '#4caf50',
+      color: '#ffffff',
+    },
+  };
+
+  export const ERROR_QUIT_GROUP_CHAT_CREATED_TOAST = {
+    type: 'error',
+    duration: 3000,
+    message: 'Failed to quit group chat.',
+    style: {
+      background: '#f44336',
+      color: '#ffffff',
+    },
+  };

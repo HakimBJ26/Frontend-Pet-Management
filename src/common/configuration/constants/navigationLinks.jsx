@@ -13,6 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import AssistantIcon from '@mui/icons-material/Assistant';
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import BorderClearIcon from '@mui/icons-material/BorderClear';
 import {
     CLIENT_DASH_PATH, ACTIVITY_TRACKER_PATH, BREED_AUTHENTICITY_PATH, COMMUNITY_PATH,
     DEFINE_SAFE_ZONE_PATH, GPS_LOCATOR_PATH, HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH,
@@ -29,7 +30,7 @@ export const clientLinks = [
     { to: `${CLIENT_DASH_PATH}${SET_ACTIVITY_GOALS_PATH}`, icon: <NoteAddIcon  />},
     { to: `${CLIENT_DASH_PATH}${HEALTH_MONITOR_PATH}`, icon: <FavoriteIcon  /> },
     { to: `${CLIENT_DASH_PATH}${HEALTH_PASSPORT_PATH}`, icon: <MapOutlinedIcon  />},
-    { to: `${CLIENT_DASH_PATH}${DEFINE_SAFE_ZONE_PATH}`, icon: <HomeIcon  /> },
+    { to: `${CLIENT_DASH_PATH}${DEFINE_SAFE_ZONE_PATH}`, icon: <BorderClearIcon  /> },
     { to: `${CLIENT_DASH_PATH}${GPS_LOCATOR_PATH}`, icon: <LocationOnIcon  /> },
     { to: `${CLIENT_DASH_PATH}${MARKET_PLACE_PATH}`, icon: <StorefrontOutlinedIcon  />},
     { to: `${CLIENT_DASH_PATH}${COMMUNITY_PATH}`, icon: <GroupOutlinedIcon  />},
