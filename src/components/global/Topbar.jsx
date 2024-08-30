@@ -80,16 +80,23 @@ function TopBar() {
     handleMenuClose(); 
   };
 
+  const resetLocalStorage=()=>{
+    localStorage.removeItem('id');
+    localStorage.removeItem('selectedPetId');
+    localStorage.removeItem('selectedPetName');
+    localStorage.removeItem('name');
+  }
+  const resetDataState=()=>{
+    setSelectedPetId('')
+      setSelectedPetName('')
+      setCurrentUser(null);
+  }
   const handleLogout = async () => {
     try {
-      await UserService.deleteMessagingToken(localStorage.getItem('id'));
+      await UserService.deleteMessagingToken(userId);
       await UserService.logout();
-      setCurrentUser(null);
-      localStorage.removeItem('id');
-      localStorage.removeItem('selectedPetId');
-      localStorage.removeItem('selectedPetName');
-      setSelectedPetId('')
-      setSelectedPetName('')
+      resetLocalStorage()
+      resetDataState()
       navigate(`${SIGN_IN_PATH}`);
     } catch (err) {
       console.error('Error during logout process:', err);

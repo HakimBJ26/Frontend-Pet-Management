@@ -36,7 +36,8 @@ import {
   MEDICAL_RECORD_PATH,
   PET_LIFE_OVERVIEW,
   ADD_ACTIVITY_PROPOSITIONS,
-  APPROVE_CERTIF_REQUEST
+  APPROVE_CERTIF_REQUEST,
+  GROUP_CHAT
 } from './common/configuration/constants/Paths'
 import BottomBar from './components/global/ButtomBar'
 import "react-toastify/dist/ReactToastify.css";
@@ -111,7 +112,7 @@ function App() {
             COMMUNITY_PATH, DEFINE_SAFE_ZONE_PATH,
             HEALTH_MONITOR_PATH, HEALTH_PASSPORT_PATH, MARKET_PLACE_PATH,
             SET_ACTIVITY_GOALS_PATH, PET_PROFILE, USER_PROFILE, SEARCH_VETO_PRODUCTS, DETAILED_HEALTH_PET, VACCINE_RECORD_PATH, VISIT_RECORD_PATH, SURGERY_RECORD_PATH,
-            MEDICAL_RECORD_PATH, HEALTH_SCORE_PATH,PET_LIFE_OVERVIEW
+            MEDICAL_RECORD_PATH, HEALTH_SCORE_PATH,PET_LIFE_OVERVIEW ,GROUP_CHAT
           ];
           if (clientPaths.some(path => location.pathname === `${CLIENT_DASH_PATH}${path}`)) {
             return

@@ -14,7 +14,6 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function(message) {
-
   let notificationOptions = {
     body: message?.data?.body,
     icon: message?.data?.icon,
