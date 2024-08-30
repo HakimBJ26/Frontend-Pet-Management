@@ -42,7 +42,7 @@ const HealthScore = () => {
 
             const healthScoreService = new WebSocketService(HEALTH_SCORE_CANAL, userId, fetchHealthScore);
             healthScoreService.connect((data) => {
-                if (!data.heartRate && data.petId === selectedPetId) {
+              if (data.petId == selectedPetId){
                     setHealthScoreData(data);
                 }
             });
